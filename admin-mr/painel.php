@@ -17,7 +17,7 @@
                     <div id="dvlogoTopo" class="alignCenter">
                         <a href="painel.php"><img src="../img/logoKaririmr.jpg" alt="Logo Kariri Multi Revendedoras" /></a>
                     </div>
-                    <div id="dvMenuTopo" class="alignLeft">
+                    <div id="dvMenuTopo" class="alignCenter">
                         <ul id="ulMenu">
                             <li><a href="painel.php">Inicio</a></li>
                             <li><a href="?pagina=usuario">Usuário</a></li>

@@ -1,13 +1,24 @@
+<?php
+require_once ("../Controller/UsuarioController.php");;
+$usuarioController = new UsuarioController();
+$resultado = "";
+
+         if(filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)){
+            echo "<b>Chamou</b>";
+         }
+   
+?>
 <div id="dvUsuarioView">
     <h1> Gerenciar Usuários </h1> 
     <br />
     <div class="controlePaginas">
         <a href="#"><img src="img/icones/editar.png" alt=""/></a>
         <a href="#"><img src="img/icones/buscar.png" alt=""/></a>
+
     </div>
 
     <br />
-    <div class="panel panel-default maxPanelWidth">
+    <div class="panel panel-default maxPanelWidth novalidate">
         <div class="panel-heading">Cadastrar e editar</div>
         <div class="panel-body">
             <form method="post" id="frmGerenciarUsuario" name="frmGerenciarUsuario">
@@ -88,9 +99,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span id="spResultado"><?=$resultado;?></span>
+                    </div>           
+                </div>  
 
                 <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
                 <a href="#" class="btn btn-danger">Cancelar</a>
+
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul id="ulErros"></ul>
+                    </div>           
+                </div>    
+
             </form>
         </div>
     </div>
