@@ -1,10 +1,34 @@
 <?php
-require_once ("../Controller/UsuarioController.php");;
+require_once ("../Controller/UsuarioController.php");
+require_once ("../Model/Usuario.php");
+
 $usuarioController = new UsuarioController();
+$usuario = new Usuario();
 $resultado = "";
 
          if(filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)){
-            echo "<b>Chamou</b>";
+            $usuario = new Usuario();
+            $usuario->setNome(INPUT_POST, "txtNome", FILTER_SANITIZE_STRING);
+            $usuario->setEmail(INPUT_POST, "txtEmail", FILTER_SANITIZE_STRING);
+            $usuario->setSenha(INPUT_POST, "txtSenha", FILTER_SANITIZE_STRING);
+            $usuario->setStatus(INPUT_POST, "txtStatus", FILTER_SANITIZE_NUMBER_INT);
+            $usuario->setCpf(INPUT_POST, "txtCPF", FILTER_SANITIZE_STRING);
+            $usuario->setLogradouro_cod(INPUT_POST, "txtLogradouro_cod", FILTER_SANITIZE_NUMBER_INT);
+            $usuario->setNascimento(INPUT_POST, "txtNascimento", FILTER_SANITIZE_STRING);
+            $usuario->setPermissao_id(INPUT_POST, "txtPermissao", FILTER_SANITIZE_NUMBER_INT);
+            $usuario->setPlano_id(INPUT_POST, "txtPlano_id", FILTER_SANITIZE_NUMBER_INT);
+            $usuario->setSexo(INPUT_POST, "txtSexo", FILTER_SANITIZE_STRING);
+            $usuario->setUsuario(INPUT_POST, "txtUsuario", FILTER_SANITIZE_STRING);
+            
+            
+            
+                if(!filter_input(INPUT_GET, "cod",FILTER_SANITIZE_NUMBER_INT)){
+                    //CADASTRAR NOVO USUARIO
+                    
+                }else{
+                    //EDITAR
+                    
+                }
          }
    
 ?>
