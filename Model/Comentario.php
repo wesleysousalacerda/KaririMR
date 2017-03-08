@@ -1,5 +1,5 @@
 <?php
-require_once ("Classificado.ph");
+require_once ("Anuncio.php");
 require_once ("Usuario.php");
 class Comentario {
     
@@ -14,7 +14,7 @@ class Comentario {
     private $usuario;
     
     public function __construct() {
-        $this ->classificado = new Cassificado(); 
+        $this ->anuncio = new Anuncio(); 
         $this ->usuario = new Usuario();
     }
     
