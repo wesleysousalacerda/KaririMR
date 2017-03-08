@@ -9,7 +9,8 @@ class UsuarioDAO{
     }
             
     public function Cadastrar(Usuario $usuario) {
-       $sql = "INSERT INTO usuario(nome, email, cpf, usuario, senha, nascimento, sexo, status, plano_id, permissao_id, logradouro_cod ) VALUES(:nome, :email, :cpf, :usuario, :senha, :nascimento, :sexo, :status, :plano_id, :permissao_id, :logradouro_cod)";
+//       Esses parametro previnem o SQL Injection
+        $sql = "INSERT INTO usuario(nome, email, cpf, usuario, senha, nascimento, sexo, status, plano_id, permissao_id, logradouro_cod ) VALUES(:nome, :email, :cpf, :usuario, :senha, :nascimento, :sexo, :status, :plano_id, :permissao_id, :logradouro_cod)";
     $parem = array(
         ":nome" => $usuario->getNome(),
         ":email" => $usuario->getEmail(),
