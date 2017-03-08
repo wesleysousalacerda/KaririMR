@@ -24,7 +24,7 @@ class UsuarioDAO{
        );
     }
     
-    return $this->pdo
+    
     
 }
 

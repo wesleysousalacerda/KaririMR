@@ -1,13 +1,13 @@
 <?php
-require_once ("Classificado.ph");
+require_once ("Anuncio.php");
 class Imagem {
 
     private $cod;
     private $imagem;
-    private $classificado;
+    private $anuncio;
     
     public function __construct() {
-        $this ->classificado = new Cassificado(); 
+        $this ->anuncio = new Anuncio(); 
     }
  
     function getCod() {
@@ -18,8 +18,8 @@ class Imagem {
         return $this->imagem;
     }
 
-    function getClassificado() {
-        return $this->classificado;
+    function getAnuncio() {
+        return $this->anuncio;
     }
 
     function setCod($cod) {
@@ -30,8 +30,8 @@ class Imagem {
         $this->imagem = $imagem;
     }
 
-    function setClassificado($classificado) {
-        $this->classificado = $classificado;
+    function setAnuncio($anuncio) {
+        $this->anuncio = $anuncio;
     }
 
 

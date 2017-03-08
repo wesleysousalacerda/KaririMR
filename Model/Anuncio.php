@@ -1,7 +1,8 @@
 <?php
-require_once ("Anuncio.php");
-require_once ("Usuario.php");
-class Comentario {
+require_once 'Ususario.php';
+require_once 'Categoria.php';
+
+class Anuncio {
     
     private $cod;
     private $nome;
@@ -11,11 +12,11 @@ class Comentario {
     private $status;
     private $perfil;
     private $categoria;
-    private $usuario;
+    private $ususario;
     
     public function __construct() {
-        $this ->anuncio = new Anuncio(); 
-        $this ->usuario = new Usuario();
+        $this ->usuario = new Usuario(); 
+        $this ->categoria = new Categoria();
     }
     
     function getCod() {
@@ -86,11 +87,10 @@ class Comentario {
         $this->categoria = $categoria;
     }
 
-    function setUsuario($usuario) {
-        $this->usuario = $usuario;
+    function setUsusario($ususario) {
+        $this->ususario = $ususario;
     }
 
 
+    
 }
-
-
