@@ -25,7 +25,7 @@ class Banco {
         $this->server = "127.0.0.1";
         $this->user = "root";
         $this->password = "";
-        $this->database = "Karirimv";
+        $this->database = "karirimr";
     }
 
     /**

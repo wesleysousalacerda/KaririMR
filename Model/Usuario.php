@@ -10,8 +10,9 @@ class Usuario {
     private $nascimento;
     private $sexo;
     private $status;
-    private $permissao;
-    private $ip;
+    private $plano_id;
+    private $permissao_id;
+    private $logradouro_cod;
     
     function getCod() {
         return $this->cod;
@@ -49,12 +50,16 @@ class Usuario {
         return $this->status;
     }
 
-    function getPermissao() {
-        return $this->permissao;
+    function getPlano_id() {
+        return $this->plano_id;
     }
 
-    function getIp() {
-        return $this->ip;
+    function getPermissao_id() {
+        return $this->permissao_id;
+    }
+
+    function getLogradouro_cod() {
+        return $this->logradouro_cod;
     }
 
     function setCod($cod) {
@@ -78,7 +83,7 @@ class Usuario {
     }
 
     function setSenha($senha) {
-        $this->senha = md5($senha);
+        $this->senha = md5($senha); //Criptografia de senha
     }
 
     function setNascimento($nascimento) {
@@ -93,13 +98,16 @@ class Usuario {
         $this->status = $status;
     }
 
-    function setPermissao($permissao) {
-        $this->permissao = $permissao;
+    function setPlano_id($plano_id) {
+        $this->plano_id = $plano_id;
     }
 
-    function setIp($ip) {
-        $this->ip = $ip;
+    function setPermissao_id($permissao_id) {
+        $this->permissao_id = $permissao_id;
     }
 
+    function setLogradouro_cod($logradouro_cod) {
+        $this->logradouro_cod = $logradouro_cod;
+    }
 }
 ?>

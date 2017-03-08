@@ -9,7 +9,7 @@ class UsuarioDAO{
     }
             
     public function Cadastrar(Usuario $usuario) {
-       $sql = "INSERT INTO usuario(nome, email, cpf, usuario, senha, nascimento, sexo, status, permissao, ip) VALUES(:nome, :email, :cpf, :usuario, :senha, :nascimento, :sexo, :status, :permissao, :ip)";
+       $sql = "INSERT INTO usuario(nome, email, cpf, usuario, senha, nascimento, sexo, status, plano_id, permissao_id, logradouro_cod ) VALUES(:nome, :email, :cpf, :usuario, :senha, :nascimento, :sexo, :status, :plano_id, :permissao_id, :logradouro_cod)";
     $parem = array(
         ":nome" => $usuario->getNome(),
         ":email" => $usuario->getEmail(),
@@ -19,6 +19,7 @@ class UsuarioDAO{
         ":nascimento" => $usuario->getNascimento(),
         ":sexo" => $usuario->getSexo(),
         ":status" => $usuario->getStatus(),
+        ":plano_id"=>$usuario->
         ":permissao" => $usuario->getPermissao(),
         
        );
