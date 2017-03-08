@@ -19,9 +19,9 @@ class UsuarioDAO{
         ":nascimento" => $usuario->getNascimento(),
         ":sexo" => $usuario->getSexo(),
         ":status" => $usuario->getStatus(),
-        ":plano_id"=>$usuario->
-        ":permissao" => $usuario->getPermissao(),
-        
+        ":plano_id"=>$usuario->getPlano_id(),
+        ":permissao_id" => $usuario->getPermissao_id(),
+        ":logradouro_cod" => $usuario->getLogradouro_cod(),
        );
     }
     
