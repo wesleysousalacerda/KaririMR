@@ -11,19 +11,24 @@ $resultado = "";
             $usuario->setNome(INPUT_POST, "txtNome", FILTER_SANITIZE_STRING);
             $usuario->setEmail(INPUT_POST, "txtEmail", FILTER_SANITIZE_STRING);
             $usuario->setSenha(INPUT_POST, "txtSenha", FILTER_SANITIZE_STRING);
-            $usuario->setStatus(INPUT_POST, "txtStatus", FILTER_SANITIZE_NUMBER_INT);
+            $usuario->setStatus(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT);
             $usuario->setCpf(INPUT_POST, "txtCPF", FILTER_SANITIZE_STRING);
             $usuario->setLogradouro_cod(INPUT_POST, "txtLogradouro_cod", FILTER_SANITIZE_NUMBER_INT);
-            $usuario->setNascimento(INPUT_POST, "txtNascimento", FILTER_SANITIZE_STRING);
-            $usuario->setPermissao_id(INPUT_POST, "txtPermissao", FILTER_SANITIZE_NUMBER_INT);
-            $usuario->setPlano_id(INPUT_POST, "txtPlano_id", FILTER_SANITIZE_NUMBER_INT);
-            $usuario->setSexo(INPUT_POST, "txtSexo", FILTER_SANITIZE_STRING);
+            $usuario->setNascimento(INPUT_POST, "txtData", FILTER_SANITIZE_STRING);
+            $usuario->setPermissao_id(INPUT_POST, "slPermissao", FILTER_SANITIZE_NUMBER_INT);
+            $usuario->setPlano_id(INPUT_POST, "slPlano_id", FILTER_SANITIZE_NUMBER_INT);
+            $usuario->setSexo(INPUT_POST, "slSexo", FILTER_SANITIZE_STRING);
             $usuario->setUsuario(INPUT_POST, "txtUsuario", FILTER_SANITIZE_STRING);
             
             
             
                 if(!filter_input(INPUT_GET, "cod",FILTER_SANITIZE_NUMBER_INT)){
                     //CADASTRAR NOVO USUARIO
+                    if ($usuarioController->Cadastrar($usuario)){
+                     $resultado = "<div class=\"alert-success\"role\"alert\">Usuario Cadastrado com sucesso.</div>";   
+                    }else{
+                     $resultado = "<div class=\"alert-danger\"role\"alert\">Houve um erro ao tentar cadastrar o usuario.</div>";
+                    }
                     
                 }else{
                     //EDITAR
@@ -125,7 +130,7 @@ $resultado = "";
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <span id="spResultado"><?=$resultado;?></span>
+                        <p id="pResultado"><?=$resultado;?></p>
                     </div>           
                 </div>  
 
