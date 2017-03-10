@@ -3,44 +3,62 @@ require_once ("../Controller/UsuarioController.php");
 require_once ("../Model/Usuario.php");
 
 $usuarioController = new UsuarioController();
-$usuario = new Usuario();
 $resultado = "";
+$spResultadoBusca = "";
+$listaUsuariosBusca = [];
 
 if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $usuario = new Usuario();
-    $usuario->setNome(INPUT_POST, "txtNome", FILTER_SANITIZE_STRING);
-    $usuario->setEmail(INPUT_POST, "txtEmail", FILTER_SANITIZE_STRING);
-    $usuario->setSenha(INPUT_POST, "txtSenha", FILTER_SANITIZE_STRING);
-    $usuario->setStatus(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT);
-    $usuario->setCpf(INPUT_POST, "txtCPF", FILTER_SANITIZE_STRING);
-//    $usuario->setLogradouro_cod(INPUT_POST, "txtLogradouro_cod", FILTER_SANITIZE_NUMBER_INT);
-    $usuario->setNascimento(INPUT_POST, "txtData", FILTER_SANITIZE_STRING);
-    $usuario->setPermissao_id(INPUT_POST, "slPermissao", FILTER_SANITIZE_NUMBER_INT);
-//    $usuario->setPlano_id(INPUT_POST, "slPlano_id", FILTER_SANITIZE_NUMBER_INT);
-    $usuario->setSexo(INPUT_POST, "slSexo", FILTER_SANITIZE_STRING);
-    $usuario->setUsuario(INPUT_POST, "txtUsuario", FILTER_SANITIZE_STRING);
 
-
+    $usuario->setNome(filter_input(INPUT_POST, "txtNome", FILTER_SANITIZE_STRING));
+    $usuario->setEmail(filter_input(INPUT_POST, "txtEmail", FILTER_SANITIZE_STRING));
+    $usuario->setCpf(filter_input(INPUT_POST, "txtCpf", FILTER_SANITIZE_STRING));
+    $usuario->setUsuario(filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_STRING));
+    $usuario->setSenha(filter_input(INPUT_POST, "txtSenha", FILTER_SANITIZE_STRING));
+    $usuario->setNascimento(filter_input(INPUT_POST, "txtData", FILTER_SANITIZE_STRING));
+    $usuario->setSexo(filter_input(INPUT_POST, "slSexo", FILTER_SANITIZE_STRING));
+    $usuario->setStatus(filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT));
+    $usuario->setPermissao(filter_input(INPUT_POST, "slPermissao", FILTER_SANITIZE_NUMBER_INT));
 
     if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
-        //CADASTRAR NOVO USUARIO
+        //Cadastrar
+
         if ($usuarioController->Cadastrar($usuario)) {
-            $resultado = "<div class=\"alert-success\"role\"alert\">Usuario Cadastrado com sucesso.</div>";
+            ?>
+            <script>
+                document.cookie = "msg=1";
+                document.location.href = "?pagina=usuario";
+            </script>
+            <?php
         } else {
-            $resultado = "<div class=\"alert-danger\"role\"alert\">Houve um erro ao tentar cadastrar o usuario.</div>";
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar o usuário.</div>";
         }
     } else {
-        //EDITAR
+        //Editar
+    }
+}
+
+//Buscar usuários
+
+if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
+
+    $termo = filter_input(INPUT_POST, "txtTermo", FILTER_SANITIZE_STRING);
+    $tipo = filter_input(INPUT_POST, "slTipoBusca", FILTER_SANITIZE_NUMBER_INT);
+    $listaUsuariosBusca = $usuarioController->RetornarUsuarios($termo, $tipo);
+
+    if ($listaUsuariosBusca != null) {
+        $spResultadoBusca = "Exibindo dados";
+    } else {
+        $spResultadoBusca = "Dados não encontrado";
     }
 }
 ?>
 <div id="dvUsuarioView">
-    <h1> Gerenciar Usuários </h1> 
+    <h1>Gerenciar Usuários</h1>
     <br />
     <div class="controlePaginas">
         <a href="?pagina=usuario"><img src="img/icones/editar.png" alt=""/></a>
         <a href="?pagina=usuario&consulta=s"><img src="img/icones/buscar.png" alt=""/></a>
-
     </div>
 
     <br />
@@ -48,10 +66,10 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     <?php
     if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
         ?>
-        <div class="panel panel-default maxPanelWidth novalidate">
+        <div class="panel panel-default maxPanelWidth">
             <div class="panel-heading">Cadastrar e editar</div>
             <div class="panel-body">
-                <form method="post" id="frmGerenciarUsuario" name="frmGerenciarUsuario">
+                <form method="post" id="frmGerenciarUsuario" name="frmGerenciarUsuario" novalidate>
 
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
@@ -60,10 +78,11 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                                 <input type="text" class="form-control" id="txtNome" name="txtNome" placeholder="Nome completo">
                             </div>
                         </div>
+
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
-                                <label for="txtUsuario">Usuario</label>
-                                <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="">
+                                <label for="txtNome">Usuário</label>
+                                <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="nomedeusuario">
                             </div>
                         </div>
                     </div>
@@ -143,115 +162,237 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                     <div class="row">
                         <div class="col-lg-12">
                             <p id="pResultado"><?= $resultado; ?></p>
-                        </div>           
-                    </div>  
-
+                        </div>
+                    </div>
                     <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
                     <a href="#" class="btn btn-danger">Cancelar</a>
 
                     <br />
+                    <br />
                     <div class="row">
                         <div class="col-lg-12">
                             <ul id="ulErros"></ul>
-                        </div>           
-                    </div>    
-
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
         <?php
     } else {
         ?>
-        <br /> 
+        <br />
         <!--DIV CONSULTA -->
-        <div class="panel panel-default maxPanelWidth novalidate">
+        <div class="panel panel-default maxPanelWidth">
             <div class="panel-heading">Consultar</div>
             <div class="panel-body">
                 <form method="post" name="frmBuscarUsuario" id="frmBuscarUsuario">
-                <div class="row">
-                    <div class="col-lg-8 col-xs-12">
-                        <div class="form-group">
-                            <label for="txtTermo">Termo de Busca</label>
-                            <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: Fulano de tal" />
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-12">
+                            <div class="form-group">
+                                <label for="txtTermo">Termo de busca</label>
+                                <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: fulano de tal" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label for="slTipoBusca">Tipo</label>
+                                <select class="form-control" id="slTipoBusca" name="slTipoBusca">
+                                    <option value="1">Nome</option>
+                                    <option value="2">E-mail</option>
+                                    <option value="3">CPF </option>
+                                    <option value="4">Usuário </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-xs-12">
-                        <div class="form-group">
-                            <label for="slTipoBusca">Sexo</label>
-                            <select class="form-control" id="slTipoBusca" name="slTipoBusca">
-                                <option value="1">Nome</option>
-                                <option value="2">E-mail</option>
-                                <option value="3">CPF</option>
-                                <option value="4">Usuário</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
+                            <span><?= $spResultadoBusca; ?></span>
                         </div>
                     </div>
-                </div>  
-                <div class="row">
-                    <div class="col-xs-2">
-                        <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar">
-                    </div>
+                </form>
 
-                </div>
-            </div> 
+                <hr />
+                <br />
+
+                <table class="table table-responsive table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Usuário</th>
+                            <th>Status</th>
+                            <th>Permissão</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($listaUsuariosBusca as $user) {
+                            ?>
+                            <tr>
+                                <td><?= $user->getNome(); ?></td>
+                                <td><?= $user->getUsuario(); ?></td>
+                                <td><?= ($user->getStatus() == 1 ? "Ativo" : "Bloqueado") ?></td>
+                                <td><?= ($user->getPermissao() == 1 ? "Administrador." : "Comum") ?></td>
+                                <td><a href="?pagina=usuario&cod=<?= $user->getCod(); ?>" class="btn btn-warning">Editar</a></td>
+                            </tr>
+
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <?php
     }
-    ?> 
+    ?>
 </div>
 <script src="../js/mask.js" type="text/javascript"></script>
+
+
 <script>
-    $(document).ready(function () {
-        $('#txtCpf').mask('000.000.000-00');
-        $('#txtData').mask('00/00/0000');
-        var vlSenhas = document.getElementsByClassName("vlSenha");
+                $(document).ready(function () {
 
-        $("#txtSenha").keyup(function () {
+                    if (getCookie("msg") == 1) {
+                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso.</div>";
+                        delete_cookie("msg");
+                    }
 
-            if (ValidarSenha()) {
-                for (var i = 0; i < vlSenhas.length; i++) {
-                    vlSenhas[i].style.color = "green";
-                    vlSenhas[i].innerHTML = "válido";
+                    $('#txtCpf').mask('000.000.000-00');
+                    $('#txtData').mask('00/00/0000');
+
+                    $("#frmGerenciarUsuario").submit(function (e) {
+                        if (!ValidarFormulario()) {
+                            e.preventDefault();
+                        }
+                    });
+
+
+
+                    var vlSenhas = document.getElementsByClassName("vlSenha");
+
+                    $("#txtSenha").keyup(function () {
+
+                        if (ValidarSenha()) {
+                            for (var i = 0; i < vlSenhas.length; i++) {
+                                vlSenhas[i].style.color = "green";
+                                vlSenhas[i].innerHTML = "válido";
+                            }
+                        } else {
+                            for (var i = 0; i < vlSenhas.length; i++) {
+                                vlSenhas[i].style.color = "red";
+                                vlSenhas[i].innerHTML = "inválido";
+                            }
+                        }
+                    });
+
+                    $("#txtSenha2").keyup(function () {
+
+                        if (ValidarSenha()) {
+                            for (var i = 0; i < vlSenhas.length; i++) {
+                                vlSenhas[i].style.color = "green";
+                                vlSenhas[i].innerHTML = "válido";
+                            }
+                        } else {
+                            for (var i = 0; i < vlSenhas.length; i++) {
+                                vlSenhas[i].style.color = "red";
+                                vlSenhas[i].innerHTML = "inválido";
+                            }
+                        }
+                    });
+
+                });
+
+                function ValidarSenha() {
+                    var senha1 = $("#txtSenha").val();
+                    var senha2 = $("#txtSenha2").val();
+
+                    if (senha1.length >= 7 && senha2.length >= 7) {
+                        if (senha1 == senha2) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
                 }
-            } else {
-                for (var i = 0; i < vlSenhas.length; i++) {
-                    vlSenhas[i].style.color = "red";
-                    vlSenhas[i].innerHTML = "inválido";
+
+                function ValidarFormulario() {
+                    var erros = 0;
+                    var ulErros = document.getElementById("ulErros");
+                    ulErros.style.color = "red";
+                    ulErros.innerHTML = "";
+
+
+                    //Javascript nativo
+                    if (document.getElementById("txtNome").value.length < 5) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe um nome válido";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    if (document.getElementById("txtUsuario").value.length < 7) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe um nome de usuário válido";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    if (document.getElementById("txtEmail").value.indexOf("@") < 0 || document.getElementById("txtEmail").value.indexOf(".") < 0) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe um e-mail válido";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    //JQuery
+                    if ($("#txtCpf").val().length < 14) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe um CPF válido";
+                        $("#ulErros").append(li);
+                        erros++;
+                    }
+
+                    if (!ValidarSenha()) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Senhas inválidas";
+                        $("#ulErros").append(li);
+                        erros++;
+                    }
+
+                    if (!ValidarData(document.getElementById("txtData").value)) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe uma data válida válida";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    var sexo = document.getElementById("slSexo").value;
+                    if (sexo != "m" && sexo != "f") {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Sexo inválido";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    var permissao = document.getElementById("slPermissao").value;
+                    if (permissao != "1" && permissao != "2") {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Permissão inválida";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    if (erros === 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
-            }
-        });
-
-        $("#txtSenha2").keyup(function () {
-
-            if (ValidarSenha()) {
-                for (var i = 0; i < vlSenhas.length; i++) {
-                    vlSenhas[i].style.color = "green";
-                    vlSenhas[i].innerHTML = "válido";
-                }
-            } else {
-                for (var i = 0; i < vlSenhas.length; i++) {
-                    vlSenhas[i].style.color = "red";
-                    vlSenhas[i].innerHTML = "inválido";
-                }
-            }
-        });
-
-    });
-
-    function ValidarSenha() {
-        var senha1 = $("#txtSenha").val();
-        var senha2 = $("#txtSenha2").val();
-
-        if (senha1.length >= 7 && senha2.length >= 7) {
-            if (senha1 == senha2) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
 </script>
