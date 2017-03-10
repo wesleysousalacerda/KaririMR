@@ -3,13 +3,7 @@
 date_default_timezone_set('America/Sao_Paulo');
 
 
-/**
- * PDO PHP Persistence Class
- * https://github.com/victortassinari/pdophpclass
- *
- *
- * @author Victor Tassinari - victortassinarix@gmail.com
- */
+
  
 class Banco {
 
@@ -63,7 +57,7 @@ class Banco {
      * @return int
      */
     public function GetLastID() {
-        return $this->getConnection()->lastInsertId();
+        return $this->getConnection()->lastInsertId(); //Retorna ultimo ID para aquela conexao, exemplo, quando for cadastrar usuario, e linkar tabela de endereco
     }
 
     /**
@@ -79,7 +73,7 @@ class Banco {
      * @return void
      */
     public function Commit() {
-        return $this->getConnection()->commit();
+        return $this->getConnection()->commit(); //Se cadastrou todo mundo, entao faz o commit, grava no banco. Se deu erro, no endereco por exemplo. Chama o Rollback
     }
 
     /**
@@ -100,7 +94,7 @@ class Banco {
         try {
             $stmt = $this->getConnection()->prepare($sql);
             $stmt->execute($params);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna uma linha com varias colunas
         } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "<b>Error on ExecuteQueryOneRow():</b> " . $ex->getMessage() . "<br />";
@@ -124,7 +118,7 @@ class Banco {
         try {
             $stmt = $this->getConnection()->prepare($sql);
             $stmt->execute($params);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna todas as linhas
         } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "<b>Error on ExecuteQuery():</b> " . $ex->getMessage() . "<br />";
@@ -144,7 +138,7 @@ class Banco {
      * @param array $params the array of parameters (array(":col1" => "val1",":col2" => "val2"))
      * @return boolean
      */
-    public function ExecuteNonQuery($sql, $params = null) {
+    public function ExecuteNonQuery($sql, $params = null) { //Nao retorna nenhuma query, so retorna verdadeiro ou falso se a query foi bem sucedida.
         try {
             $stmt = $this->getConnection()->prepare($sql);
             return $stmt->execute($params);

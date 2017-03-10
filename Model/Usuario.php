@@ -10,9 +10,9 @@ class Usuario {
     private $nascimento;
     private $sexo;
     private $status;
-    private $plano_id;
+//    private $plano_id;
     private $permissao_id;
-    private $logradouro_cod;
+//    private $logradouro_cod;
     
     function getCod() {
         return $this->cod;
@@ -50,17 +50,17 @@ class Usuario {
         return $this->status;
     }
 
-    function getPlano_id() {
-        return $this->plano_id;
-    }
+//    function getPlano_id() {
+//        return $this->plano_id;
+//    }
 
     function getPermissao_id() {
         return $this->permissao_id;
     }
 
-    function getLogradouro_cod() {
-        return $this->logradouro_cod;
-    }
+//    function getLogradouro_cod() {
+//        return $this->logradouro_cod;
+//    }
 
     function setCod($cod) {
         $this->cod = $cod;
@@ -98,16 +98,16 @@ class Usuario {
         $this->status = $status;
     }
 
-    function setPlano_id($plano_id) {
-        $this->plano_id = $plano_id;
-    }
+//    function setPlano_id($plano_id) {
+//        $this->plano_id = $plano_id;
+//    }
 
     function setPermissao_id($permissao_id) {
         $this->permissao_id = $permissao_id;
     }
 
-    function setLogradouro_cod($logradouro_cod) {
-        $this->logradouro_cod = $logradouro_cod;
-    }
+//    function setLogradouro_cod($logradouro_cod) {
+//        $this->logradouro_cod = $logradouro_cod;
+//    }
 }
 ?>
