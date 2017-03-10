@@ -9,7 +9,7 @@ class UsuarioController{
     }
     
     public function Cadastrar(Usuario $usuario) {
-        if(strlen($usuario->getNome()) >= 5 && strpos($usuario->getEmail(), "@") && strpos($usuario->getEmail(), ".") &&
+        if(strlen($usuario->getNome()) >= 5 && strlen($usuario->getUsuario()) >= 7 && strpos($usuario->getEmail(), "@") && strpos($usuario->getEmail(), ".") &&
                 strlen($usuario->getCpf()) == 14 && $usuario->getSexo() != "" && $usuario->getPermissao_id() >= 1 && $usuario->getPermissao_id() <= 3 
                 && $usuario->getStatus() >= 1 && $usuario->getStatus() <= 2){
             
