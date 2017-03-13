@@ -64,8 +64,8 @@ class UsuarioDAO {
 
             $listaUsuario = [];
 
-            foreach ($dataTable as $resultado) {
-                $usuario = new Usuario();
+            foreach ($dataTable as $resultado) { // O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
+                $usuario = new Usuario(); // Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
                 $usuario->setCod($resultado["cod"]);
                 $usuario->setNome($resultado["nome"]);
                 $usuario->setStatus($resultado["status"]);
@@ -77,6 +77,35 @@ class UsuarioDAO {
 
             return $listaUsuario;
         } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+
+    public function RetornaCod(int $usuarioCod) {
+        try {
+            $sql = "SELECT nome,email,cpf,usuario,nascimento,sexo,status,permissao FROM usuario WHERE cod = :cod";
+            $param = array(
+                ":cod" => $usuarioCod
+            );
+            $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
+            if ($dt != null) {
+                $usuario = new Usuario();
+                $usuario->setNome($dt["nome"]);
+                $usuario->setEmail($dt["email"]);
+                $usuario->setCpf($dt["cpf"]);
+                $usuario->setUsuario($dt["usuario"]);
+                $usuario->setNascimento($dt["nascimento"]);
+                $usuario->setSexo($dt["sexo"]);
+                $usuario->setStatus($dt["status"]);
+                $usuario->setPermissao($dt["permissao"]);
+                return $usuario;
+            } else {
+                return null;
+            }
+        } catch (Exception $ex) {
             if ($this->debug) {
                 echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
             }

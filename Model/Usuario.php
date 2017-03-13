@@ -39,7 +39,9 @@ class Usuario {
     }
 
     function getNascimento() {
-        return date("Y-m-d",strtotime($this->nascimento));
+//        return date("Y-m-d",strtotime($this->nascimento));
+    
+        return $this->nascimento;
     }
 
     function getSexo() {
@@ -75,7 +77,7 @@ class Usuario {
     }
 
     function setUsuario($usuario) {
-        $this->usuario = $usuario;
+        $this->usuario = strtolower($usuario);
     }
 
     function setSenha($senha) {
@@ -83,7 +85,8 @@ class Usuario {
     }
 
     function setNascimento($nascimento) {
-       $this->nascimento = $nascimento;
+       $date = str_replace('/','-', $nascimento);
+       $this->nascimento = date('Y-m-d',strtotime($date));
     }
 
     function setSexo($sexo) {

@@ -27,5 +27,12 @@ class UsuarioController {
             return null;
         }
     }
+    public function RetornarCod(int $usuarioCod){
+      if ($usuarioCod >0){
+          return $this->usuarioDAO->RetornaCod($usuarioCod);          
+      }else{
+          return null;
+      }  
+    }
 
 }
