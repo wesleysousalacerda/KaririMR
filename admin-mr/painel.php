@@ -1,4 +1,6 @@
 <!doctype html>
+<!--Codigo fonte disponivel em:
+https://github.com/wesleysousalacerda/KaririMR-->
 <html lang="pt-br">
     <head>
         <title>Kariri Multi Revendedoras - Painel</title>
