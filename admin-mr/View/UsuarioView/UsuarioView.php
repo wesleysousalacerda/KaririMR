@@ -1,6 +1,15 @@
 <?php
 require_once ("../Controller/UsuarioController.php");
 require_once ("../Model/Usuario.php");
+$nome = "";
+$email = "";
+$usuario = "";
+$senha = "";
+$cpf = "";
+$dtnascimento = "";
+$sexo = "f";
+$permissao = 2;
+$status = 2;
 
 $usuarioController = new UsuarioController();
 $resultado = "";
@@ -28,6 +37,8 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             <script>
                 document.cookie = "msg=1";
                 document.location.href = "?pagina=usuario";
+            //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+            //o Cookie redirecionara para a pagina de usuario.
             </script>
             <?php
         } else {
@@ -52,7 +63,23 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
         $spResultadoBusca = "Dados não encontrado";
     }
 }
+if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
+    $retornoUsuario = $usuarioController->RetornarCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+    $nome = $retornoUsuario->getNome();
+    $email = $retornoUsuario->getEmail();
+    $usuario = $retornoUsuario->getUsuario();
+    $senha = "sim";
+    $cpf = $retornoUsuario->getCpf();
+    
+    $date= str_replace('-','/', $retornoUsuario->getNascimento());
+    $dtnascimento = date('d-m-Y',strtotime($date));
+        
+    $sexo = $retornoUsuario->getSexo();
+    $permissao = $retornoUsuario->getPermissao();
+    $status = $retornoUsuario->getStatus ();
+}
 ?>
+
 <div id="dvUsuarioView">
     <h1>Gerenciar Usuários</h1>
     <br />
@@ -63,9 +90,9 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
 
     <br />
     <!--DIV CADASTRO -->
-    <?php
-    if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
-        ?>
+<?php
+if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
+    ?>
         <div class="panel panel-default maxPanelWidth">
             <div class="panel-heading">Cadastrar e editar</div>
             <div class="panel-body">
@@ -75,14 +102,14 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtNome">Nome completo</label>
-                                <input type="text" class="form-control" id="txtNome" name="txtNome" placeholder="Nome completo">
+                                <input type="text" class="form-control" id="txtNome" name="txtNome" placeholder="Nome completo" value="<?= $nome; ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtNome">Usuário</label>
-                                <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="nomedeusuario">
+                                <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="nomedeusuario" value="<?= $usuario; ?>">
                             </div>
                         </div>
                     </div>
@@ -91,14 +118,14 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtEmail">E-mail</label>
-                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="email@dominio.com">
+                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="email@dominio.com" value="<?= $email; ?>">
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtCpf">CPF</label>
-                                <input type="text" class="form-control" id="txtCpf" name="txtCpf" placeholder="">
+                                <input type="text" class="form-control" id="txtCpf" name="txtCpf" placeholder="" value="<?= $cpf; ?>">
                             </div>
                         </div>
                     </div>
@@ -107,14 +134,14 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtSenha">Senha <span class="vlSenha"></span></label>
-                                <input type="password" class="form-control" id="txtSenha" name="txtSenha" placeholder="*******" />
+                                <input type="password" class="form-control" id="txtSenha" name="txtSenha" placeholder="*******" <?= ($senha) == "" ? "" : "disabled='disabled'"; ?> />
                             </div>
                         </div>
 
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtSenha2">Confirmar senha <span class="vlSenha"></span></label>
-                                <input type="password" class="form-control" id="txtSenha2" name="txtSenha2" placeholder="*******" />
+                                <input type="password" class="form-control" id="txtSenha2" name="txtSenha2" placeholder="*******" <?= ($senha) == "" ? "" : "disabled='disabled'"; ?> />
                             </div>
                         </div>
                     </div>
@@ -123,7 +150,7 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtData">Data nascimento</label>
-                                <input type="text" class="form-control" id="txtData" name="txtData" placeholder="21/08/1992" />
+                                <input type="text" class="form-control" id="txtData" name="txtData" placeholder="19/01/1995" value="<?= $dtnascimento; ?>" />
                             </div>
                         </div>
 
@@ -131,8 +158,8 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                             <div class="form-group">
                                 <label for="slSexo">Sexo</label>
                                 <select class="form-control" id="slSexo" name="slSexo">
-                                    <option value="m">Masculino</option>
-                                    <option value="f">Feminino</option>
+                                    <option value="m" <?= ($sexo == "m" ? "selected='selected'" : "") ?>>Masculino</option>
+                                    <option value="f"<?= ($sexo == "f" ? "selected='selected'" : "") ?>>Feminino</option>
                                 </select>
                             </div>
                         </div>
@@ -143,8 +170,8 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                             <div class="form-group">
                                 <label for="slStatus">Status</label>
                                 <select class="form-control" id="slStatus" name="slStatus">
-                                    <option value="1">Ativo</option>
-                                    <option value="2">Bloqueado</option>
+                                    <option value="1" <?= ($status == "1" ? "selected='selected'" : "") ?>>Ativo</option>
+                                    <option value="2"<?= ($status == "2" ? "selected='selected'" : "") ?>>Bloqueado</option>
                                 </select>
                             </div>
                         </div>
@@ -153,8 +180,8 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                             <div class="form-group">
                                 <label for="slPermissao">Permissão</label>
                                 <select class="form-control" id="slPermissao" name="slPermissao">
-                                    <option value="1">Administrador</option>
-                                    <option value="2">Comum</option>
+                                    <option value="1"<?= ($permissao == "1" ? "selected='selected'" : "") ?>>Administrador</option>
+                                    <option value="2"<?= ($permissao == "2" ? "selected='selected'" : "") ?>>Comum</option>
                                 </select>
                             </div>
                         </div>
@@ -177,9 +204,9 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                 </form>
             </div>
         </div>
-        <?php
-    } else {
-        ?>
+    <?php
+} else {
+    ?>
         <br />
         <!--DIV CONSULTA -->
         <div class="panel panel-default maxPanelWidth">
@@ -229,9 +256,9 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        foreach ($listaUsuariosBusca as $user) {
-                            ?>
+    <?php
+    foreach ($listaUsuariosBusca as $user) {
+        ?>
                             <tr>
                                 <td><?= $user->getNome(); ?></td>
                                 <td><?= $user->getUsuario(); ?></td>
@@ -240,159 +267,159 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
                                 <td><a href="?pagina=usuario&cod=<?= $user->getCod(); ?>" class="btn btn-warning">Editar</a></td>
                             </tr>
 
-                            <?php
-                        }
-                        ?>
+        <?php
+    }
+    ?>
                     </tbody>
                 </table>
             </div>
         </div>
-        <?php
-    }
-    ?>
+    <?php
+}
+?>
 </div>
 <script src="../js/mask.js" type="text/javascript"></script>
 
 
 <script>
-                $(document).ready(function () {
+    $(document).ready(function () {
 
-                    if (getCookie("msg") == 1) {
-                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso.</div>";
-                        delete_cookie("msg");
-                    }
+        if (getCookie("msg") == 1) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso.</div>";
+            delete_cookie("msg");
+        }
 
-                    $('#txtCpf').mask('000.000.000-00');
-                    $('#txtData').mask('00/00/0000');
+        $('#txtCpf').mask('000.000.000-00');
+        $('#txtData').mask('00/00/0000');
 
-                    $("#frmGerenciarUsuario").submit(function (e) {
-                        if (!ValidarFormulario()) {
-                            e.preventDefault();
-                        }
-                    });
+        $("#frmGerenciarUsuario").submit(function (e) {
+            if (!ValidarFormulario()) {
+                e.preventDefault();
+            }
+        });
 
 
 
-                    var vlSenhas = document.getElementsByClassName("vlSenha");
+        var vlSenhas = document.getElementsByClassName("vlSenha");
 
-                    $("#txtSenha").keyup(function () {
+        $("#txtSenha").keyup(function () {
 
-                        if (ValidarSenha()) {
-                            for (var i = 0; i < vlSenhas.length; i++) {
-                                vlSenhas[i].style.color = "green";
-                                vlSenhas[i].innerHTML = "válido";
-                            }
-                        } else {
-                            for (var i = 0; i < vlSenhas.length; i++) {
-                                vlSenhas[i].style.color = "red";
-                                vlSenhas[i].innerHTML = "inválido";
-                            }
-                        }
-                    });
-
-                    $("#txtSenha2").keyup(function () {
-
-                        if (ValidarSenha()) {
-                            for (var i = 0; i < vlSenhas.length; i++) {
-                                vlSenhas[i].style.color = "green";
-                                vlSenhas[i].innerHTML = "válido";
-                            }
-                        } else {
-                            for (var i = 0; i < vlSenhas.length; i++) {
-                                vlSenhas[i].style.color = "red";
-                                vlSenhas[i].innerHTML = "inválido";
-                            }
-                        }
-                    });
-
-                });
-
-                function ValidarSenha() {
-                    var senha1 = $("#txtSenha").val();
-                    var senha2 = $("#txtSenha2").val();
-
-                    if (senha1.length >= 7 && senha2.length >= 7) {
-                        if (senha1 == senha2) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    } else {
-                        return false;
-                    }
+            if (ValidarSenha()) {
+                for (var i = 0; i < vlSenhas.length; i++) {
+                    vlSenhas[i].style.color = "green";
+                    vlSenhas[i].innerHTML = "válido";
                 }
-
-                function ValidarFormulario() {
-                    var erros = 0;
-                    var ulErros = document.getElementById("ulErros");
-                    ulErros.style.color = "red";
-                    ulErros.innerHTML = "";
-
-
-                    //Javascript nativo
-                    if (document.getElementById("txtNome").value.length < 5) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um nome válido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-
-                    if (document.getElementById("txtUsuario").value.length < 7) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um nome de usuário válido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-
-                    if (document.getElementById("txtEmail").value.indexOf("@") < 0 || document.getElementById("txtEmail").value.indexOf(".") < 0) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um e-mail válido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-
-                    //JQuery
-                    if ($("#txtCpf").val().length < 14) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um CPF válido";
-                        $("#ulErros").append(li);
-                        erros++;
-                    }
-
-                    if (!ValidarSenha()) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Senhas inválidas";
-                        $("#ulErros").append(li);
-                        erros++;
-                    }
-
-                    if (!ValidarData(document.getElementById("txtData").value)) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe uma data válida válida";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-
-                    var sexo = document.getElementById("slSexo").value;
-                    if (sexo != "m" && sexo != "f") {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Sexo inválido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-
-                    var permissao = document.getElementById("slPermissao").value;
-                    if (permissao != "1" && permissao != "2") {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Permissão inválida";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-
-                    if (erros === 0) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+            } else {
+                for (var i = 0; i < vlSenhas.length; i++) {
+                    vlSenhas[i].style.color = "red";
+                    vlSenhas[i].innerHTML = "inválido";
                 }
+            }
+        });
+
+        $("#txtSenha2").keyup(function () {
+
+            if (ValidarSenha()) {
+                for (var i = 0; i < vlSenhas.length; i++) {
+                    vlSenhas[i].style.color = "green";
+                    vlSenhas[i].innerHTML = "válido";
+                }
+            } else {
+                for (var i = 0; i < vlSenhas.length; i++) {
+                    vlSenhas[i].style.color = "red";
+                    vlSenhas[i].innerHTML = "inválido";
+                }
+            }
+        });
+
+    });
+
+    function ValidarSenha() {
+        var senha1 = $("#txtSenha").val();
+        var senha2 = $("#txtSenha2").val();
+
+        if (senha1.length >= 7 && senha2.length >= 7) {
+            if (senha1 == senha2) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    function ValidarFormulario() {
+        var erros = 0;
+        var ulErros = document.getElementById("ulErros");
+        ulErros.style.color = "red";
+        ulErros.innerHTML = "";
+
+
+        //Javascript nativo
+        if (document.getElementById("txtNome").value.length < 5) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe um nome válido";
+            ulErros.appendChild(li);
+            erros++;
+        }
+
+        if (document.getElementById("txtUsuario").value.length < 7) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe um nome de usuário válido";
+            ulErros.appendChild(li);
+            erros++;
+        }
+
+        if (document.getElementById("txtEmail").value.indexOf("@") < 0 || document.getElementById("txtEmail").value.indexOf(".") < 0) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe um e-mail válido";
+            ulErros.appendChild(li);
+            erros++;
+        }
+
+        //JQuery
+        if ($("#txtCpf").val().length < 14) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe um CPF válido";
+            $("#ulErros").append(li);
+            erros++;
+        }
+
+        if (!ValidarSenha()) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Senhas inválidas";
+            $("#ulErros").append(li);
+            erros++;
+        }
+
+        if (!ValidarData(document.getElementById("txtData").value)) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe uma data válida válida";
+            ulErros.appendChild(li);
+            erros++;
+        }
+
+        var sexo = document.getElementById("slSexo").value;
+        if (sexo != "m" && sexo != "f") {
+            var li = document.createElement("li");
+            li.innerHTML = "- Sexo inválido";
+            ulErros.appendChild(li);
+            erros++;
+        }
+
+        var permissao = document.getElementById("slPermissao").value;
+        if (permissao != "1" && permissao != "2") {
+            var li = document.createElement("li");
+            li.innerHTML = "- Permissão inválida";
+            ulErros.appendChild(li);
+            erros++;
+        }
+
+        if (erros === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>
