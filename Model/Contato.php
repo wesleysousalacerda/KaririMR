@@ -1,8 +1,7 @@
 <?php
 
 class Contato {
-    
-    
+
     private $cod;
     private $nome;
     private $email;
@@ -10,7 +9,7 @@ class Contato {
     private $mensagem;
     private $data;
     private $ip;
-    
+
     function getCod() {
         return $this->cod;
     }
@@ -67,7 +66,6 @@ class Contato {
         $this->ip = $ip;
     }
 
-
 }
 
-
+?>

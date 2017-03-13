@@ -2,8 +2,6 @@
 
 date_default_timezone_set('America/Sao_Paulo');
 
-
-
  
 class Banco {
 
@@ -18,7 +16,7 @@ class Banco {
         $this->debug = true;
         $this->server = "127.0.0.1";
         $this->user = "root";
-        $this->password = "";
+        $this->password = "brasilux@D7";
         $this->database = "karirimr";
     }
 
@@ -57,7 +55,7 @@ class Banco {
      * @return int
      */
     public function GetLastID() {
-        return $this->getConnection()->lastInsertId(); //Retorna ultimo ID para aquela conexao, exemplo, quando for cadastrar usuario, e linkar tabela de endereco
+        return $this->getConnection()->lastInsertId();
     }
 
     /**
@@ -73,7 +71,7 @@ class Banco {
      * @return void
      */
     public function Commit() {
-        return $this->getConnection()->commit(); //Se cadastrou todo mundo, entao faz o commit, grava no banco. Se deu erro, no endereco por exemplo. Chama o Rollback
+        return $this->getConnection()->commit();
     }
 
     /**
@@ -94,7 +92,7 @@ class Banco {
         try {
             $stmt = $this->getConnection()->prepare($sql);
             $stmt->execute($params);
-            return $stmt->fetch(PDO::FETCH_ASSOC); // Retorna uma linha com varias colunas
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "<b>Error on ExecuteQueryOneRow():</b> " . $ex->getMessage() . "<br />";
@@ -118,7 +116,7 @@ class Banco {
         try {
             $stmt = $this->getConnection()->prepare($sql);
             $stmt->execute($params);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC); //Retorna todas as linhas
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "<b>Error on ExecuteQuery():</b> " . $ex->getMessage() . "<br />";
@@ -138,7 +136,7 @@ class Banco {
      * @param array $params the array of parameters (array(":col1" => "val1",":col2" => "val2"))
      * @return boolean
      */
-    public function ExecuteNonQuery($sql, $params = null) { //Nao retorna nenhuma query, so retorna verdadeiro ou falso se a query foi bem sucedida.
+    public function ExecuteNonQuery($sql, $params = null) {
         try {
             $stmt = $this->getConnection()->prepare($sql);
             return $stmt->execute($params);

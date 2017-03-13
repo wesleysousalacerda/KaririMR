@@ -1,6 +1,7 @@
 <?php
 
 class Usuario {
+
     private $cod;
     private $nome;
     private $email;
@@ -10,10 +11,9 @@ class Usuario {
     private $nascimento;
     private $sexo;
     private $status;
-//    private $plano_id;
-    private $permissao_id;
-//    private $logradouro_cod;
-    
+    private $permissao;
+    private $ip;
+
     function getCod() {
         return $this->cod;
     }
@@ -39,7 +39,7 @@ class Usuario {
     }
 
     function getNascimento() {
-        return $this->nascimento;
+        return date("Y-m-d",strtotime($this->nascimento));
     }
 
     function getSexo() {
@@ -50,17 +50,13 @@ class Usuario {
         return $this->status;
     }
 
-//    function getPlano_id() {
-//        return $this->plano_id;
-//    }
-
-    function getPermissao_id() {
-        return $this->permissao_id;
+    function getPermissao() {
+        return $this->permissao;
     }
 
-//    function getLogradouro_cod() {
-//        return $this->logradouro_cod;
-//    }
+    function getIp() {
+        return $this->ip;
+    }
 
     function setCod($cod) {
         $this->cod = $cod;
@@ -83,11 +79,11 @@ class Usuario {
     }
 
     function setSenha($senha) {
-        $this->senha = md5($senha); //Criptografia de senha
+        $this->senha = md5($senha);
     }
 
     function setNascimento($nascimento) {
-        $this->nascimento = $nascimento;
+       $this->nascimento = $nascimento;
     }
 
     function setSexo($sexo) {
@@ -98,16 +94,14 @@ class Usuario {
         $this->status = $status;
     }
 
-//    function setPlano_id($plano_id) {
-//        $this->plano_id = $plano_id;
-//    }
-
-    function setPermissao_id($permissao_id) {
-        $this->permissao_id = $permissao_id;
+    function setPermissao($permissao) {
+        $this->permissao = $permissao;
     }
 
-//    function setLogradouro_cod($logradouro_cod) {
-//        $this->logradouro_cod = $logradouro_cod;
-//    }
+    function setIp($ip) {
+        $this->ip = $ip;
+    }
+
 }
+
 ?>

@@ -1,96 +1,70 @@
 <?php
-require_once ("Anuncio.php");
-require_once ("Usuario.php");
+
+require_once("Anuncio.php");
+require_once("Usuario.php");
+
 class Comentario {
-    
+
     private $cod;
-    private $nome;
-    private $descricao;
-    private $tipo;
-    private $valor;
+    private $mensagem;
+    private $data;
     private $status;
-    private $perfil;
-    private $categoria;
+    private $anuncio;
     private $usuario;
-    
+
     public function __construct() {
-        $this ->anuncio = new Anuncio(); 
-        $this ->usuario = new Usuario();
+        $this->anuncio = new Anuncio();
+        $this->usuario = new Usuario();
     }
-    
+
     function getCod() {
         return $this->cod;
     }
 
-    function getNome() {
-        return $this->nome;
+    function getMensagem() {
+        return $this->mensagem;
     }
 
-    function getDescricao() {
-        return $this->descricao;
-    }
-
-    function getTipo() {
-        return $this->tipo;
-    }
-
-    function getValor() {
-        return $this->valor;
+    function getData() {
+        return $this->data;
     }
 
     function getStatus() {
         return $this->status;
     }
 
-    function getPerfil() {
-        return $this->perfil;
+    function getAnuncio() {
+        return $this->anuncio;
     }
 
-    function getCategoria() {
-        return $this->categoria;
-    }
-
-    function getUsusario() {
-        return $this->ususario;
+    function getUsuario() {
+        return $this->usuario;
     }
 
     function setCod($cod) {
         $this->cod = $cod;
     }
 
-    function setNome($nome) {
-        $this->nome = $nome;
+    function setMensagem($mensagem) {
+        $this->mensagem = $mensagem;
     }
 
-    function setDescricao($descricao) {
-        $this->descricao = $descricao;
-    }
-
-    function setTipo($tipo) {
-        $this->tipo = $tipo;
-    }
-
-    function setValor($valor) {
-        $this->valor = $valor;
+    function setData($data) {
+        $this->data = $data;
     }
 
     function setStatus($status) {
         $this->status = $status;
     }
 
-    function setPerfil($perfil) {
-        $this->perfil = $perfil;
-    }
-
-    function setCategoria($categoria) {
-        $this->categoria = $categoria;
+    function setAnuncio($anuncio) {
+        $this->anuncio = $anuncio;
     }
 
     function setUsuario($usuario) {
         $this->usuario = $usuario;
     }
 
-
 }
 
-
+?>

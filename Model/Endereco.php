@@ -1,9 +1,9 @@
 <?php
 
-require_once ("Ususario.php");
+require_once("Usuario.php");
 
 class Endereco {
-    
+
     private $cod;
     private $rua;
     private $numero;
@@ -13,11 +13,11 @@ class Endereco {
     private $complemento;
     private $cep;
     private $usuario;
-    
+
     public function __construct() {
-        $this ->usuario = new Usuario(); 
+        $this->usuario = new Usuario();
     }
-    
+
     function getCod() {
         return $this->cod;
     }
@@ -90,6 +90,6 @@ class Endereco {
         $this->usuario = $usuario;
     }
 
-
 }
 
+?>

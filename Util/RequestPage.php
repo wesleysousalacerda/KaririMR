@@ -4,10 +4,10 @@ $pagina = filter_input(INPUT_GET, "pagina", FILTER_SANITIZE_STRING);
 
 $arrayPaginas = array(
     "home" => "View/home.php", //Página inicial
-    "contato"=> "View/ContatoView/ContatoView.php", //Página de contato
-    "usuario"=> "View/UsuarioView/UsuarioView.php", //Página de usuario
-    "anuncio"=> "View/AnuncioView/AnuncioView.php", //Página de anuncios
-    "categoria"=> "View/CategoriaView/CategoriaView.php", //Página de categorias
+    "contato" => "View/ContatoView/ContatoView.php",
+    "usuario" => "View/UsuarioView/UsuarioView.php",
+    "anuncio" => "View/AnuncioView/AnuncioView.php",
+    "categoria" => "View/CategoriaView/CategoriaView.php",
 );
 
 if ($pagina) {
@@ -26,3 +26,4 @@ if ($pagina) {
 } else {
     require_once("View/home.php");
 }
+?>

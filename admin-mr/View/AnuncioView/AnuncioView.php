@@ -1,4 +1,3 @@
 <div id="dvAnuncioView">
-    <h1> Gerenciar Anuncios </h1>    
+    <h1>Gerenciar Anuncios</h1>
 </div>
-

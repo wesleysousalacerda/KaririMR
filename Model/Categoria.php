@@ -1,13 +1,13 @@
 <?php
 
 class Categoria {
-    
+
     private $cod;
     private $nome;
     private $thumb;
     private $descricao;
     private $link;
-    
+
     function getCod() {
         return $this->cod;
     }
@@ -48,5 +48,6 @@ class Categoria {
         $this->link = $link;
     }
 
-
 }
+
+?>

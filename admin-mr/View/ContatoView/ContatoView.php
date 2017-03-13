@@ -1,4 +1,3 @@
 <div id="dvContatoView">
-    <h1> Gerenciar Contatos </h1>    
+    <h1>Gerenciar Contato</h1>
 </div>
-

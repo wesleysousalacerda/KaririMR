@@ -1,15 +1,17 @@
 <?php
-require_once ("Anuncio.php");
+
+require_once("Anuncio.php");
+
 class Imagem {
 
     private $cod;
     private $imagem;
     private $anuncio;
-    
+
     public function __construct() {
-        $this ->anuncio = new Anuncio(); 
+        $this->anuncio = new Anuncio();
     }
- 
+
     function getCod() {
         return $this->cod;
     }
@@ -34,7 +36,6 @@ class Imagem {
         $this->anuncio = $anuncio;
     }
 
-
-
 }
 
+?>

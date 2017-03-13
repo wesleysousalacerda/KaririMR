@@ -1,9 +1,9 @@
 <?php
-require_once 'Ususario.php';
-require_once 'Categoria.php';
+require_once("Usuario.php");
+require_once("Categoria.php");
 
 class Anuncio {
-    
+
     private $cod;
     private $nome;
     private $descricao;
@@ -12,13 +12,13 @@ class Anuncio {
     private $status;
     private $perfil;
     private $categoria;
-    private $ususario;
-    
+    private $usuario;
+
     public function __construct() {
-        $this ->usuario = new Usuario(); 
-        $this ->categoria = new Categoria();
+        $this->usuario = new Usuario();
+        $this->categoria = new Categoria();
     }
-    
+
     function getCod() {
         return $this->cod;
     }
@@ -51,8 +51,8 @@ class Anuncio {
         return $this->categoria;
     }
 
-    function getUsusario() {
-        return $this->ususario;
+    function getUsuario() {
+        return $this->usuario;
     }
 
     function setCod($cod) {
@@ -87,10 +87,10 @@ class Anuncio {
         $this->categoria = $categoria;
     }
 
-    function setUsusario($ususario) {
-        $this->ususario = $ususario;
+    function setUsuario($usuario) {
+        $this->usuario = $usuario;
     }
 
-
-    
 }
+
+?>
