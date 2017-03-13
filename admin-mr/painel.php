@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
     <head>
-            <meta charset="utf-8" />
+        <title>Kariri Multi Revendedoras - Painel</title>
+        <meta charset="utf-8" />
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jquery-3.1.1.min.js" type="text/javascript"></script>
         <script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -9,6 +10,7 @@
         <link rel="shortcut icon" href="../img/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <script src="js/script.js" type="text/javascript"></script>
     </head>
     <body>
         <div id="dvPainel" class="centralizada">
@@ -49,8 +51,10 @@
 
                 <div class="col-lg-6 col-xs-12">
                     <a href="#">Facebook</a><br  />
-                    <a href="#">Twitter</a><br  />
                     <a href="#">Instagram</a><br  />
+                    <a href="#">Twitter</a><br  />
+                    <a href="#">Youtube</a><br  />
+                    
                 </div>
             </div>
         </div> 
