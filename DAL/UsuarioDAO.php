@@ -129,14 +129,47 @@ class UsuarioDAO {
             } else {
                 return null;
             }
-        } catch (Exception $ex) {
+        } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
             }
             return null;
         }
     }
+    
+    public function AutenticarUsuarioPainel(string $usu, string $senha){
+        
+        try {
+            $sql = "SELECT cod, nome FROM usuario WHERE status = 1 AND permissao = 1 AND usuario = :usuario AND senha = :senha";
+            
+       
+            $param = array(  //Array associativo para passar os dados do usuário
+                ":usuario" => $usu,
+                ":senha" => $senha
+            );
+            
+            $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
-}
+            if($dt != null){
+                $usuario = new Usuario();
+                
+                $usuario->setCod($dt["cod"]);
+                $usuario->setNome($dt["nome"]);
+               
+                
+                return $usuario;
+                        
+            }else{
+                return null;
+            }
+            
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+        }
+    }
 
 ?>

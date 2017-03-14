@@ -48,7 +48,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
         }
     } else {
         //Editar
-        
+
         $usuario->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
         if ($usuarioController->Alterar($usuario)) {
             ?>
@@ -81,7 +81,7 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
 }
 if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
     $retornoUsuario = $usuarioController->RetornarCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
-    
+
     $cod = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
     $nome = $retornoUsuario->getNome();
     $email = $retornoUsuario->getEmail();
@@ -119,7 +119,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
-                                <input type="hidden" id="txtCodUsuario" value="<?=$cod;?>" />
+                                <input type="hidden" id="txtCodUsuario" value="<?= $cod; ?>" />
                                 <label for="txtNome">Nome completo</label>
                                 <input type="text" class="form-control" id="txtNome" name="txtNome" placeholder="Nome completo" value="<?= $nome; ?>">
                             </div>
@@ -276,17 +276,19 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($listaUsuariosBusca as $user) {
-                            ?>
-                            <tr>
-                                <td><?= $user->getNome(); ?></td>
-                                <td><?= $user->getUsuario(); ?></td>
-                                <td><?= ($user->getStatus() == 1 ? "Ativo" : "Bloqueado") ?></td>
-                                <td><?= ($user->getPermissao() == 1 ? "Administrador." : "Comum") ?></td>
-                                <td><a href="?pagina=usuario&cod=<?= $user->getCod(); ?>" class="btn btn-warning">Editar</a></td>
-                            </tr>
+                        if ($listaUsuariosBusca != null) {
+                            foreach ($listaUsuariosBusca as $user) {
+                                ?>
+                                <tr>
+                                    <td><?= $user->getNome(); ?></td>
+                                    <td><?= $user->getUsuario(); ?></td>
+                                    <td><?= ($user->getStatus() == 1 ? "Ativo" : "Bloqueado") ?></td>
+                                    <td><?= ($user->getPermissao() == 1 ? "Administrador." : "Comum") ?></td>
+                                    <td><a href="?pagina=usuario&cod=<?= $user->getCod(); ?>" class="btn btn-warning">Editar</a></td>
+                                </tr>
 
-                            <?php
+                                <?php
+                            }
                         }
                         ?>
                     </tbody>
@@ -306,8 +308,8 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         if (getCookie("msg") == 1) {
             document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso.</div>";
             document.cookie = "msg = d";
-        
-        }else if (getCookie("msg") == 2) {
+
+        } else if (getCookie("msg") == 2) {
             document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário alterado com sucesso.</div>";
             document.cookie = "msg = d";
         }
@@ -409,7 +411,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
             erros++;
         }
 
-        if (!ValidarSenha() && $("#txtCodUsuario").val() == "0" ) {
+        if (!ValidarSenha() && $("#txtCodUsuario").val() == "0") {
             var li = document.createElement("li");
             li.innerHTML = "- Senhas inválidas";
             $("#ulErros").append(li);

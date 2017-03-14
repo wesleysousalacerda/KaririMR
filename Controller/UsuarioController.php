@@ -44,5 +44,15 @@ class UsuarioController {
           return null;
       }  
     }
+    public function AutenticarUsuarioPainel(string $user, string $senha){
+        
+        if(strlen($user) >=7 && strlen($senha)>=7){
+         $senha = md5($senha);
+         return $this->usuarioDAO->AutenticarUsuarioPainel($user, $senha);
+        }else{
+            return null;
+        }
+        
+    }
 
 }

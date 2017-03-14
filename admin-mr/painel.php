@@ -1,3 +1,7 @@
+<?php
+
+session_start();
+?>
 <!doctype html>
 <!--Codigo fonte disponivel em:
 https://github.com/wesleysousalacerda/KaririMR-->
