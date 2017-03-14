@@ -37,6 +37,30 @@ class UsuarioDAO {
         }
     }
 
+    public function Alterar(Usuario $usuario) {
+        try {
+            $sql = "UPDATE usuario SET nome = :nome, email = :email, cpf = :cpf, usuario = :usuario, nascimento = :nascimento , sexo = :sexo, status = :status, permissao = :permissao WHERE cod = :cod"; 
+            $param = array(
+                ":nome" => $usuario->getNome(),
+                ":email" => $usuario->getEmail(),
+                ":cpf" => $usuario->getCpf(),
+                ":usuario" => $usuario->getUsuario(),
+                ":nascimento" => $usuario->getNascimento(),
+                ":sexo" => $usuario->getSexo(),
+                ":status" => $usuario->getStatus(),
+                ":permissao" => $usuario->getPermissao(),
+                ":cod" =>$usuario->getCod(),
+            );
+
+            return $this->pdo->ExecuteNonQuery($sql, $param);
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return false;
+        }
+    }
+    
     public function RetornarUsuarios(string $termo, int $tipo) {
         try {
             $sql = "";

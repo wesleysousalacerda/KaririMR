@@ -1,6 +1,8 @@
 <?php
 require_once ("../Controller/UsuarioController.php");
 require_once ("../Model/Usuario.php");
+
+$cod = 0;
 $nome = "";
 $email = "";
 $usuario = "";
@@ -46,6 +48,20 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
         }
     } else {
         //Editar
+        
+        $usuario->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+        if ($usuarioController->Alterar($usuario)) {
+            ?>
+            <script>
+                document.cookie = "msg=2";
+                document.location.href = "?pagina=usuario";
+            //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+            //o Cookie redirecionara para a pagina de usuario.
+            </script>
+            <?php
+        } else {
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar o usuário.</div>";
+        }
     }
 }
 
@@ -65,18 +81,20 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
 }
 if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
     $retornoUsuario = $usuarioController->RetornarCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+    
+    $cod = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
     $nome = $retornoUsuario->getNome();
     $email = $retornoUsuario->getEmail();
     $usuario = $retornoUsuario->getUsuario();
     $senha = "sim";
     $cpf = $retornoUsuario->getCpf();
-    
-    $date= str_replace('-','/', $retornoUsuario->getNascimento());
-    $dtnascimento = date('d-m-Y',strtotime($date));
-        
+
+    $date = str_replace('-', '/', $retornoUsuario->getNascimento());
+    $dtnascimento = date('d-m-Y', strtotime($date));
+
     $sexo = $retornoUsuario->getSexo();
     $permissao = $retornoUsuario->getPermissao();
-    $status = $retornoUsuario->getStatus ();
+    $status = $retornoUsuario->getStatus();
 }
 ?>
 
@@ -90,9 +108,9 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 
     <br />
     <!--DIV CADASTRO -->
-<?php
-if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
-    ?>
+    <?php
+    if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
+        ?>
         <div class="panel panel-default maxPanelWidth">
             <div class="panel-heading">Cadastrar e editar</div>
             <div class="panel-body">
@@ -101,6 +119,7 @@ if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
                     <div class="row">
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
+                                <input type="hidden" id="txtCodUsuario" value="<?=$cod;?>" />
                                 <label for="txtNome">Nome completo</label>
                                 <input type="text" class="form-control" id="txtNome" name="txtNome" placeholder="Nome completo" value="<?= $nome; ?>">
                             </div>
@@ -204,9 +223,9 @@ if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
                 </form>
             </div>
         </div>
-    <?php
-} else {
-    ?>
+        <?php
+    } else {
+        ?>
         <br />
         <!--DIV CONSULTA -->
         <div class="panel panel-default maxPanelWidth">
@@ -256,9 +275,9 @@ if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
                         </tr>
                     </thead>
                     <tbody>
-    <?php
-    foreach ($listaUsuariosBusca as $user) {
-        ?>
+                        <?php
+                        foreach ($listaUsuariosBusca as $user) {
+                            ?>
                             <tr>
                                 <td><?= $user->getNome(); ?></td>
                                 <td><?= $user->getUsuario(); ?></td>
@@ -267,16 +286,16 @@ if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
                                 <td><a href="?pagina=usuario&cod=<?= $user->getCod(); ?>" class="btn btn-warning">Editar</a></td>
                             </tr>
 
-        <?php
-    }
-    ?>
+                            <?php
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
         </div>
-    <?php
-}
-?>
+        <?php
+    }
+    ?>
 </div>
 <script src="../js/mask.js" type="text/javascript"></script>
 
@@ -286,7 +305,11 @@ if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
 
         if (getCookie("msg") == 1) {
             document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso.</div>";
-            delete_cookie("msg");
+            document.cookie = "msg = d";
+        
+        }else if (getCookie("msg") == 2) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário alterado com sucesso.</div>";
+            document.cookie = "msg = d";
         }
 
         $('#txtCpf').mask('000.000.000-00');
@@ -386,7 +409,7 @@ if (!filter_input(INPUT_GET, "consulta", FILTER_SANITIZE_STRING)) {
             erros++;
         }
 
-        if (!ValidarSenha()) {
+        if (!ValidarSenha() && $("#txtCodUsuario").val() == "0" ) {
             var li = document.createElement("li");
             li.innerHTML = "- Senhas inválidas";
             $("#ulErros").append(li);
