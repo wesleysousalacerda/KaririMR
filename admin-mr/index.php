@@ -1,10 +1,23 @@
 <?php
+session_start();
 
-session_start(); 
-require_once ("../Controller/UsuarioController.php");
-require_once ("../Model/Usuario.php");
+require_once("../Controller/UsuarioController.php");
+require_once("../Model/Usuario.php");
 
 $retorno = "&nbsp;";
+
+if (isset($_SESSION["entrar"])) {
+    header("Location: painel.php");
+}
+
+
+if (filter_input(INPUT_GET, "msg", FILTER_SANITIZE_NUMBER_INT)) {
+    if (filter_input(INPUT_GET, "msg", FILTER_SANITIZE_NUMBER_INT) == 1) {
+        $retorno = "<div class=\"alert alert-danger\" role=\"alert\">Acesso negado!!!</div>";
+    } else {
+        $retorno = "<div class=\"alert alert-warning\" role=\"alert\">Você fez Logout.</div>";
+    }
+}
 
 if (filter_input(INPUT_POST, "btnEntrar", FILTER_SANITIZE_STRING)) {
 
@@ -13,22 +26,26 @@ if (filter_input(INPUT_POST, "btnEntrar", FILTER_SANITIZE_STRING)) {
     $pass = filter_input(INPUT_POST, "txtSenha", FILTER_SANITIZE_STRING);
 
     $resultado = $usuarioController->AutenticarUsuarioPainel($user, $pass);
-    
+
     if ($resultado != null) {
+        if (filter_input(INPUT_POST, "ckManterLogado", FILTER_SANITIZE_STRING)) {
+            $_SESSION["entrar"] = true;
+        }
+
+
         $_SESSION["cod"] = $resultado->getCod();
         $_SESSION["nome"] = $resultado->getNome();
         $_SESSION["logado"] = true;
         header("Location: painel.php");
-        
     } else {
-        $retorno = "<div class=\"alert alert-danger\" role=\"alert\">Usuario ou senha inválidos.</div>";
+        $retorno = "<div class=\"alert alert-danger\" role=\"alert\">Usuário ou senha inválido.</div>";
     }
 }
 ?>
 <!doctype html>
 <html lang="pt-br">
     <head>
-        <title>Kariri Multi Revendedoras - Login</title>
+        <title>Kariri Multi Revendedoras- Login</title>
         <meta charset="utf-8" />
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jquery-3.1.1.min.js" type="text/javascript"></script>
@@ -43,7 +60,7 @@ if (filter_input(INPUT_POST, "btnEntrar", FILTER_SANITIZE_STRING)) {
             <form method="post">
                 <div class="row">
                     <div class="col-lg-12 alignCenter">
-                        <img src="../img/logoKaririmr.jpg" alt="Kariri Multi Revendedoras"/>
+                        <img src="../img/logoKaririmr.jpg" alt="Logo Kariri Multi Revendedoras"/>
                     </div>
                     <div class="clear"></div>
 
@@ -61,12 +78,14 @@ if (filter_input(INPUT_POST, "btnEntrar", FILTER_SANITIZE_STRING)) {
                             <input type="password" class="form-control" id="txtSenha" name="txtSenha" placeholder="*******">
                         </div>
                         <input class="btn btn-success" type="submit" name="btnEntrar" value="Entrar">
-                        <a href="#" data-toggle="modal" data-target="#myModal">Recuperar senha</a>
-                    </div>
 
-                    <p>&nbsp</p>
+                        <a href="#" data-toggle="modal" data-target="#myModal">Recuperar senha</a>
+                        <br />
+                        <label><input type="checkbox" value="s" name="ckManterLogado" /> Manter logado</label>  
+                    </div>
+                    <p>&nbsp;</p>
                     <div class="col-lg-12">
-                        <?=$retorno;?>
+                        <?= $retorno; ?>
                     </div>
                 </div>
             </form>

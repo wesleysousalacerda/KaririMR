@@ -1,13 +1,18 @@
 <?php
-
 session_start();
+
+if (isset($_SESSION["logado"])) {
+    if (!$_SESSION["logado"]) {
+        header("Location: index.php?msg=1");
+    }
+} else {
+    header("Location: index.php?msg=1");
+}
 ?>
 <!doctype html>
-<!--Codigo fonte disponivel em:
-https://github.com/wesleysousalacerda/KaririMR-->
 <html lang="pt-br">
     <head>
-        <title>Kariri Multi Revendedoras - Painel</title>
+        <title>Kariri Muti Revendedoras - Painel</title>
         <meta charset="utf-8" />
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jquery-3.1.1.min.js" type="text/javascript"></script>
@@ -23,16 +28,16 @@ https://github.com/wesleysousalacerda/KaririMR-->
             <div class="row">
                 <div class="col-lg-12" id="dvTopo">
                     <div id="dvlogoTopo" class="alignCenter">
-                        <a href="painel.php"><img src="../img/logoKaririmr.jpg" alt="Logo Kariri Multi Revendedoras" /></a>
+                        <a href="painel.php"><img src="../img/logoKaririmr.jpg" alt="Kariri Multi Revendedoras" /></a>
                     </div>
                     <div id="dvMenuTopo" class="alignCenter">
                         <ul id="ulMenu">
                             <li><a href="painel.php">Inicio</a></li>
                             <li><a href="?pagina=usuario">Usuário</a></li>
-                            <li><a href="?pagina=anuncio">Anuncios</a></li>
+                            <li><a href="?pagina=classificado">Anuncios</a></li>
                             <li><a href="?pagina=categoria">Categoria</a></li>
                             <li><a href="?pagina=contato">Contato</a></li>
-                            <li><a href="?pagina=sair">Sair</a></li>
+                            <li><a href="logout.php">Sair</a></li>
                         </ul>
                     </div>
                     <div class="clear"></div>
@@ -52,15 +57,14 @@ https://github.com/wesleysousalacerda/KaririMR-->
             <div class="centralizada">
                 <div class="col-lg-6 col-xs-12">
                     <br /><br />
-                    <p>&copy; Kariri Multi Revendedoras - Todos os Direitos Reservados</p>  
+                    <p>&copy; Kariri Multi Revendedoras- Todos os Direitos Reservados</p>  
                 </div>
 
                 <div class="col-lg-6 col-xs-12">
                     <a href="#">Facebook</a><br  />
-                    <a href="#">Instagram</a><br  />
                     <a href="#">Twitter</a><br  />
                     <a href="#">Youtube</a><br  />
-                    
+                    <a href="#">Instagram</a><br  />
                 </div>
             </div>
         </div> 

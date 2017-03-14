@@ -6,8 +6,9 @@ $arrayPaginas = array(
     "home" => "View/home.php", //Página inicial
     "contato" => "View/ContatoView/ContatoView.php",
     "usuario" => "View/UsuarioView/UsuarioView.php",
+    "endereco" => "View/UsuarioView/EnderecoView.php",
     "anuncio" => "View/AnuncioView/AnuncioView.php",
-    "categoria" => "View/CategoriaView/CategoriaView.php",
+    "categoria" => "View/CategoriaView/CategoriaView.php"
 );
 
 if ($pagina) {

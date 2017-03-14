@@ -94,7 +94,7 @@ ul{
 }
 
 #ulMenu li a:hover{
-    background-color: #c9302c;
+    background-color: #ac2925;
     color: #FFF;
 }
 
@@ -119,6 +119,7 @@ ul{
     border-top:3px solid #eee;
     color :#FFF;
 }
+
 #dvRodape a{
     color: #fff;
 }

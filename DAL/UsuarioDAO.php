@@ -39,7 +39,7 @@ class UsuarioDAO {
 
     public function Alterar(Usuario $usuario) {
         try {
-            $sql = "UPDATE usuario SET nome = :nome, email = :email, cpf = :cpf, usuario = :usuario, nascimento = :nascimento , sexo = :sexo, status = :status, permissao = :permissao WHERE cod = :cod"; 
+            $sql = "UPDATE usuario SET nome = :nome, email = :email, cpf =:cpf, usuario = :usuario, nascimento = :nascimento, sexo = :sexo, status = :status, permissao =:permissao WHERE cod = :cod";
             $param = array(
                 ":nome" => $usuario->getNome(),
                 ":email" => $usuario->getEmail(),
@@ -49,7 +49,7 @@ class UsuarioDAO {
                 ":sexo" => $usuario->getSexo(),
                 ":status" => $usuario->getStatus(),
                 ":permissao" => $usuario->getPermissao(),
-                ":cod" =>$usuario->getCod(),
+                ":cod" => $usuario->getCod()
             );
 
             return $this->pdo->ExecuteNonQuery($sql, $param);
@@ -60,7 +60,7 @@ class UsuarioDAO {
             return false;
         }
     }
-    
+
     public function RetornarUsuarios(string $termo, int $tipo) {
         try {
             $sql = "";
@@ -88,8 +88,8 @@ class UsuarioDAO {
 
             $listaUsuario = [];
 
-            foreach ($dataTable as $resultado) { // O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
-                $usuario = new Usuario(); // Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
+            foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
+                $usuario = new Usuario();// Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
                 $usuario->setCod($resultado["cod"]);
                 $usuario->setNome($resultado["nome"]);
                 $usuario->setStatus($resultado["status"]);
@@ -110,13 +110,16 @@ class UsuarioDAO {
 
     public function RetornaCod(int $usuarioCod) {
         try {
-            $sql = "SELECT nome,email,cpf,usuario,nascimento,sexo,status,permissao FROM usuario WHERE cod = :cod";
+            $sql = "SELECT nome, email, cpf, usuario, nascimento, sexo, status, permissao FROM usuario WHERE cod = :cod";
             $param = array(
                 ":cod" => $usuarioCod
             );
+
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
             if ($dt != null) {
                 $usuario = new Usuario();
+
                 $usuario->setNome($dt["nome"]);
                 $usuario->setEmail($dt["email"]);
                 $usuario->setCpf($dt["cpf"]);
@@ -125,6 +128,7 @@ class UsuarioDAO {
                 $usuario->setSexo($dt["sexo"]);
                 $usuario->setStatus($dt["status"]);
                 $usuario->setPermissao($dt["permissao"]);
+
                 return $usuario;
             } else {
                 return null;
@@ -136,40 +140,35 @@ class UsuarioDAO {
             return null;
         }
     }
-    
-    public function AutenticarUsuarioPainel(string $usu, string $senha){
-        
+
+    public function AutenticarUsuarioPainel(string $usu, string $senha) {
         try {
             $sql = "SELECT cod, nome FROM usuario WHERE status = 1 AND permissao = 1 AND usuario = :usuario AND senha = :senha";
-            
-       
-            $param = array(  //Array associativo para passar os dados do usuário
+
+            $param = array(
                 ":usuario" => $usu,
                 ":senha" => $senha
             );
-            
-            $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
-            if($dt != null){
+            $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
+            
+            if ($dt != null) {
                 $usuario = new Usuario();
-                
                 $usuario->setCod($dt["cod"]);
                 $usuario->setNome($dt["nome"]);
-               
-                
+
                 return $usuario;
-                        
-            }else{
+            } else {
                 return null;
             }
-            
         } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
             }
             return null;
         }
-        }
     }
+
+}
 
 ?>

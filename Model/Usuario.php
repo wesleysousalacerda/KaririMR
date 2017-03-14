@@ -39,8 +39,6 @@ class Usuario {
     }
 
     function getNascimento() {
-//        return date("Y-m-d",strtotime($this->nascimento));
-    
         return $this->nascimento;
     }
 
@@ -85,8 +83,8 @@ class Usuario {
     }
 
     function setNascimento($nascimento) {
-       $date = str_replace('/','-', $nascimento);
-       $this->nascimento = date('Y-m-d',strtotime($date));
+        $date = str_replace('/', '-', $nascimento);
+        $this->nascimento = date('Y-m-d', strtotime($date));
     }
 
     function setSexo($sexo) {

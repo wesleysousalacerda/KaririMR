@@ -24,12 +24,12 @@ class UsuarioController {
         if (strlen($usuario->getNome()) >= 5 && strlen($usuario->getUsuario()) >= 7 && strpos($usuario->getEmail(), "@") && strpos($usuario->getEmail(), ".") &&
                 strlen($usuario->getCpf()) == 14 && $usuario->getSexo() != "" && $usuario->getPermissao() >= 1 && $usuario->getPermissao() <= 2 && $usuario->getStatus() >= 1 && $usuario->getStatus() <= 2) {
 
-            return $this->usuarioDAO->Cadastrar($usuario);
+            return $this->usuarioDAO->Alterar($usuario);
         } else {
             return false;
         }
     }
-    
+
     public function RetornarUsuarios(string $termo, int $tipo) {
         if ($termo != "" && $tipo >= 1 && $tipo <= 4) {
             return $this->usuarioDAO->RetornarUsuarios($termo, $tipo);
@@ -37,22 +37,23 @@ class UsuarioController {
             return null;
         }
     }
-    public function RetornarCod(int $usuarioCod){
-      if ($usuarioCod >0){
-          return $this->usuarioDAO->RetornaCod($usuarioCod);          
-      }else{
-          return null;
-      }  
-    }
-    public function AutenticarUsuarioPainel(string $user, string $senha){
-        
-        if(strlen($user) >=7 && strlen($senha)>=7){
-         $senha = md5($senha);
-         return $this->usuarioDAO->AutenticarUsuarioPainel($user, $senha);
-        }else{
+
+    public function RetornaCod(int $usuarioCod) {
+        if ($usuarioCod > 0) {
+            return $this->usuarioDAO->RetornaCod($usuarioCod);
+        } else {
             return null;
         }
-        
+    }
+
+    public function AutenticarUsuarioPainel(string $usu, string $senha) {
+
+        if (strlen($usu) >= 7 && strlen($senha) >= 7) {
+            $senha = md5($senha);
+            return $this->usuarioDAO->AutenticarUsuarioPainel($usu, $senha);
+        } else {
+            return null;
+        }
     }
 
 }
