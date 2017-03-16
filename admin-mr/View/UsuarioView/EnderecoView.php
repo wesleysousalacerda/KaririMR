@@ -130,4 +130,23 @@ $resultado = "";
     $(document).ready(function () {
         $('#txtCep').mask('00000-000');
     });
+    
+    $("#txtCep").focusout(function(){
+        var link = "http://api.postmon.com.br/v1/cep/" + $("txtCep").val();
+        
+        link = link.replace("-", "");
+        
+        $.ajax({
+           url : link,
+           dataType : "json",
+           type : "get",
+           data : {},
+           success : function(ret){
+               console.log(ret);
+           },
+           error : function(erro){
+               console.log(erro);
+           }
+        });
+    });
 </script>
