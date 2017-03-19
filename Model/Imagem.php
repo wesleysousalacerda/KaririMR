@@ -32,8 +32,8 @@ class Imagem {
         $this->imagem = $imagem;
     }
 
-    function setClassificado($anuncio) {
-        $this->classificado = $anuncio;
+    function setAnuncio($anuncio) {
+        $this->anuncio = $anuncio;
     }
 
 }
