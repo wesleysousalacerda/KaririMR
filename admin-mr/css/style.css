@@ -14,6 +14,10 @@ ul{
 }
 
 /*CLASS*/
+.bold{
+    font-weight: bold;
+}
+
 .centralizada{
     max-width:1280px;
 }
