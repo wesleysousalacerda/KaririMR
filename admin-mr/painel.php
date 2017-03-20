@@ -12,7 +12,7 @@ if (isset($_SESSION["logado"])) {
 <!doctype html>
 <html lang="pt-br">
     <head>
-        <title>Kariri Muti Revendedoras - Painel</title>
+        <title>Kariri Multi Revendedoras - Painel</title>
         <meta charset="utf-8" />
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jquery-3.1.1.min.js" type="text/javascript"></script>
