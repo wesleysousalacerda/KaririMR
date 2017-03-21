@@ -1,8 +1,22 @@
 <?php
+require_once ("../Controller/TelefoneController.php");
+require_once ("../Model/Telefone.php");
+
+$telefoneController = new TelefoneController();
 $endCod = 0;
 $numero = "";
 $resultado = "";
 $tipo = 1;
+
+if (filter_input(INPUT_POST,"btnGravar", FILTER_SANITIZE_STRING)){
+    $telefone = new Telefone();
+    
+    $telefone->setCod(filter_input(INPUT_POST,"endCod",FILTER_SANITIZE_NUMBER_INT));
+    $telefone->setNumero(filter_input(INPUT_POST,"txtNumero",FILTER_SANITIZE_STRING));
+    $telefone->setTipo(filter_input(INPUT_POST,"slTipo",FILTER_SANITIZE_STRING));
+    $telefone->getUsuario()->setCod(filter_input(INPUT_GET,"cod",FILTER_SANITIZE_NUMBER_INT));
+}
+
 ?>
 <div id="dvTelefoneView">
     <h1>Gerenciar Telefone</h1>
@@ -59,7 +73,44 @@ $tipo = 1;
 <script src="../js/mask.js" type="text/javascript"></script>
 
 <script>
-$(document).ready(function(){
-     $('#txtNumero').mask('(00) 00000 -0000');
-});
+    $(document).ready(function () {
+        $('#txtNumero').mask('(00) 00000-0000');
+     
+        $("#frmGerenciarTelefone").submit(function (event) {
+            if (!Validar()) {
+                event.preventDefault();
+            }
+        });
+    });
+
+
+    //Validação
+
+    function Validar() {
+         
+        var erros = 0;
+        
+        var ulErros = document.getElementById("ulErros");
+        ulErros.style.color = "red";
+        ulErros.innerHTML = "";
+
+        if ($("#slTipo").val() <= 0 || $("#slTipo").val() > 3) {
+            erros++;
+            var li = document.createElement("li");
+            li.innerHTML = "Tipo de numero invalido";
+            ulErros.appendChild(li);
+            console.log("Erro tipo");
+        }
+        if ($("#txtNumero").val().length < 5) {
+            erros++;
+            var li = document.createElement("li");
+            li.innerHTML = "Número Invalido";
+            ulErros.appendChild(li);
+        }
+        if (erros === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>
