@@ -86,7 +86,7 @@ if (filter_input(INPUT_GET, "codedit", FILTER_SANITIZE_NUMBER_INT)) {
     }
 }
 ?>
-<div id="dvUsuarioView">
+<div id="dvEnderecoView">
     <h1>Gerenciar Enredeço</h1>
     <br />
     <!--DIV CADASTRO -->
