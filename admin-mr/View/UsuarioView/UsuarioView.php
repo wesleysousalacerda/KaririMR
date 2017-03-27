@@ -292,7 +292,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                                                 Opções <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="#">Visualizar</a></li>
+                                                <li><a href="?pagina=visualizarusuario&cod=<?= $user->getCod(); ?>">Visualizar</a></li>
                                                 <li><a href="?pagina=usuario&cod=<?= $user->getCod(); ?>">Editar</a></li>
                                                 <li role="separator" class="divider"></li>
                                                 <li><a href="?pagina=alterarsenha&cod=<?= $user->getCod(); ?>">Alterar senha</a></li>

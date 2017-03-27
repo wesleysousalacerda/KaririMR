@@ -110,7 +110,7 @@ class UsuarioDAO {
 
     public function RetornaCod(int $usuarioCod) {
         try {
-            $sql = "SELECT nome, email, cpf, usuario, nascimento, sexo, status, permissao FROM usuario WHERE cod = :cod";
+            $sql = "SELECT nome, email, cpf, usuario, nascimento, sexo, status, permissao, ip FROM usuario WHERE cod = :cod";
             $param = array(
                 ":cod" => $usuarioCod
             );
@@ -128,6 +128,7 @@ class UsuarioDAO {
                 $usuario->setSexo($dt["sexo"]);
                 $usuario->setStatus($dt["status"]);
                 $usuario->setPermissao($dt["permissao"]);
+                $usuario->setIp($dt["ip"]);
 
                 return $usuario;
             } else {
