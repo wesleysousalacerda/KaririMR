@@ -8,6 +8,7 @@ $arrayPaginas = array(
     "usuario" => "View/UsuarioView/UsuarioView.php",
     "endereco" => "View/UsuarioView/EnderecoView.php",
     "anuncio" => "View/AnuncioView/AnuncioView.php",
+    "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
     "categoria" => "View/CategoriaView/CategoriaView.php",
     "telefone" => "View/UsuarioView/TelefoneView.php"
 );

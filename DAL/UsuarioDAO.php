@@ -89,7 +89,7 @@ class UsuarioDAO {
             $listaUsuario = [];
 
             foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
-                $usuario = new Usuario();// Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
+                $usuario = new Usuario(); // Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
                 $usuario->setCod($resultado["cod"]);
                 $usuario->setNome($resultado["nome"]);
                 $usuario->setStatus($resultado["status"]);
@@ -151,7 +151,7 @@ class UsuarioDAO {
             );
 
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
-            
+
             if ($dt != null) {
                 $usuario = new Usuario();
                 $usuario->setCod($dt["cod"]);
@@ -166,6 +166,22 @@ class UsuarioDAO {
                 echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
             }
             return null;
+        }
+    }
+
+    public function AlterarSenha(string $senha, int $cod) {
+        try {
+            $sql = "UPDATE usuario SET senha = :senha WHERE cod = :cod";
+            $param = array (
+            ":senha" => md5($senha),
+            ":cod" => $cod
+            );
+            return $this->pdo->ExecuteNonQuery($sql, $param);
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return false;
         }
     }
 
