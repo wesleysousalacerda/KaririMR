@@ -82,7 +82,7 @@ $listaTelefone = $telefoneController->RetornarTodosUsuario(filter_input(INPUT_GE
                     $tipoTelefone = "Fax";
                 }
                 ?>
-                <p><span class="bold">Tipo :</span> <?= $tipoTelefone; ?> <span class="bold">Numero:</span> <?= $telefone->getNumero(); ?>
+                <p> <span class="bold">Numero:</span> <?= $telefone->getNumero(); ?><span class="bold">  Tipo :</span> <?= $tipoTelefone; ?>
                 <hr />
                 <?php
             }
