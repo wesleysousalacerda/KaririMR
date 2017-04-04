@@ -7,6 +7,15 @@ class Categoria {
     private $thumb;
     private $descricao;
     private $link;
+    private $subcategoria;
+
+    function getSubcategoria() {
+        return $this->subcategoria;
+    }
+
+    function setSubcategoria($subcategoria) {
+        $this->subcategoria = $subcategoria;
+    }
 
     function getCod() {
         return $this->cod;

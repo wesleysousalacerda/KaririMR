@@ -2,7 +2,7 @@
 require_once("../Util/UploadFile.php");
 require_once("../Model/Categoria.php");
 require_once("../Controller/CategoriaController.php");
-$categoriaController = new CategoriaController();
+//$categoriaController = new CategoriaController();
 
 $cod = "";
 $nome = "";
@@ -11,8 +11,76 @@ $thumb = "";
 $subcategoria = 0;
 $descricao = "";
 $resultado = "";
-?>
 
+if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
+    $categoria = new Categoria();
+    $categoria->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+    $categoria->setNome(filter_input(INPUT_POST, "txtNome", FILTER_SANITIZE_STRING));
+    $categoria->setLink(filter_input(INPUT_POST, "txtLink", FILTER_SANITIZE_STRING));
+    $categoria->setDescricao(filter_input(INPUT_POST, "txtDescricao", FILTER_SANITIZE_STRING));
+
+    if (filter_input(INPUT_POST, "slSubcategoria", FILTER_SANITIZE_NUMBER_INT)) {
+        $categoria->setSubcategoria(filter_input(INPUT_POST, "slSubcategoria", FILTER_SANITIZE_NUMBER_INT));
+    } else {
+        $categoria->setSubcategoria(null);
+    }
+
+
+    if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
+        //Cadastro
+        $upload = new Upload();
+        $nomeImagem = $upload->LoadFile("../img/Categorias/", "img", $_FILES["flImagem"]);
+        $categoria->setThumb($nomeImagem);
+
+        if ($nomeImagem != "" && $nomeImagem != "invalid") {
+            //Método de cadastro
+
+            if ($categoriaController->Cadastrar($categoria)) {
+                ?>
+                <script>
+                    document.cookie = "msg=1";
+                    document.location.href = "?pagina=categoria";
+                </script>
+                <?php
+            } else {
+                $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a categoria.</div>";
+            }
+        } else if ($nomeImagem == "invalid") {
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Formato de imagem inválido.</div>";
+        } else {
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar carregar a imagem.</div>";
+        }
+    } else {
+        //Editar
+        if ($categoriaController->Alterar($categoria)) {
+            ?>
+            <script>
+                document.cookie = "msg=2";
+                document.location.href = "?pagina=categoria";
+            </script>
+            <?php
+        } else {
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a categoria.</div>";
+        }
+    }
+}
+
+if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
+    $categoria = $categoriaController->RetornarCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+    if ($categoria != null) {
+        $cod = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
+        $nome = $categoria->getNome();
+        $link = $categoria->getLink();
+        $thumb = "img";
+        $subcategoria = $categoria->getSubcategoria();
+        $descricao = $categoria->getDescricao();
+    }
+}
+
+
+//$listaResumida = $categoriaController->RetornarCategoriasResumido();
+//$listaCategoria = $categoriaController->RetornarTodos();
+?>
 <div id="dvCategoriaView">
     <h1>Gerenciar Categorias</h1>
     <br />
@@ -33,7 +101,7 @@ $resultado = "";
                     <div class="col-lg-6 col-xs-12">
                         <div class="form-group">
                             <label for="txtLink">Link</label>
-                            <input type="text" class="form-control" id="txtLink" name="txtLink" placeholder="Veículos"  value="<?= $link; ?>">
+                            <input type="text" class="form-control" id="txtLink" name="txtLink" placeholder="eletronicos"  value="<?= $link; ?>">
                         </div>
                     </div>
                 </div>
