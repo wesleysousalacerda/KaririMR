@@ -62,7 +62,7 @@ if (filter_input(INPUT_POST, "btnEntrar", FILTER_SANITIZE_STRING)) {
             <form method="post">
                 <div class="row">
                     <div class="col-lg-12 alignCenter">
-                        <img src="../img/logoKaririmr.jpg" alt="Logo Kariri Multi Revendedoras"/>
+                        <img src="../img/logoKaririmr.png" style="width: 100%;" alt="Logo Kariri Multi Revendedoras"/>
                     </div>
                     <div class="clear"></div>
 
@@ -70,20 +70,25 @@ if (filter_input(INPUT_POST, "btnEntrar", FILTER_SANITIZE_STRING)) {
                     <div class="borderBottom"></div>
                     <br /> 
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 alignCenter">
                         <div class="form-group">
-                            <label for="txtUsuario">Usuário</label>
-                            <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuário">
+                            <!--<label for="txtUsuario">Usuário</label>-->
+                            <input style="height: 50px;font-size: 18px"type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuário" autofocus="">
                         </div>
                         <div class="form-group">
-                            <label for="txtSenha">Senha</label>
-                            <input type="password" class="form-control" id="txtSenha" name="txtSenha" placeholder="*******">
+                            <!--<label for="txtSenha">Senha</label>-->
+                            <input style="height: 50px;font-size: 18px" type="password" class="form-control" id="txtSenha" name="txtSenha" placeholder="*******">
                         </div>
-                        <input class="btn btn-success" type="submit" name="btnEntrar" value="Entrar">
-                        
-                        <a href="#" data-toggle="modal" data-target="#myModal">Recuperar senha</a>
+                        <div class="alignLeft">
+                        <label><input type="checkbox" value="s" name="ckManterLogado" /> Manter logado</label>
+                        </div>
                         <br />
-                        <label><input type="checkbox" value="s" name="ckManterLogado" /> Manter logado</label>  
+                        <input class="btn-lg btn-success btn-block" type="submit" name="btnEntrar" value="Entrar">
+                        <br />
+                         <div class="alignLeft">
+                        <a href="#" data-toggle="modal" data-target="#myModal">Recuperar senha</a>
+                         </div>
+                                                 
                     </div>
                     <p>&nbsp;</p>
                     <div class="col-lg-12">
