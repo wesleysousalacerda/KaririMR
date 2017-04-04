@@ -2,7 +2,7 @@
 require_once("../Util/UploadFile.php");
 require_once("../Model/Categoria.php");
 require_once("../Controller/CategoriaController.php");
-//$categoriaController = new CategoriaController();
+$categoriaController = new CategoriaController();
 
 $cod = "";
 $nome = "";
@@ -78,8 +78,8 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 }
 
 
-//$listaResumida = $categoriaController->RetornarCategoriasResumido();
-//$listaCategoria = $categoriaController->RetornarTodos();
+$listaResumida = $categoriaController->RetornarCategoriasResumido();
+$listaCategoria = $categoriaController->RetornarTodos();
 ?>
 <div id="dvCategoriaView">
     <h1>Gerenciar Categorias</h1>
@@ -101,7 +101,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                     <div class="col-lg-6 col-xs-12">
                         <div class="form-group">
                             <label for="txtLink">Link</label>
-                            <input type="text" class="form-control" id="txtLink" name="txtLink" placeholder="eletronicos"  value="<?= $link; ?>">
+                            <input type="text" class="form-control" id="txtLink" name="txtLink" placeholder="Veiculos"  value="<?= $link; ?>">
                         </div>
                     </div>
                 </div>

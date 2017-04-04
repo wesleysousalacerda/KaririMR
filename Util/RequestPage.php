@@ -7,9 +7,14 @@ $arrayPaginas = array(
     "contato" => "View/ContatoView/ContatoView.php",
     "usuario" => "View/UsuarioView/UsuarioView.php",
     "endereco" => "View/UsuarioView/EnderecoView.php",
+    "telefone" => "View/UsuarioView/TelefoneView.php",
+    "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
+    "visualizarusuario" => "View/UsuarioView/VisualizarView.php",
     "anuncio" => "View/AnuncioView/AnuncioView.php",
     "categoria" => "View/CategoriaView/CategoriaView.php",
-    "telefone" => "View/UsuarioView/TelefoneView.php"
+    "categoriaimagem" => "View/CategoriaView/AlterarImagem.php",
+    "gerenciarimagemclassificado" => "View/ClassificadoView/ImagensClassificadoView.php",
+    "visualizaranuncio" => "View/AnuncioView/VisualizarAnuncio.php",
 );
 
 if ($pagina) {
