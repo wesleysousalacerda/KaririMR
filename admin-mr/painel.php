@@ -28,7 +28,7 @@ if (isset($_SESSION["logado"])) {
             <div class="row">
                 <div class="col-lg-12" id="dvTopo">
                     <div id="dvlogoTopo" class="alignCenter">
-                        <a href="painel.php"><img src="../img/logoKaririmr.jpg" alt="Kariri Multi Revendedoras" /></a>
+                        <a href="painel.php"><img src="../img/logoKaririmr.png" style="width: 450px;" alt="Kariri Multi Revendedoras" /></a>
                     </div>
                     <div id="dvMenuTopo" class="alignCenter">
                         <ul id="ulMenu">
