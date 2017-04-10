@@ -1,34 +1,34 @@
 <?php
 require_once("../Model/Categoria.php");
-require_once("../Model/Classificado.php");
+require_once("../Model/Anuncio.php");
 require_once("../Model/Imagem.php");
-require_once("../Controller/ClassificadoController.php");
+require_once("../Controller/AnuncioController.php");
 require_once("../Controller/ImagemController.php");
 
-$classificadoController = new ClassificadoController();
+$anuncioController = new AnuncioController();
 $imagemController = new ImagemController();
 
 $cod = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
-$classificado = $classificadoController->RetornarCompletoCod($cod);
-$imagens = $imagemController->CarregarImagensClassificado($cod);
+$anuncio = $anuncioController->RetornarCompletoCod($cod);
+$imagens = $imagemController->CarregarImagensAnuncio($cod);
 
 $tipoAnucio = "";
-if ($classificado->getTipo() == 1) {
+if ($anuncio->getTipo() == 1) {
     $tipoAnucio = "Venda";
-} else if ($classificado->getTipo() == 2) {
+} else if ($anuncio->getTipo() == 2) {
     $tipoAnucio = "Troca";
 } else {
     $tipoAnucio = "Doação";
 }
 ?>
-<div id="dvImagensClassificadoView">
-    <h1>Visualizar classificado</h1>
+<div id="dvImagensAnuncioView">
+    <h1>Visualizar anuncio</h1>
     <br />
     <?php
-    if ($classificado->getNome() != null) {
+    if ($anuncio->getNome() != null) {
         ?>
         <div class = "panel panel-info maxPanelWidth">
-            <div class = "panel-heading bold"><?= $classificado->getNome(); ?></div>
+            <div class = "panel-heading bold"><?= $anuncio->getNome(); ?></div>
             <div class = "panel-body">
                 <div class="row">
                     <div class="col-xs-12">
@@ -55,7 +55,7 @@ if ($classificado->getTipo() == 1) {
                                     foreach ($imagens as $ima) {
                                         ?>
                                         <div <?= ($cont == 0 ? "class=\"item active\"" : "class=\"item\"") ?>>
-                                            <img src = "../img/Classificados/<?= $ima->getImagem(); ?>" alt = "<?= $classificado->getNome(); ?>">
+                                            <img src = "../img/Anuncios/<?= $ima->getImagem(); ?>" alt = "<?= $anuncio->getNome(); ?>">
                                         </div>
                                         <?php
                                         $cont++;
@@ -82,17 +82,17 @@ if ($classificado->getTipo() == 1) {
                 <br />
                 <div class="row">
                     <div class="col-xs-12">
-                        <p><span class="bold">Categoria:</span> <?= $classificado->getCategoria()->getNome(); ?></p>
-                        <p><span class="bold">Usuário:</span> <?= $classificado->getUsuario()->getNome(); ?></p>
-                        <p><span class="bold">Status:</span> <?= ($classificado->getStatus() == 1 ? "<span style='color: green;'>Ativo</span>" : "<span style='color: red;'>Bloqueado</span>"); ?></p>
-                        <p><span class="bold">Perfil de anúncio:</span> <?= ($classificado->getPerfil() == 1 ? "<span style='color: green;'>Patrocinado</span>" : "<span style='color: blue;'>Comum</span>"); ?></p>
+                        <p><span class="bold">Categoria:</span> <?= $anuncio->getCategoria()->getNome(); ?></p>
+                        <p><span class="bold">Usuário:</span> <?= $anuncio->getUsuario()->getNome(); ?></p>
+                        <p><span class="bold">Status:</span> <?= ($anuncio->getStatus() == 1 ? "<span style='color: green;'>Ativo</span>" : "<span style='color: red;'>Bloqueado</span>"); ?></p>
+                        <p><span class="bold">Perfil de anúncio:</span> <?= ($anuncio->getPerfil() == 1 ? "<span style='color: green;'>Patrocinado</span>" : "<span style='color: blue;'>Comum</span>"); ?></p>
                         <p><span class="bold">Tipo de anúncio:</span> <?= $tipoAnucio; ?></p>
-                        <p><span class="bold">Valor:</span> <?= number_format($classificado->getValor()); ?></p>
+                        <p><span class="bold">Valor:</span> <?= number_format($anuncio->getValor()); ?></p>
                         <p><span class="bold">Descrição:</span></p>
-                        <?= $classificado->getDescricao(); ?>
+                        <?= $anuncio->getDescricao(); ?>
                         <br /> <br />
-                        <a href="?pagina=classificado&cod=<?= $cod; ?>" class="btn btn-warning">Editar</a>
-                        <a href="?pagina=gerenciarimagemclassificado&cod=<?= $cod; ?>" class="btn btn-info">Gerenciar imagens</a>
+                        <a href="?pagina=anuncio&cod=<?= $cod; ?>" class="btn btn-warning">Editar</a>
+                        <a href="?pagina=gerenciarimagemanuncio&cod=<?= $cod; ?>" class="btn btn-info">Gerenciar imagens</a>
                     </div>
                 </div>
             </div>
