@@ -10,14 +10,14 @@ $resultado = "";
 
 if (filter_input(INPUT_POST, "btnCarregar", FILTER_SANITIZE_STRING)) {
 
-    $arquivos = $uploadMultipleFile->LoadFile("../img/Classificados/", $_FILES["flImagem"]);
-    $codClassificado = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
+    $arquivos = $uploadMultipleFile->LoadFile("../img/Anuncios/", $_FILES["flImagem"]);
+    $codAnuncio = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
 
     $listaImagem = [];
     foreach ($arquivos as $nome) {
         //     
         $imagem = new Imagem();
-        $imagem->getClassificado()->setCod($codClassificado);
+        $imagem->getAnuncio()->setCod($codAnuncio);
         $imagem->setImagem($nome);
 
         $listaImagem[] = $imagem;
@@ -27,12 +27,12 @@ if (filter_input(INPUT_POST, "btnCarregar", FILTER_SANITIZE_STRING)) {
         ?>
         <script>
             document.cookie = "msg=1";
-            document.location.href = "?pagina=gerenciarimagemclassificado&cod=<?= $codClassificado; ?>";
+            document.location.href = "?pagina=gerenciarimagemanuncio&cod=<?= $codAnuncio; ?>";
         </script>
         <?php
     } else {
         foreach ($arquivos as $nome) {
-            unlink("../img/Classificados/{$nome}");
+            unlink("../img/Anuncios/{$nome}");
         }
         $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar as imagens.</div>";
     }
@@ -48,11 +48,11 @@ if (filter_input(INPUT_GET, "del", FILTER_SANITIZE_NUMBER_INT)) {
     $nomeImagem = $imagemController->VerificarArquivoExiste(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT), filter_input(INPUT_GET, "del", FILTER_SANITIZE_NUMBER_INT));
     if ($nomeImagem != "" || $nomeImagem != null) {
         if ($imagemController->RemoverImagem(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT), filter_input(INPUT_GET, "del", FILTER_SANITIZE_NUMBER_INT))) {
-            unlink("../img/Classificados/{$nomeImagem}");
+            unlink("../img/Anuncios/{$nomeImagem}");
             ?>
             <script>
                 document.cookie = "msg=2";
-                document.location.href = "?pagina=gerenciarimagemclassificado&cod=<?= filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT); ?>";
+                document.location.href = "?pagina=gerenciarimagemanuncio&cod=<?= filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT); ?>";
             </script>
             <?php
         } else {
@@ -63,16 +63,16 @@ if (filter_input(INPUT_GET, "del", FILTER_SANITIZE_NUMBER_INT)) {
     }
 }
 
-$listaImagem = $imagemController->CarregarImagensClassificado(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+$listaImagem = $imagemController->CarregarImagensAnuncio(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
 ?>
-<div id="dvImagensClassificadoView">
-    <h1>Gerenciar imagens do classificado</h1>
+<div id="dvImagensAnuncioView">
+    <h1>Gerenciar imagens do anuncio</h1>
     <br />
 
     <div class="panel panel-default maxPanelWidth">
         <div class="panel-heading">Carregar imagens</div>
         <div class="panel-body">
-            <form method="post" id="frmGerenciarImagensClassificado" name="frmGerenciarImagensClassificado"  enctype="multipart/form-data">
+            <form method="post" id="frmGerenciarImagensAnuncio" name="frmGerenciarImagensAnuncio"  enctype="multipart/form-data">
                 <div class="row">
                     <div class=" col-xs-12">
                         <div class="form-group">
@@ -108,7 +108,7 @@ $listaImagem = $imagemController->CarregarImagensClassificado(filter_input(INPUT
     <div class="panel panel-default maxPanelWidth">
         <div class="panel-heading">Imagens</div>
         <div class="panel-body">
-            <!--Aqui ven as imagens do classificado-->
+            <!--Aqui ven as imagens do anuncio-->
             <table class="table table-hover table-responsive table-striped">
                 <thead>
                     <tr>
@@ -121,9 +121,9 @@ $listaImagem = $imagemController->CarregarImagensClassificado(filter_input(INPUT
                         foreach ($listaImagem as $imagem) {
                             ?>
                             <tr>
-                                <td><img src="../img/Classificados/<?= $imagem->getImagem(); ?>" alt="Imagem produto" class="imgClassificado" />
+                                <td><img src="../img/Anuncios/<?= $imagem->getImagem(); ?>" alt="Imagem produto" class="imgAnuncio" />
                                     <br /> <br />
-                                    <a href="?pagina=gerenciarimagemclassificado&cod=2&del=<?= $imagem->getCod(); ?>" class="btn btn-danger">Remover</a></td>
+                                    <a href="?pagina=gerenciarimagemanuncio&cod=2&del=<?= $imagem->getCod(); ?>" class="btn btn-danger">Remover</a></td>
                             </tr>
                             <?php
                         }
@@ -162,7 +162,7 @@ $listaImagem = $imagemController->CarregarImagensClassificado(filter_input(INPUT
         });
 
 
-        $("#frmGerenciarImagensClassificado").submit(function (event) {
+        $("#frmGerenciarImagensAnuncio").submit(function (event) {
             var inp = document.getElementById('flImagem');
             if (inp.files.length <= 6) {
                 //Valido
