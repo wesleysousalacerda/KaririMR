@@ -201,7 +201,7 @@ $listaResumida = $categoriaController->RetornarCategoriasResumido();
                             <select class="form-control" id="slTipoBusca" name="slTipoBusca">
                                 <option value="1">Venda</option>
                                 <option value="2">Troca</option>
-                                <option value="3">Doação</option>
+                                <option value="3">Troca ou venda</option>
                             </select>
                         </div>
                     </div>
