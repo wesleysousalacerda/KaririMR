@@ -11,9 +11,11 @@ $arrayPaginas = array(
     "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
     "visualizarusuario" => "View/UsuarioView/VisualizarView.php",
     "anuncio" => "View/AnuncioView/AnuncioView.php",
+    "visualizarusuario" => "View/UsuarioView/VisualizarView.php",
+    "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
     "categoria" => "View/CategoriaView/CategoriaView.php",
     "categoriaimagem" => "View/CategoriaView/AlterarImagem.php",
-    "gerenciarimagemclassificado" => "View/ClassificadoView/ImagensClassificadoView.php",
+    "gerenciarimagemanuncio" => "View/AnuncioView/ImagensAnuncioView.php",
     "visualizaranuncio" => "View/AnuncioView/VisualizarAnuncio.php",
 );
 

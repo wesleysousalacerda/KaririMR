@@ -185,7 +185,7 @@ $listaCategoria = $categoriaController->RetornarTodos();
         </div>
     </div>
 </div>
-<script src="../ckeditor/ckeditor.js"></script>
+<script src="../Util/ckeditor/ckeditor.js"></script>
 <script>
                 $(document).ready(function () {
                     CKEDITOR.replace('txtDescricao');
