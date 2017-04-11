@@ -77,7 +77,7 @@ class Banco {
     }
 
     /**
-     * Roolback changes on opened transaction
+     * Roolback changes on opened transaction - Check integrity.
      * @return void
      */
     public function Rollback() {

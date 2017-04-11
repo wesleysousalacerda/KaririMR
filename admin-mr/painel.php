@@ -36,6 +36,7 @@ if (isset($_SESSION["logado"])) {
                             <li><a href="?pagina=usuario">Usuário</a></li>
                             <li><a href="?pagina=anuncio">Anuncios</a></li>
                             <li><a href="?pagina=categoria">Categoria</a></li>
+                            <li><a href="?pagina=subcategoria">Subcategoria</a></li>
                             <li><a href="?pagina=contato">Contato</a></li>
                             <li><a href="logout.php">Sair</a></li>
                         </ul>

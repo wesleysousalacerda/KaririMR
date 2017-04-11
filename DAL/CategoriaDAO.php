@@ -72,7 +72,7 @@ class CategoriaDAO {
     public function RetornarCategoriasResumido() {
         try {
             //$sql = "SELECT cod, nome FROM categoria WHERE categoria_cod IS NULL ORDER BY nome ASC"; //Categorias PAI
-            $sql = "SELECT cod, nome, categoria_cod FROM categoria ORDER BY categoria_cod, nome ASC"; //Categorias PAI e FILHO
+            $sql = "SELECT cod, nome, categoria_cod FROM categoria WHERE  categoria_cod IS NULL ORDER BY categoria_cod, nome ASC"; //Categorias PAI e FILHO
 
             $dt = $this->pdo->ExecuteQuery($sql);
             $listaCategoria = [];
@@ -94,9 +94,35 @@ class CategoriaDAO {
         }
     }
 
-    public function RetornarTodos() {
+    public function RetornarTodosCat() {
         try {
-            $sql = "SELECT cod, nome, categoria_cod, thumb, descricao, link FROM categoria ORDER BY nome ASC"; //Categorias PAI e FILHO
+            $sql = "SELECT cod, nome, categoria_cod, thumb, descricao, link FROM categoria WHERE categoria_cod IS NULL ORDER BY nome ASC"; //Categorias PAI
+
+            $dt = $this->pdo->ExecuteQuery($sql);
+            $listaCategoria = [];
+
+            foreach ($dt as $cat) {
+                $categoria = new Categoria();
+                $categoria->setCod($cat["cod"]);
+                $categoria->setNome($cat["nome"]);
+                $categoria->setDescricao($cat["descricao"]);
+                $categoria->setLink($cat["link"]);
+                $categoria->setThumb($cat["thumb"]);
+                $categoria->setSubcategoria($cat["categoria_cod"]);
+                $listaCategoria[] = $categoria;
+            }
+
+            return $listaCategoria;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+    public function RetornarTodosSub() {
+        try {
+            $sql = "SELECT cod, nome, categoria_cod, thumb, descricao, link FROM categoria WHERE categoria_cod IS NOT NULL ORDER BY nome ASC"; //Categorias FILHO
 
             $dt = $this->pdo->ExecuteQuery($sql);
             $listaCategoria = [];

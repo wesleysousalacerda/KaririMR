@@ -38,8 +38,11 @@ class CategoriaController {
         return $this->categoriaDAO->RetornarCategoriasResumido();
     }
 
-    public function RetornarTodos() {
-        return $this->categoriaDAO->RetornarTodos();
+    public function RetornarTodosCat() {
+        return $this->categoriaDAO->RetornarTodosCat();
+    }
+    public function RetornarTodosSub() {
+        return $this->categoriaDAO->RetornarTodosSub();
     }
 
     public function RetornarCod(int $cod) {
