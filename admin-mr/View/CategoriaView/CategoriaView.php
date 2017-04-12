@@ -115,19 +115,7 @@ $listaCategoriaCat = $categoriaController->RetornarTodosCat();
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-xs-12">
-<!--                        <div class="form-group">
-                            <label for="slSubcategoria">Categoria</label>
-                            <select class="form-control" id="slSubcategoria" name="slSubcategoria">
-                                <option value="">Selecione</option>
-                                <?php
-                                foreach ($listaResumida as $cat) {
-                                    ?>
-                                    <option value="<?= $cat->getCod() ?>" <?= ($subcategoria == $cat->getCod() ? "selected='selected'" : "") ?> <?= ($cat->getSubcategoria() == null ? "style='font-weight: bold;'" : "") ?>><?= $cat->getNome() ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>-->
-                    </div>
+                    
                 </div>
 
                 <div class="row">
@@ -163,7 +151,7 @@ $listaCategoriaCat = $categoriaController->RetornarTodosCat();
         <div class="panel-heading">Consultar</div>
         <div class="panel-body">
             <?php
-            foreach ($listaCategoriaCat as $categoria) {
+                foreach ($listaCategoriaCat as $categoria) {
                 ?>
                 <div class="row">
                     <div class="col-lg-4 col-xs-12">

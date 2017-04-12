@@ -19,8 +19,8 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $categoria->setLink(filter_input(INPUT_POST, "txtLink", FILTER_SANITIZE_STRING));
     $categoria->setDescricao(filter_input(INPUT_POST, "txtDescricao", FILTER_SANITIZE_STRING));
 
-    if (filter_input(INPUT_POST, "slSubcategoria", FILTER_SANITIZE_NUMBER_INT)) {
-        $categoria->setSubcategoria(filter_input(INPUT_POST, "slSubcategoria", FILTER_SANITIZE_NUMBER_INT));
+    if (filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT)) {
+        $categoria->setSubcategoria(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
     } else {
         $categoria->setSubcategoria(null);
     }
@@ -39,11 +39,11 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                 ?>
                 <script>
                     document.cookie = "msg=1";
-                    document.location.href = "?pagina=categoria";
+                    document.location.href = "?pagina=Subcategoria";
                 </script>
                 <?php
             } else {
-                $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a categoria.</div>";
+                $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a Subcategoria.</div>";
             }
         } else if ($nomeImagem == "invalid") {
             $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Formato de imagem inválido.</div>";
@@ -56,11 +56,11 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             ?>
             <script>
                 document.cookie = "msg=2";
-                document.location.href = "?pagina=categoria";
+                document.location.href = "?pagina=Subcategoria";
             </script>
             <?php
         } else {
-            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a categoria.</div>";
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a Subcategoria.</div>";
         }
     }
 }
@@ -80,16 +80,18 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 
 $listaResumida = $categoriaController->RetornarCategoriasResumido();
 $listaCategoriaSub = $categoriaController->RetornarTodosSub();
+
 ?>
-<div id="dvCategoriaView">
+
+            <div id="dvCategoriaView">
     <h1>Gerenciar Subcategorias</h1>
-    
+
     <br />
-    
+
     <div class="panel panel-default maxPanelWidth">
         <div class="panel-heading">Cadastrar e editar</div>
         <div class="panel-body">
-            <form method="post" id="frmGerenciarCategoria" name="frmGerenciarCategoria" novalidate enctype="multipart/form-data">
+            <form method="post" id="frmGerenciarSubcategoria" name="frmGerenciarSubcategoria" novalidate enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-lg-6 col-xs-12">
                         <div class="form-group">
@@ -117,8 +119,8 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
 
                     <div class="col-lg-6 col-xs-12">
                         <div class="form-group">
-                            <label for="slSubcategoria">Categoria</label>
-                            <select class="form-control" id="slSubcategoria" name="slSubcategoria">
+                            <label for="slCategoria">Categoria</label>
+                            <select class="form-control" id="slCategoria" name="slCategoria">
                                 <option value="">Selecione</option>
                                 <?php
                                 foreach ($listaResumida as $cat) {
@@ -191,15 +193,15 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
                 $(document).ready(function () {
                     CKEDITOR.replace('txtDescricao');
                     if (getCookie("msg") == 1) {
-                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria cadastrada com sucesso.</div>";
+                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Subcategoria cadastrada com sucesso.</div>";
                         document.cookie = "msg=d";
                     } else if (getCookie("msg") == 2) {
-                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria alterada com sucesso.</div>";
+                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Subcategoria alterada com sucesso.</div>";
                         document.cookie = "msg=d";
                     }
 
 
-                    $("#frmGerenciarCategoria").submit(function (e) {
+                    $("#frmGerenciarSubcategoria").submit(function (e) {
                         if (!ValidarFormulario()) {
                             e.preventDefault();
                         }
@@ -219,7 +221,12 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
                             ulErros.appendChild(li);
                             erros++;
                         }
-
+                        if (document.getElementById("slCategoria").value == "") {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Selecione uma categoria";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
                         if (document.getElementById("txtLink").value.length < 2) {
                             var li = document.createElement("li");
                             li.innerHTML = "- Informe um link válido";

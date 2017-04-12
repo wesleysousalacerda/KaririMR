@@ -72,7 +72,7 @@ class CategoriaDAO {
     public function RetornarCategoriasResumido() {
         try {
             //$sql = "SELECT cod, nome FROM categoria WHERE categoria_cod IS NULL ORDER BY nome ASC"; //Categorias PAI
-            $sql = "SELECT cod, nome, categoria_cod FROM categoria WHERE  categoria_cod IS NULL ORDER BY categoria_cod, nome ASC"; //Categorias PAI e FILHO
+            $sql = "SELECT cod, nome, categoria_cod FROM categoria WHERE  categoria_cod IS NULL ORDER BY categoria_cod, nome ASC"; //Categorias PAI
 
             $dt = $this->pdo->ExecuteQuery($sql);
             $listaCategoria = [];
