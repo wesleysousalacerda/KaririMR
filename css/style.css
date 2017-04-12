@@ -1,0 +1,109 @@
+/*ELEMENTOS*/
+*{
+    padding:0;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+}
+
+/*dvTopo*/
+#dvTopo{
+    background-color: #A9A9A9;
+    border-bottom: 1px solid #BDBDBD;
+}
+
+#dvTopo{
+    text-align: center;
+}
+
+#dvTopo img{
+    width:100%;
+    max-width: 226px;
+}
+
+/*#dvMenu*/
+#dvMenuTopo{
+    background-color: #233237;
+    border-bottom: 5px solid #BDBDBD;
+}
+
+#dvMenuTopo ul {
+    list-style: none;
+    padding:5px;
+}
+
+#dvMenuTopo ul li{
+    display: inline;
+    padding:5px;
+}
+
+#dvMenuTopo ul li:hover{
+    background-color: #03A9F4;
+}
+
+
+#dvMenuTopo ul li a{
+    color: #FFF;
+    text-decoration: none;
+    font-size: 1.125em;
+    padding:5px;
+}
+
+/**/
+#dvConteudo{
+    min-height: 100vh;
+}
+
+/*dvEsquerda*/
+#dvEsquerda{
+    border:1px solid #BDBDBD;
+}
+
+/*dvDireita*/
+#dvDireita{
+
+}
+
+#txtBusca{
+    width: 90%;
+    padding: 7px;
+    margin-bottom: 10px;
+    outline: none;
+    border:1px solid #3399ff;
+}
+
+#txtBusca:active{
+    box-shadow: 0 0 5px #03A9F4;
+}
+
+#btnBuscar{
+    width: 95%;
+    padding: 7px;
+    outline: none;
+    border:1px solid #3399ff;
+    cursor: pointer;
+    background-color: #f6f7f9;
+}
+
+#iconesSociais a img{
+    width:100%;
+    max-width: 48px;
+    padding:0.3em;
+}
+
+.boxDireita{
+    border:1px solid #BDBDBD;
+    padding:10px;
+    margin-top:20px;
+    text-align: center;
+}
+
+
+/*dvRodape*/
+#dvRodape{
+    background-color: #233237;
+    border-top: 5px solid #BDBDBD;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}

@@ -83,9 +83,9 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
 ?>
 <div id="dvCategoriaView">
     <h1>Gerenciar Subcategorias</h1>
-    
+
     <br />
-    
+
     <div class="panel panel-default maxPanelWidth">
         <div class="panel-heading">Cadastrar e editar</div>
         <div class="panel-body">
@@ -188,67 +188,73 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
 </div>
 <script src="../Util/ckeditor/ckeditor.js"></script>
 <script>
-                $(document).ready(function () {
-                    CKEDITOR.replace('txtDescricao');
-                    if (getCookie("msg") == 1) {
-                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria cadastrada com sucesso.</div>";
-                        document.cookie = "msg=d";
-                    } else if (getCookie("msg") == 2) {
-                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria alterada com sucesso.</div>";
-                        document.cookie = "msg=d";
-                    }
+    $(document).ready(function () {
+        CKEDITOR.replace('txtDescricao');
+        if (getCookie("msg") == 1) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria cadastrada com sucesso.</div>";
+            document.cookie = "msg=d";
+        } else if (getCookie("msg") == 2) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria alterada com sucesso.</div>";
+            document.cookie = "msg=d";
+        }
 
 
-                    $("#frmGerenciarCategoria").submit(function (e) {
-                        if (!ValidarFormulario()) {
-                            e.preventDefault();
-                        }
-                    });
+        $("#frmGerenciarCategoria").submit(function (e) {
+            if (!ValidarFormulario()) {
+                e.preventDefault();
+            }
+        });
 
-                    function ValidarFormulario() {
-                        var erros = 0;
-                        var ulErros = document.getElementById("ulErros");
-                        ulErros.style.color = "red";
-                        ulErros.innerHTML = "";
+        function ValidarFormulario() {
+            var erros = 0;
+            var ulErros = document.getElementById("ulErros");
+            ulErros.style.color = "red";
+            ulErros.innerHTML = "";
 
 
-                        //Javascript nativo
-                        if (document.getElementById("txtNome").value.length < 2) {
-                            var li = document.createElement("li");
-                            li.innerHTML = "- Informe um nome válido";
-                            ulErros.appendChild(li);
-                            erros++;
-                        }
+            //Javascript nativo
+            if (document.getElementById("txtNome").value.length < 2) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um nome válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
+            if (document.getElementById("slSubcategoria").value == "") {;;;
+                var li = document.createElement("li");
+                li.innerHTML = "- Selecione uma categoria";
+                ulErros.appendChild(li);
+                erros++;
+            }
 
-                        if (document.getElementById("txtLink").value.length < 2) {
-                            var li = document.createElement("li");
-                            li.innerHTML = "- Informe um link válido";
-                            ulErros.appendChild(li);
-                            erros++;
-                        }
+            if (document.getElementById("txtLink").value.length < 2) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um link válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
 
-                        if ($("#txtCodCategoria").val() == "") {
-                            if (document.getElementById("flImagem").value == "") {
-                                var li = document.createElement("li");
-                                li.innerHTML = "- Selecione uma imagem";
-                                ulErros.appendChild(li);
-                                erros++;
-                            }
-                        }
+            if ($("#txtCodCategoria").val() == "") {
+                if (document.getElementById("flImagem").value == "") {
+                    var li = document.createElement("li");
+                    li.innerHTML = "- Selecione uma imagem";
+                    ulErros.appendChild(li);
+                    erros++;
+                }
+            }
 
-                        var value = CKEDITOR.instances['txtDescricao'].getData();
-                        if (value.length < 10) {
-                            var li = document.createElement("li");
-                            li.innerHTML = "- Informe uma descrição";
-                            ulErros.appendChild(li);
-                            erros++;
-                        }
+            var value = CKEDITOR.instances['txtDescricao'].getData();
+            if (value.length < 10) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe uma descrição";
+                ulErros.appendChild(li);
+                erros++;
+            }
 
-                        if (erros === 0) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                });
+            if (erros === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
 </script>
