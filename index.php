@@ -9,6 +9,7 @@
         <link href="css/unsemantic-grid-responsive.css" rel="stylesheet" media="all" />
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="shortcut icon" href="img/favicon.ico" />
+        
     </head>
     <body>
         <!--Topo do site-->
@@ -36,19 +37,7 @@
                 <!--Menu Pesquisa-->
                 <div class="grid-parent grid-100" id="boxBusca">
                     <input type="text" id="txtBusca" placeholder="Buscar" />
-                    <select id="slBusca">
-                        <option value="" selected="selected">Selecione</option>
-                        <optgroup label="Frutas">
-                            <option value="6">Banana</option>
-                            <option value="1">Maça</option>
-                            <option value="4">Uva</option>
-                        </optgroup>
-                        <optgroup label="Carnes">
-                            <option value="5">Bife</option>
-                            <option value="3">Frango</option>
-                            <option value="1">Peixe</option>
-                        </optgroup>
-                    </select>
+                    <select id="slBusca"></select>
                     <button id="btnBuscar">Buscar</button>
                 </div>
                 <?php

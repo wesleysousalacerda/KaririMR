@@ -1,15 +1,18 @@
 <?php
 
 require_once("Banco.php");
+require_once("../Util/ClassSerialization.php");
 
 class CategoriaDAO {
 
     private $pdo;
     private $debug;
+    private $serialization;
 
     public function __construct() {
         $this->pdo = new Banco();
         $this->debug = true;
+        $this->serialization = new ClassSerialization();
     }
 
     public function Cadastrar(Categoria $categoria) {
@@ -71,7 +74,7 @@ class CategoriaDAO {
 
     public function RetornarCategoriasResumido() {
         try {
-            //$sql = "SELECT cod, nome FROM categoria WHERE categoria_cod IS NULL ORDER BY nome ASC"; //Categorias PAI
+//            $sql = "SELECT cod, nome FROM categoria WHERE categoria_cod IS NULL ORDER BY nome ASC"; //Categorias PAI
             $sql = "SELECT cod, nome, categoria_cod FROM categoria WHERE  categoria_cod IS NULL ORDER BY categoria_cod, nome ASC"; //Categorias PAI e FILHO
 
             $dt = $this->pdo->ExecuteQuery($sql);
@@ -120,6 +123,31 @@ class CategoriaDAO {
             return null;
         }
     }
+    
+     public function RetornarTodosJSON() {
+        try {
+            $sql = "SELECT nome, categoria_cod, link FROM categoria ORDER BY nome ASC"; //Categorias PAI e FILHO
+
+            $dt = $this->pdo->ExecuteQuery($sql);
+            $listaCategoria = [];
+
+            foreach ($dt as $cat) {
+                $categoria = new Categoria();
+                $categoria->setNome($cat["nome"]);
+                $categoria->setLink($cat["link"]);
+                $categoria->setSubcategoria($cat["categoria_cod"]);
+                $listaCategoria[] = $categoria;
+            }
+
+            return $this->serialization->serialize($listaCategoria);
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+    
     public function RetornarTodosSub() {
         try {
             $sql = "SELECT cod, nome, categoria_cod, thumb, descricao, link FROM categoria WHERE categoria_cod IS NOT NULL ORDER BY nome ASC"; //Categorias FILHO
