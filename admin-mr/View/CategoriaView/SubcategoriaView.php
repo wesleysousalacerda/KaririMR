@@ -19,8 +19,13 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $categoria->setLink(filter_input(INPUT_POST, "txtLink", FILTER_SANITIZE_STRING));
     $categoria->setDescricao(filter_input(INPUT_POST, "txtDescricao", FILTER_SANITIZE_STRING));
 
+<<<<<<< HEAD
     if (filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT)) {
         $categoria->setSubcategoria(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
+=======
+    if (filter_input(INPUT_POST, "slSubcategoria", FILTER_SANITIZE_NUMBER_INT)) {
+        $categoria->setSubcategoria(filter_input(INPUT_POST, "slSubcategoria", FILTER_SANITIZE_NUMBER_INT));
+>>>>>>> refs/remotes/origin/master
     } else {
         $categoria->setSubcategoria(null);
     }
@@ -39,11 +44,19 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                 ?>
                 <script>
                     document.cookie = "msg=1";
+<<<<<<< HEAD
                     document.location.href = "?pagina=Subcategoria";
                 </script>
                 <?php
             } else {
                 $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a Subcategoria.</div>";
+=======
+                    document.location.href = "?pagina=categoria";
+                </script>
+                <?php
+            } else {
+                $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a categoria.</div>";
+>>>>>>> refs/remotes/origin/master
             }
         } else if ($nomeImagem == "invalid") {
             $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Formato de imagem inválido.</div>";
@@ -56,11 +69,19 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             ?>
             <script>
                 document.cookie = "msg=2";
+<<<<<<< HEAD
                 document.location.href = "?pagina=Subcategoria";
             </script>
             <?php
         } else {
             $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a Subcategoria.</div>";
+=======
+                document.location.href = "?pagina=categoria";
+            </script>
+            <?php
+        } else {
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a categoria.</div>";
+>>>>>>> refs/remotes/origin/master
         }
     }
 }
@@ -80,10 +101,15 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 
 $listaResumida = $categoriaController->RetornarCategoriasResumido();
 $listaCategoriaSub = $categoriaController->RetornarTodosSub();
+<<<<<<< HEAD
 
 ?>
 
             <div id="dvCategoriaView">
+=======
+?>
+<div id="dvCategoriaView">
+>>>>>>> refs/remotes/origin/master
     <h1>Gerenciar Subcategorias</h1>
 
     <br />
@@ -91,7 +117,11 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
     <div class="panel panel-default maxPanelWidth">
         <div class="panel-heading">Cadastrar e editar</div>
         <div class="panel-body">
+<<<<<<< HEAD
             <form method="post" id="frmGerenciarSubcategoria" name="frmGerenciarSubcategoria" novalidate enctype="multipart/form-data">
+=======
+            <form method="post" id="frmGerenciarCategoria" name="frmGerenciarCategoria" novalidate enctype="multipart/form-data">
+>>>>>>> refs/remotes/origin/master
                 <div class="row">
                     <div class="col-lg-6 col-xs-12">
                         <div class="form-group">
@@ -119,8 +149,13 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
 
                     <div class="col-lg-6 col-xs-12">
                         <div class="form-group">
+<<<<<<< HEAD
                             <label for="slCategoria">Categoria</label>
                             <select class="form-control" id="slCategoria" name="slCategoria">
+=======
+                            <label for="slSubcategoria">Categoria</label>
+                            <select class="form-control" id="slSubcategoria" name="slSubcategoria">
+>>>>>>> refs/remotes/origin/master
                                 <option value="">Selecione</option>
                                 <?php
                                 foreach ($listaResumida as $cat) {
@@ -190,6 +225,7 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
 </div>
 <script src="../Util/ckeditor/ckeditor.js"></script>
 <script>
+<<<<<<< HEAD
                 $(document).ready(function () {
                     CKEDITOR.replace('txtDescricao');
                     if (getCookie("msg") == 1) {
@@ -258,4 +294,75 @@ $listaCategoriaSub = $categoriaController->RetornarTodosSub();
                         }
                     }
                 });
+=======
+    $(document).ready(function () {
+        CKEDITOR.replace('txtDescricao');
+        if (getCookie("msg") == 1) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria cadastrada com sucesso.</div>";
+            document.cookie = "msg=d";
+        } else if (getCookie("msg") == 2) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Categoria alterada com sucesso.</div>";
+            document.cookie = "msg=d";
+        }
+
+
+        $("#frmGerenciarCategoria").submit(function (e) {
+            if (!ValidarFormulario()) {
+                e.preventDefault();
+            }
+        });
+
+        function ValidarFormulario() {
+            var erros = 0;
+            var ulErros = document.getElementById("ulErros");
+            ulErros.style.color = "red";
+            ulErros.innerHTML = "";
+
+
+            //Javascript nativo
+            if (document.getElementById("txtNome").value.length < 2) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um nome válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
+            if (document.getElementById("slSubcategoria").value == "") {;;;
+                var li = document.createElement("li");
+                li.innerHTML = "- Selecione uma categoria";
+                ulErros.appendChild(li);
+                erros++;
+            }
+
+            if (document.getElementById("txtLink").value.length < 2) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um link válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
+
+            if ($("#txtCodCategoria").val() == "") {
+                if (document.getElementById("flImagem").value == "") {
+                    var li = document.createElement("li");
+                    li.innerHTML = "- Selecione uma imagem";
+                    ulErros.appendChild(li);
+                    erros++;
+                }
+            }
+
+            var value = CKEDITOR.instances['txtDescricao'].getData();
+            if (value.length < 10) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe uma descrição";
+                ulErros.appendChild(li);
+                erros++;
+            }
+
+            if (erros === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    });
+>>>>>>> refs/remotes/origin/master
 </script>
