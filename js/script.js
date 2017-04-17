@@ -24,13 +24,36 @@ function MontarSelectCategoria(data) {
     
     for (var i = 0; i < data.length; i++) {
         
-        if(data[i].Subcatecoria !=null){
-            categoria = data [i];
+        if(data[i].Subcategoria == null){
+            categoria.push(data[i]);
         }else{
-            subCategoria = data[i];
+            subCategoria.push(data[i]);
         }
     }
     
-    console.log(subCategoria);
+    var slBusca = document.getElementById("slBusca");
+    
+    var optionDefault = document.createElement("option");
+    optionDefault.setAttribute("selected", "selected");
+    optionDefault.innerText = "Selecione";
+    
+    slBusca.appendChild(optionDefault);
+    
+    for (var i = 0; i < categoria.length; i++) {
+        var optgroup = document.createElement("optgroup");
+        optgroup.label = categoria[i].Nome;
+        
+        for (var j = 0; j < subCategoria.length; j++) {
+            if (subCategoria[j].Subcategoria == categoria[i].Cod) {
+                var option =document.createElement("option");
+                option.innerHTML = subCategoria[j].Nome;
+                optgroup.appendChild(option);
+            }
+        }
+        
+        slBusca.appendChild(optgroup);
+    }
+    
+   
 }
 

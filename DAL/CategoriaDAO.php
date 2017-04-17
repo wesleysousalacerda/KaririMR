@@ -126,13 +126,14 @@ class CategoriaDAO {
     
      public function RetornarTodosJSON() {
         try {
-            $sql = "SELECT nome, categoria_cod, link FROM categoria ORDER BY nome ASC"; //Categorias PAI e FILHO
+            $sql = "SELECT cod, nome, categoria_cod, link FROM categoria ORDER BY nome ASC"; //Categorias PAI e FILHO
 
             $dt = $this->pdo->ExecuteQuery($sql);
             $listaCategoria = [];
 
             foreach ($dt as $cat) {
                 $categoria = new Categoria();
+                $categoria->setCod($cat["cod"]);
                 $categoria->setNome($cat["nome"]);
                 $categoria->setLink($cat["link"]);
                 $categoria->setSubcategoria($cat["categoria_cod"]);

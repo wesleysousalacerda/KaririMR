@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/KaririMR/DAL/ImagemDAO.php</file>
-            <file>file:/C:/xampp/htdocs/KaririMR/admin-mr/painel.php</file>
-            <file>file:/C:/xampp/htdocs/KaririMR/DAL/AnuncioDAO.php</file>
-            <file>file:/C:/xampp/htdocs/KaririMR/admin-mr/View/AnuncioView/AnuncioView.php</file>
-            <file>file:/C:/xampp/htdocs/KaririMR/DAL/Banco.php</file>
-            <file>file:/C:/xampp/htdocs/KaririMR/admin-mr/index.php</file>
+            <file>file:/C:/xampp/htdocs/KaririMR/css/style.css</file>
+            <file>file:/C:/xampp/htdocs/KaririMR/index.php</file>
+            <file>file:/C:/xampp/htdocs/KaririMR/DAL/CategoriaDAO.php</file>
+            <file>file:/C:/xampp/htdocs/KaririMR/js/script.js</file>
+            <file>file:/C:/xampp/htdocs/KaririMR/admin-mr/View/CategoriaView/CategoriaView.php</file>
+            <file>file:/C:/xampp/htdocs/KaririMR/Util/ClassSerialization.php</file>
+            <file>file:/C:/xampp/htdocs/KaririMR/Controller/CategoriaController.php</file>
         </group>
     </open-files>
 </project-private>

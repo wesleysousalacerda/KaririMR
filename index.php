@@ -9,6 +9,7 @@
         <link href="css/unsemantic-grid-responsive.css" rel="stylesheet" media="all" />
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="shortcut icon" href="img/favicon.ico" />
+        <script src="js/script.js" type="text/javascript"></script>
         
     </head>
     <body>
