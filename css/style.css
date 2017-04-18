@@ -146,43 +146,52 @@
     color: #fff;
 }
 
-/**/
+/*Categorias*/
 
-.painel{
-    max-width:800px;
-    width:100px;
-    background-color: coral;
-}
-
-.panel .panel-title{
+.panel {
     width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
+    border-bottom:1px solid #d4d4d4;
+}
+.imgGridCategoria{
+   text-align: center; 
 }
 
-.panel .panl-contex .dvGrid{
+.imgGridCategoria img{
+    max-width: 450px;
+    width: 100%;
+    margin-top: 10px;
+
+}
+
+.conteudoGridCategoria{
+    margin-top: 10px;
+
+}
+
+.paginacao{
+    width: 100%;
     text-align: center;
-    background-color: #FFF;
-    width: 100%;
-    max-width: 24%;
-    font-size: 1em;
-    display: inline-block;
-    margin-bottom: 5px;
-}  
-@media (max-width: 480px){
-    .panel .panel-content .dvGrid{
-        max-width: 49%;
-    }
 }
 
-.panel .panel-content a{
+.paginacao ul{
+    list-style: none;
+}
+
+.paginacao ul li{
+    display: inline;
+}
+
+.paginacao ul li a{
     text-decoration: none;
-    color: #111;
-    font-size: 1em;
+    background-color: #607D8B;
+    padding: 5px;
+    color: #FFF;
+    font-weight: bold;
+    margin-right: 2px;
 }
 
-.panel .panel-content img{
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
+.paginacao ul li a:hover, paginacao ul li a:active{
+    box-shadow: 0 0 7px #0288D1;
 }
+    
+    

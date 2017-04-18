@@ -10,7 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="shortcut icon" href="img/favicon.ico" />
         <script src="js/script.js" type="text/javascript"></script>
-        
+
     </head>
     <body>
         <!--Topo do site-->
@@ -44,7 +44,7 @@
                 <?php
                 require_once("Util/ResquestPageSite.php");
                 ?>
-            </div>
+            </div> 
 
             <div class="grid-30 mobile-grid-100" id="dvDireita">
                 <!--Redes sociais-->
