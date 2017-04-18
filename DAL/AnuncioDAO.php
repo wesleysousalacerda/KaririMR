@@ -117,8 +117,7 @@ class AnuncioDAO {
             return null;
         }
     }
-
-    public function RetornarCompletoCod($cod) {
+public function RetornarCompletoCod($cod) {  
         try {
             $sql = "SELECT c.nome as clanome, c.descricao, c.tipo, c.valor, c.status, c.perfil, ca.nome as catnome, u.nome as usnome FROM anuncio c " .
                     "INNER JOIN categoria ca ON ca.cod = c.categoria_cod " .
@@ -152,7 +151,34 @@ class AnuncioDAO {
             return null;
         }
     }
+      public function RetornarPesquisa(int $categoriaCod, string $termo) {
+        try {
+            $sql = "SELECT anun.nome, SUBSTR (anun.descricao, 0, 250), (SELECT imagem FROM imagens WHERE anuncio_cod  = anun.cod ORDER BY cod ASC LIMIT 1) as img FROM anuncio anun WHERE anun.categoria_cod = :categoria_cod AND nome LIKE :termo AND anun.status = 1"; 
+            $param = array(
+                ":categoria_cod" => $categoriaCod,
+                ":termo" => $termo
+            );
 
+            $dt = $this->pdo->ExecuteQuery($sql, $param);   
+            $listaAnuncio = [];
+            
+            foreach($dt as $dr) {
+                $anuncioConsulta = new AnuncioConsulta();
+                $anuncioConsulta->setNome($dr["nome"]);
+                $anuncioConsulta->setDescricao($dr["descricao"]);
+                $anuncioConsulta->setImagem($dr["img"]);
+                
+                $listaAnuncio[] = $classificdoConsulta;
+            }
+
+            return $listaAnuncio;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
 }
 
 ?>

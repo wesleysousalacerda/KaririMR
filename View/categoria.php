@@ -1,3 +1,16 @@
+<?php
+
+if (filter_input(INPUT_GET, "termo", FILTER_SANITIZE_STRING) && filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT)){
+    
+
+
+require_once ("Controller/AnuncioController.php");
+require_once ("Model/ViewModel/AnuncioConsulta.php");
+
+$anuncioController = new AnuncioController();
+}
+?>
+
 <div id="dvCategoria">
     <h1>Categorias</h1>
     <br />
