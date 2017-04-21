@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 require_once ("../Controller/UsuarioController.php");
 require_once ("../Model/Usuario.php");
@@ -287,19 +288,11 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                                     <td><?= ($user->getStatus() == 1 ? "Ativo" : "Bloqueado") ?></td>
                                     <td><?= ($user->getPermissao() == 1 ? "Administrador." : "Comum") ?></td>
                                     <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Opções <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="?pagina=visualizarusuario&cod=<?= $user->getCod(); ?>">Visualizar</a></li>
-                                                <li><a href="?pagina=usuario&cod=<?= $user->getCod(); ?>">Editar</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="?pagina=alterarsenha&cod=<?= $user->getCod(); ?>">Alterar senha</a></li>
-                                                <li><a href="?pagina=endereco&cod=<?= $user->getCod(); ?>">Gerenciar endereço</a></li>
-                                                <li><a href="?pagina=telefone&cod=<?= $user->getCod(); ?>">Gerenciar telefone</a></li>
-                                            </ul>
-                                        </div>
+                                        <a href="?pagina=visualizarusuario&cod=<?= $user->getCod(); ?>" class="btn btn-success">Visualizar</a>
+                                        <a href="?pagina=usuario&cod=<?= $user->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
+                                        <a href="?pagina=alterarsenha&cod=<?= $user->getCod(); ?>" class="btn btn-danger">Senha</a>
+                                        <a href="?pagina=endereco&cod=<?= $user->getCod(); ?>" class="btn btn-info">Endereço</a>
+                                        <a href="?pagina=telefone&cod=<?= $user->getCod(); ?>" class="btn btn-primary">Telefone</a>
                                 </tr>
 
                                 <?php
