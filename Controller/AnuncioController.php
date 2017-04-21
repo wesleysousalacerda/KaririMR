@@ -39,6 +39,9 @@ class AnuncioController {
             return null;
         }
     }
+    public function RetornarTodosAnuncios() {
+    return $this->anuncioDAO->RetornarTodosAnuncios();
+    }
 
     public function RetornarCod(int $cod) {
         if ($cod > 0) {

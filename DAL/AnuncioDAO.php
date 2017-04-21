@@ -92,6 +92,30 @@ class AnuncioDAO {
             return null;
         }
     }
+    public function RetornarTodosAnuncios() {
+        try {
+            $sql = "SELECT cod, nome, status FROM anuncio ORDER BY nome ASC";
+            $dt = $this->pdo->ExecuteQuery($sql,NULL);
+            $listaAnuncio = [];
+
+            foreach ($dt as $dr) {
+                $anuncio = new Anuncio();
+
+                $anuncio->setCod($dr["cod"]);
+                $anuncio->setNome($dr["nome"]);
+                $anuncio->setStatus($dr["status"]);
+
+                $listaAnuncio[] = $anuncio;
+            }
+
+            return $listaAnuncio;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
 
     public function RetornarCod(int $cod) {
         try {

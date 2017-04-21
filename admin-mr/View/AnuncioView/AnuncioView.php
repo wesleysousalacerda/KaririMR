@@ -15,6 +15,7 @@ $tipo = 1;
 $valor = "";
 
 $resultado = "";
+$Bresultado = "";
 
 
 if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
@@ -65,8 +66,13 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
     $categoriaCod = filter_input(INPUT_POST, "slCategoriaBusca", FILTER_SANITIZE_NUMBER_INT);
     $perfil = filter_input(INPUT_POST, "slPerfilBusca", FILTER_SANITIZE_NUMBER_INT);
     $termo = filter_input(INPUT_POST, "txtTermo", FILTER_SANITIZE_STRING);
-
-    $listaBusca = $anuncioController->RetornarTodosFiltro($termo, $tipo, $status, $perfil, $categoriaCod);
+    if ($status != NULL && $tipo != NULL && $categoriaCod != NULL && $perfil != NULL && $termo != NULL) {
+        $listaBusca = $anuncioController->RetornarTodosFiltro($termo, $tipo, $status, $perfil, $categoriaCod);
+    } else {
+        $Bresultado = "<div class=\"alert alert-danger\" role=\"alert\">Insira todos os campos.</div>";
+    }
+} else if (filter_input(INPUT_POST, "btnBuscarTodos", FILTER_SANITIZE_STRING)) {
+    $listaBusca = $anuncioController->RetornarTodosAnuncios();
 }
 
 if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
@@ -246,10 +252,17 @@ $listaResumida = $categoriaController->RetornarCategoriasResumido();
                         <div class="form-group">
                             <br />
                             <input class="btn btn-success" type="submit" name="btnBuscar" value="Buscar">
+                            <input class="btn btn-info" type="submit" name="btnBuscarTodos" value="Buscar Todos">
+
                         </div>
                     </div>
                 </div>
             </form>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p id="BResultado"><?= $Bresultado; ?></p>
+                </div>
+            </div>
             <br />
             <hr />
             <br />
@@ -290,94 +303,94 @@ $listaResumida = $categoriaController->RetornarCategoriasResumido();
 <script src="../js/mask.js" type="text/javascript"></script>
 <script src="../Util/ckeditor/ckeditor.js"></script>
 <script>
-    $(document).ready(function () {
-        CKEDITOR.replace('txtDescricao');
-        $('#txtValor').mask('000.000.000.000.000,00', {reverse: true});
+                $(document).ready(function () {
+                    CKEDITOR.replace('txtDescricao');
+                    $('#txtValor').mask('000.000.000.000.000,00', {reverse: true});
 
-        if (getCookie("msg") == 1) {
-            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Anuncio cadastrado com sucesso.</div>";
-            document.cookie = "msg=d";
-        } else if (getCookie("msg") == 2) {
-            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Anuncio alterado com sucesso.</div>";
-            document.cookie = "msg=d";
-        }
+                    if (getCookie("msg") == 1) {
+                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Anuncio cadastrado com sucesso.</div>";
+                        document.cookie = "msg=d";
+                    } else if (getCookie("msg") == 2) {
+                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Anuncio alterado com sucesso.</div>";
+                        document.cookie = "msg=d";
+                    }
 
-        $("#frmGerenciarAnuncio").submit(function (e) {
-            if (!ValidarFormulario()) {
-                e.preventDefault();
-            }
-        });
+                    $("#frmGerenciarAnuncio").submit(function (e) {
+                        if (!ValidarFormulario()) {
+                            e.preventDefault();
+                        }
+                    });
 
-        $("#frmBuscar").submit(function (e) {
-            if ($("#txtTermo").val() == "" || $("#slCategoriaBusca").val() == "") {
-                alert("Formulário de busca inválido!!!");
-                e.preventDefault();
-            }
-        });
+//        $("#frmBuscar").submit(function (e) {
+//            if ($("#txtTermo").val() == "" || $("#slCategoriaBusca").val() == "") {
+//                alert("Formulário de busca inválido!!!");
+//                e.preventDefault();
+//            }
+//        });
 
 
 
-        function ValidarFormulario() {
-            var erros = 0;
-            var ulErros = document.getElementById("ulErros");
-            ulErros.style.color = "red";
-            ulErros.innerHTML = "";
+                    function ValidarFormulario() {
+                        var erros = 0;
+                        var ulErros = document.getElementById("ulErros");
+                        ulErros.style.color = "red";
+                        ulErros.innerHTML = "";
 
-            if (document.getElementById("txtNome").value.length <= 0) {
-                var li = document.createElement("li");
-                li.innerHTML = "- Informe um nome válido";
-                ulErros.appendChild(li);
-                erros++;
-            }
+                        if (document.getElementById("txtNome").value.length <= 0) {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Informe um nome válido";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
 
-            if (document.getElementById("slTipo").value < 0) {
-                var li = document.createElement("li");
-                li.innerHTML = "- Informe um tipo de anúncio";
-                ulErros.appendChild(li);
-                erros++;
-            }
+                        if (document.getElementById("slTipo").value < 0) {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Informe um tipo de anúncio";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
 
-            if (document.getElementById("slStatus").value < 0) {
-                var li = document.createElement("li");
-                li.innerHTML = "- Informe um status";
-                ulErros.appendChild(li);
-                erros++;
-            }
+                        if (document.getElementById("slStatus").value < 0) {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Informe um status";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
 
-            if (document.getElementById("slPerfil").value < 0) {
-                var li = document.createElement("li");
-                li.innerHTML = "- Informe um perfil";
-                ulErros.appendChild(li);
-                erros++;
-            }
+                        if (document.getElementById("slPerfil").value < 0) {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Informe um perfil";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
 
-            if (document.getElementById("slPerfil").value == "") {
-                var li = document.createElement("li");
-                li.innerHTML = "- Selecione uma categoria";
-                ulErros.appendChild(li);
-                erros++;
-            }
+                        if (document.getElementById("slPerfil").value == "") {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Selecione uma categoria";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
 
-            if (document.getElementById("slCategoria").value == "") {
-                var li = document.createElement("li");
-                li.innerHTML = "- Selecione uma categoria";
-                ulErros.appendChild(li);
-                erros++;
-            }
+                        if (document.getElementById("slCategoria").value == "") {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Selecione uma categoria";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
 
-            var value = CKEDITOR.instances['txtDescricao'].getData();
-            if (value.length < 10) {
-                var li = document.createElement("li");
-                li.innerHTML = "- Informe uma descrição";
-                ulErros.appendChild(li);
-                erros++;
-            }
+                        var value = CKEDITOR.instances['txtDescricao'].getData();
+                        if (value.length < 10) {
+                            var li = document.createElement("li");
+                            li.innerHTML = "- Informe uma descrição";
+                            ulErros.appendChild(li);
+                            erros++;
+                        }
 
-            if (erros === 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    });
+                        if (erros === 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                });
 </script>
