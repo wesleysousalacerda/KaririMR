@@ -80,6 +80,11 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
     } else {
         $spResultadoBusca = "Dados não encontrado";
     }
+}else if (filter_input(INPUT_POST, "btnBuscarTudo", FILTER_SANITIZE_STRING)) {
+
+    
+    $listaUsuariosBusca = $usuarioController->RetornarTodosUsuarios();
+
 }
 
 if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
@@ -260,7 +265,10 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                         <div class="col-xs-12">
                             <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
                             <span><?= $spResultadoBusca; ?></span>
+                            <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
+                           
                         </div>
+                        
                     </div>
                 </form>
 

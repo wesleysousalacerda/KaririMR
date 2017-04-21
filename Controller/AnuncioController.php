@@ -1,7 +1,7 @@
 <?php
 
 if(file_exists("../DAL/AnuncioDAO.php")){
-require_once("DAL/AnuncioDAO.php");
+require_once("../DAL/AnuncioDAO.php");
 }elseif(file_exists("DAL/AnuncioDAO.php")){
 require_once("DAL/AnuncioDAO.php");
 }

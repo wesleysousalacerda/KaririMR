@@ -58,12 +58,12 @@
 
                 <!---->
                 <div class="boxDireita grid-parent grid-100">
-                    <p>Ericlis eh gay</p>
+                    <p>aaaaa</p>
                 </div>
 
                 <!---->
                 <div class="boxDireita grid-parent grid-100">
-                    <p>Luis eh veaco</p>
+                    <p>Luis eh </p>
                     <p>O GP eh top</p>
                 </div>
             </div>

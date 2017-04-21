@@ -38,6 +38,10 @@ class UsuarioController {
         }
     }
 
+    public function RetornarTodosUsuarios() {
+        return $this->usuarioDAO->RetornarTodosUsuarios();
+    }
+
     public function RetornaCod(int $usuarioCod) {
         if ($usuarioCod > 0) {
             return $this->usuarioDAO->RetornaCod($usuarioCod);

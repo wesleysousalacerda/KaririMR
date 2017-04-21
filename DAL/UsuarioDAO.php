@@ -107,6 +107,34 @@ class UsuarioDAO {
             return null;
         }
     }
+    public function RetornarTodosUsuarios() {
+        try {
+            $sql = "";
+            $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario ORDER BY nome ASC";
+
+            $dataTable = $this->pdo->ExecuteQuery($sql,NULL);
+
+            $listaUsuarioTodos = [];
+
+            foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
+                $usuario = new Usuario(); // Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
+                $usuario->setCod($resultado["cod"]);
+                $usuario->setNome($resultado["nome"]);
+                $usuario->setStatus($resultado["status"]);
+                $usuario->setPermissao($resultado["permissao"]);
+                $usuario->setUsuario($resultado["usuario"]);
+
+                $listaUsuarioTodos[] = $usuario;
+            }
+
+            return $listaUsuarioTodos;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
 
     public function RetornaCod(int $usuarioCod) {
         try {
