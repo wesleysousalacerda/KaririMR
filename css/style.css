@@ -6,6 +6,29 @@
     font-size: 1em;
 }
 
+
+h1{
+    font-size: 2em;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.line{
+    margin:10px;
+    border-bottom: 1px solid #CCC;
+}
+
+.linha{
+    margin-top:10px;    
+}
+
+
+.coluna{
+    margin-top:10px;
+}
+
 /*dvTopo*/
 #dvTopo{
     background-color: #A9A9A9;
@@ -153,7 +176,7 @@
     border-bottom:1px solid #d4d4d4;
 }
 .imgGridCategoria{
-   text-align: center; 
+    text-align: center; 
 }
 
 .imgGridCategoria img{
@@ -193,5 +216,32 @@
 .paginacao ul li a:hover, paginacao ul li a:active{
     box-shadow: 0 0 7px #0288D1;
 }
-    
-    
+
+/*formcontroles*/
+
+.formcontroles input[type=text], .formcontroles input[type=password], .formcontroles select{
+    width: 100%;
+    padding:5px;
+    outline-color: blue;
+}
+
+.btn-padrao{
+    padding:5px;
+    background-color: #34ce7a;
+    border:1px solid #0f8746;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+}
+
+.btn-padrao:hover{
+    box-shadow: 0 0 5px #111;
+}
+
+@media (max-width: 480px) {
+    .btn-padrao{
+        width:100%;
+    }
+
+}
+
