@@ -138,4 +138,52 @@
             }
         }
     }
+    
+    String.prototype.replaceAll = String.prototype.replaceAll || function (needle, replacement) {
+        return this.split(needle).join(replacement);
+    };
+    
+//http://www.devmedia.com.br/validar-cpf-com-javascript/23916
+    function ValidaCPF(strCPF) {
+        var arrayNumerosInvalidos = ["11111111111", "22222222222", "33333333333", "44444444444", "55555555555", "66666666666", "77777777777", "88888888888", "99999999999"];
+        var CPFDigitosValid = true;
+        strCPF = strCPF.replaceAll(".", "");
+        strCPF = strCPF.replaceAll("-", "");
+        strCPF.trim(); //remover espaços
+
+        for (var i = 0; i < arrayNumerosInvalidos.length; i++) {
+            if (strCPF == arrayNumerosInvalidos[i]) {
+                CPFDigitosValid = false;
+            }
+        }
+
+        if (CPFDigitosValid) {
+
+            //https://www.w3schools.com/jsref/jsref_trim_string.asp
+
+            var Soma;
+            var Resto;
+            Soma = 0;
+            if (strCPF == "00000000000")
+                return false;
+            for (i = 1; i <= 9; i++)
+                Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+            Resto = (Soma * 10) % 11;
+            if ((Resto == 10) || (Resto == 11))
+                Resto = 0;
+            if (Resto != parseInt(strCPF.substring(9, 10)))
+                return false;
+            Soma = 0;
+            for (i = 1; i <= 10; i++)
+                Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+            Resto = (Soma * 10) % 11;
+            if ((Resto == 10) || (Resto == 11))
+                Resto = 0;
+            if (Resto != parseInt(strCPF.substring(10, 11)))
+                return false;
+            return true;
+        } else {
+            return false;
+        }
+    }
 </script>
