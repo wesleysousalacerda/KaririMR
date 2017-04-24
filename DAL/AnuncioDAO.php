@@ -146,8 +146,8 @@ class AnuncioDAO {
     public function RetornarCompletoCod($cod) {
         try {
             $sql = "SELECT a.nome as anunnome, a.descricao, a.tipo, a.valor, a.status, a.perfil, ca.nome as catnome, u.nome as usnome FROM anuncio a " .
-                    "INNER JOIN categoria ca ON ca.cod = c.categoria_cod " .
-                    "INNER JOIN usuario u ON u.cod = c.usuario_cod " .
+                    "INNER JOIN categoria ca ON ca.cod = a.categoria_cod " .
+                    "INNER JOIN usuario u ON u.cod = a.usuario_cod " .
                     "WHERE a.cod = :cod";
             $param = array(
                 ":cod" => $cod

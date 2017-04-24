@@ -96,6 +96,29 @@ class CategoriaDAO {
             return null;
         }
     }
+    public function RetornarCategorias() {
+        try {
+            $sql = "SELECT cod, nome, categoria_cod FROM categoria ORDER BY categoria_cod, nome ASC"; //Categorias PAI e FILHO
+
+            $dt = $this->pdo->ExecuteQuery($sql);
+            $listaCategoria = [];
+
+            foreach ($dt as $cat) {
+                $categoria = new Categoria();
+                $categoria->setCod($cat["cod"]);
+                $categoria->setNome($cat["nome"]);
+                $categoria->setSubcategoria($cat["categoria_cod"]);
+                $listaCategoria[] = $categoria;
+            }
+
+            return $listaCategoria;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
 
     public function RetornarTodosCat() {
         try {
