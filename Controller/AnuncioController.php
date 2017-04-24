@@ -61,7 +61,7 @@ class AnuncioController {
     
     public function RetornarPesquisa(int $categoriaCod, string $termo) {
         if (strlen($termo) >= 3 && $categoriaCod > 0) {
-            return $this->anuncioDAO->RetornarCompletoCod($categoriaCod, $termo);
+            return $this->anuncioDAO->RetornarPesquisa($categoriaCod, $termo);
         } else {
             return null;
         }

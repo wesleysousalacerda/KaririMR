@@ -6,7 +6,7 @@ $(document).ready(function () {
         var termo = $("#txtBusca").val();
         var categoria = $("#slBusca").val();
         if (termo.length >= 3) {
-            document.location.href = "?pagina=categoria&termo=" + termo + "&cat=" + categoria;
+            document.location.href = "?pagina=categoria&cat=" + categoria + "&termo=" + termo;
         }else{
             alert("Informe pelo menos  três caracteres!");
         }

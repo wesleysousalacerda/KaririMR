@@ -177,10 +177,10 @@ public function RetornarCompletoCod($cod) {
     }
       public function RetornarPesquisa(int $categoriaCod, string $termo) {
         try {
-            $sql = "SELECT anun.nome, SUBSTR (anun.descricao, 0, 250), (SELECT imagem FROM imagens WHERE anuncio_cod  = anun.cod ORDER BY cod ASC LIMIT 1) as img FROM anuncio anun WHERE anun.categoria_cod = :categoria_cod AND nome LIKE :termo AND anun.status = 1"; 
+            $sql = "SELECT anun.nome,anun.descricao, (SELECT imagem FROM imagens WHERE anuncio_cod = anun.cod ORDER BY cod ASC LIMIT 1) as img FROM anuncio anun WHERE anun.categoria_cod = :categoriaCod AND anun.nome LIKE :termo AND anun.status = 1"; 
             $param = array(
-                ":categoria_cod" => $categoriaCod,
-                ":termo" => $termo
+                ":categoriaCod" => $categoriaCod,
+                ":termo" => "%{$termo}%"
             );
 
             $dt = $this->pdo->ExecuteQuery($sql, $param);   
@@ -192,7 +192,7 @@ public function RetornarCompletoCod($cod) {
                 $anuncioConsulta->setDescricao($dr["descricao"]);
                 $anuncioConsulta->setImagem($dr["img"]);
                 
-                $listaAnuncio[] = $classificdoConsulta;
+                $listaAnuncio[] = $anuncioConsulta;
             }
 
             return $listaAnuncio;
