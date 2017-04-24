@@ -63,8 +63,8 @@
 
                 <!---->
                 <div class="boxDireita grid-parent grid-100">
-                    <p>Luis eh </p>
-                    <p>O GP eh top</p>
+                    <p>Patrocinado</p>
+                    <p>Patrocinio</p>
                 </div>
             </div>
         </div>

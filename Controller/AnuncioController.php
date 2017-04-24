@@ -60,6 +60,7 @@ class AnuncioController {
     }
 
     public function RetornarQuantidadeRegistros(int $categoriaCod, string $termo) {
+<<<<<<< HEAD
         if (strlen($termo) >= 3 && $categoriaCod > 0) {
             return $this->anuncioDAO->RetornarQuantidadeRegistros($categoriaCod, $termo);
         } else {
@@ -69,11 +70,39 @@ class AnuncioController {
 
     public function RetornarPesquisa(int $categoriaCod, string $termo, int $inicio, int $fim) {
         if (strlen($termo) >= 3 && $categoriaCod > 0) {
+=======
+        if (strlen($termo) >= 3 && $categoriaCod > 0) {
+            return $this->anuncioDAO->RetornarQuantidadeRegistros($categoriaCod, $termo);
+        } else {
+            return 0;
+        }
+    }
+    public function RetornarQuantidadeRegistrosCat(int $categoriaCod) {
+        if ( $categoriaCod > 0) {
+            return $this->anuncioDAO->RetornarQuantidadeRegistrosCat($categoriaCod);
+        } else {
+            return 0;
+        }
+    }
+
+    public function RetornarPesquisa(int $categoriaCod, string $termo, int $inicio, int $fim) {
+        if (strlen($termo) >= 1 && $categoriaCod > 0) {
+>>>>>>> refs/remotes/origin/prod
             return $this->anuncioDAO->RetornarPesquisa($categoriaCod, $termo, $inicio, $fim);
         } else {
             return null;
         }
     }
+<<<<<<< HEAD
+=======
+     public function RetornarPesquisaCat(int $categoriaCod, int $inicio, int $fim) {
+        if ($categoriaCod > 0) {
+            return $this->anuncioDAO->RetornarPesquisaCat($categoriaCod, $inicio, $fim);
+        } else {
+            return null;
+        }
+    }
+>>>>>>> refs/remotes/origin/prod
 
     public function RetornarAnuncioCod(int $cod) {
         if ($cod > 0) {
