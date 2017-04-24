@@ -47,7 +47,7 @@ function MontarSelectCategoria(data) {
 
     var optionDefault = document.createElement("option");
     optionDefault.setAttribute("selected", "selected");
-    optionDefault.innerText = "Selecione";
+    optionDefault.innerText = "Categoria: ";
 
     slBusca.appendChild(optionDefault);
 

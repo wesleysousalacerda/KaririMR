@@ -23,11 +23,13 @@
             <div class="grid-container">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="?pagina=cadastro">Cadastro</a></li>
+                    <li><a href="?pagina=anuncie.php">Anuncie</a></li>
+                    <li><a href="?pagina=cadastro">Cadastre-se</a></li>
                     <li><a href="?pagina=categoria">Categorias</a></li>
                     <li><a href="?pagina=termodeuso">Termos de uso</a></li>
                     <li><a href="?pagina=quemsomos">Quem somos</a></li>
-                    <li><a href="?pagina=contato">Contato</a></li>                    
+                    <li><a href="?pagina=contato">Contato</a></li>
+                    <li><a href="?pagina=Login">Login</a></li>                     
                 </ul> 
             </div>
         </div>
@@ -37,9 +39,9 @@
             <div class="grid-60 mobile-grid-100 suffix-10" id="dvEsquerda">
                 <!--Menu Pesquisa-->
                 <div class="grid-parent grid-100" id="boxBusca">
-                    <input type="text" id="txtBusca" placeholder="Buscar" />
+                    <input type="text" id="txtBusca" placeholder="Buscar  anúncios:" />
                     <select id="slBusca"></select>
-                    <button id="btnBuscar">Buscar</button>
+                    <button  id="btnBuscar">Buscar:</button>
                 </div>
                 <?php
                 require_once("Util/ResquestPageSite.php");
@@ -58,7 +60,7 @@
 
                 <!---->
                 <div class="boxDireita grid-parent grid-100">
-                    <p>aaaaa</p>
+                    <p>Ofertas:</p>
                 </div>
 
                 <!---->
