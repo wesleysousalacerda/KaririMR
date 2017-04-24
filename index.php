@@ -9,6 +9,8 @@
         <link href="css/unsemantic-grid-responsive.css" rel="stylesheet" media="all" />
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="shortcut icon" href="img/favicon.ico" />
+        <script src="js/script.js" type="text/javascript"></script>
+
     </head>
     <body>
         <!--Topo do site-->
@@ -33,20 +35,18 @@
         <!--Conteúdo centro do site-->
         <div id="dvConteudo" class="grid-container">
             <div class="grid-60 mobile-grid-100 suffix-10" id="dvEsquerda">
-                <?php
-                
-                require_once("Util/ResquestPageSite.php");
-                ?>
-            </div>
-
-            <div class="grid-30 mobile-grid-100" id="dvDireita">
                 <!--Menu Pesquisa-->
-                <div class="boxDireita grid-parent grid-100">
+                <div class="grid-parent grid-100" id="boxBusca">
                     <input type="text" id="txtBusca" placeholder="Buscar" />
-                    <br />
+                    <select id="slBusca"></select>
                     <button id="btnBuscar">Buscar</button>
                 </div>
+                <?php
+                require_once("Util/ResquestPageSite.php");
+                ?>
+            </div> 
 
+            <div class="grid-30 mobile-grid-100" id="dvDireita">
                 <!--Redes sociais-->
                 <div class="boxDireita grid-parent grid-100" id="iconesSociais">
                     <a href=""><img src="img/social/facebook.png" alt=""/></a>
@@ -58,12 +58,12 @@
 
                 <!---->
                 <div class="boxDireita grid-parent grid-100">
-                    <p>Ericlis eh gay</p>
+                    <p>aaaaa</p>
                 </div>
 
                 <!---->
                 <div class="boxDireita grid-parent grid-100">
-                    <p>Luis eh veaco</p>
+                    <p>Luis eh </p>
                     <p>O GP eh top</p>
                 </div>
             </div>
@@ -73,7 +73,7 @@
         <div id="dvRodape">
             <div class="grid-container">
                 <div class="grid-100">
-                   <p>&copy; Kariri Multi Revendedoras- Todos os Direitos Reservados</p>  
+                    <p>&copy; Kariri Multi Revendedoras- Todos os Direitos Reservados</p>  
                 </div>
             </div>
         </div>

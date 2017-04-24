@@ -1,6 +1,11 @@
 <?php
 
-require_once("../DAL/anuncioDAO.php");
+if(file_exists("../DAL/AnuncioDAO.php")){
+require_once("../DAL/AnuncioDAO.php");
+}elseif(file_exists("DAL/AnuncioDAO.php")){
+require_once("DAL/AnuncioDAO.php");
+}
+
 
 class AnuncioController {
 
@@ -34,6 +39,9 @@ class AnuncioController {
             return null;
         }
     }
+    public function RetornarTodosAnuncios() {
+    return $this->anuncioDAO->RetornarTodosAnuncios();
+    }
 
     public function RetornarCod(int $cod) {
         if ($cod > 0) {
@@ -46,6 +54,14 @@ class AnuncioController {
     public function RetornarCompletoCod($cod) {
         if ($cod > 0) {
             return $this->anuncioDAO->RetornarCompletoCod($cod);
+        } else {
+            return null;
+        }
+    }
+    
+    public function RetornarPesquisa(int $categoriaCod, string $termo) {
+        if (strlen($termo) >= 3 && $categoriaCod > 0) {
+            return $this->anuncioDAO->RetornarPesquisa($categoriaCod, $termo);
         } else {
             return null;
         }
