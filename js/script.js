@@ -5,10 +5,11 @@ $(document).ready(function () {
         
         var termo = $("#txtBusca").val();
         var categoria = $("#slBusca").val();
-        if (termo.length >= 3) {
+        if (termo.length >= 1 && categoria >=1) {
             document.location.href = "?pagina=categoria&cat=" + categoria + "&termo=" + termo;
         }else{
-            alert("Informe pelo menos  três caracteres!");
+            termo = null;
+            document.location.href = "?pagina=categoria&cat=" + categoria;
         }
     });
 

@@ -201,6 +201,28 @@ class AnuncioDAO {
             return null;
         }
     }
+     public function RetornarQuantidadeRegistrosCat(int $categoriaCod) {
+        try {
+            $sql = "SELECT count(anun.cod) as total FROM anuncio anun WHERE anun.categoria_cod = :categoriacod AND anun.status = 1";
+
+            $param = array(
+                ":categoriacod" => $categoriaCod,
+            );
+
+            $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
+            if ($dr["total"] != null) {
+                return $dr["total"];
+            } else {
+                return 0;
+            }
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
 
     public function RetornarPesquisa(int $categoriaCod, string $termo, int $inicio, int $fim) {
         try {
@@ -209,6 +231,35 @@ class AnuncioDAO {
             $param = array(
                 ":categoriacod" => $categoriaCod,
                 ":termo" => "%{$termo}%",
+                ":inicio" => $inicio,
+                ":fim" => $fim
+            );
+
+            $dt = $this->pdo->ExecuteQuery($sql, $param);
+            $listaAnuncio = [];
+            foreach ($dt as $dr) {
+                $anuncioConsulta = new AnuncioConsulta();
+                $anuncioConsulta->setCod($dr["cod"]);
+                $anuncioConsulta->setNome($dr["nome"]);
+                $anuncioConsulta->setDescricao($dr["descricao"]);
+                $anuncioConsulta->setImagem($dr["img"]);
+
+                $listaAnuncio[] = $anuncioConsulta;
+            }
+
+            return $listaAnuncio;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+    public function RetornarPesquisaCat(int $categoriaCod, int $inicio, int $fim) {
+        try {
+            $sql = "SELECT anun.cod, anun.nome, anun.descricao, (SELECT imagem FROM imagens WHERE anuncio_cod = anun.cod ORDER BY cod ASC LIMIT 1) as img FROM anuncio anun WHERE anun.categoria_cod = :categoriacod AND anun.status = 1 LIMIT :inicio, :fim";
+            $param = array(
+                ":categoriacod" => $categoriaCod,
                 ":inicio" => $inicio,
                 ":fim" => $fim
             );

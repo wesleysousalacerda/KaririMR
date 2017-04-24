@@ -66,10 +66,24 @@ class AnuncioController {
             return 0;
         }
     }
+    public function RetornarQuantidadeRegistrosCat(int $categoriaCod) {
+        if ( $categoriaCod > 0) {
+            return $this->anuncioDAO->RetornarQuantidadeRegistrosCat($categoriaCod);
+        } else {
+            return 0;
+        }
+    }
 
     public function RetornarPesquisa(int $categoriaCod, string $termo, int $inicio, int $fim) {
-        if (strlen($termo) >= 3 && $categoriaCod > 0) {
+        if (strlen($termo) >= 1 && $categoriaCod > 0) {
             return $this->anuncioDAO->RetornarPesquisa($categoriaCod, $termo, $inicio, $fim);
+        } else {
+            return null;
+        }
+    }
+     public function RetornarPesquisaCat(int $categoriaCod, int $inicio, int $fim) {
+        if ($categoriaCod > 0) {
+            return $this->anuncioDAO->RetornarPesquisaCat($categoriaCod, $inicio, $fim);
         } else {
             return null;
         }
