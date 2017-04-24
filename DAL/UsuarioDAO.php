@@ -107,12 +107,13 @@ class UsuarioDAO {
             return null;
         }
     }
+
     public function RetornarTodosUsuarios() {
         try {
             $sql = "";
             $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario ORDER BY nome ASC";
 
-            $dataTable = $this->pdo->ExecuteQuery($sql,NULL);
+            $dataTable = $this->pdo->ExecuteQuery($sql, NULL);
 
             $listaUsuarioTodos = [];
 
@@ -201,9 +202,9 @@ class UsuarioDAO {
     public function AlterarSenha(string $senha, int $cod) {
         try {
             $sql = "UPDATE usuario SET senha = :senha WHERE cod = :cod";
-            $param = array (
-            ":senha" => md5($senha),
-            ":cod" => $cod
+            $param = array(
+                ":senha" => md5($senha),
+                ":cod" => $cod
             );
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
@@ -214,6 +215,30 @@ class UsuarioDAO {
         }
     }
 
+    //____________Validar dados existentes_________________________\\
+    public function VerificaUsuarioExiste(string $user) {
+        try {
+            $sql = "SELECT usuario FROM usuario WHERE usuario = :usuario";
+
+            $param = array(
+                ":usuario" => $user
+            );
+
+            $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
+
+            if (!empty($dr)) {
+                return 1;
+            } else {
+                return -1;
+            }
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
 }
 
 ?>
