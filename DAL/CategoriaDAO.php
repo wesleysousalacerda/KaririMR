@@ -85,15 +85,8 @@ class CategoriaDAO {
     public function RetornarCategorias() {
         try {
             $sql = "SELECT cod, nome, categoria_cod FROM categoria ORDER BY categoria_cod, nome ASC"; //Categorias PAI e FILHO
-<<<<<<< HEAD
-
             $dt = $this->pdo->ExecuteQuery($sql);
             $listaCategoria = [];
-
-=======
-            $dt = $this->pdo->ExecuteQuery($sql);
-            $listaCategoria = [];
->>>>>>> refs/remotes/origin/prod
             foreach ($dt as $cat) {
                 $categoria = new Categoria();
                 $categoria->setCod($cat["cod"]);
@@ -101,10 +94,6 @@ class CategoriaDAO {
                 $categoria->setSubcategoria($cat["categoria_cod"]);
                 $listaCategoria[] = $categoria;
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/prod
             return $listaCategoria;
         } catch (PDOException $ex) {
             if ($this->debug) {
@@ -113,10 +102,6 @@ class CategoriaDAO {
             return null;
         }
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/prod
     public function RetornarTodosCat() {
         try {
             $sql = "SELECT cod, nome, categoria_cod, thumb, descricao, link FROM categoria WHERE categoria_cod IS NULL ORDER BY nome ASC"; //Categorias PAI
