@@ -1,11 +1,20 @@
 <?php
 
 class AnuncioConsulta{
+    private $cod;
     private $nome;
     private $descricao;
     private $imagem;
     
-    function getNome() {
+    function getCod() {
+        return $this->cod;
+    }
+
+    function setCod($cod) {
+        $this->cod = $cod;
+    }
+
+        function getNome() {
         return $this->nome;
     }
 
@@ -31,5 +40,4 @@ class AnuncioConsulta{
 
 }
 ?>
-}
 

@@ -85,10 +85,9 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
     $perfil = $anuncio->getPerfil();
     $tipo = $anuncio->getTipo();
     $valor = number_format($anuncio->getValor(), 2, ",", ".");
-    echo $valor;
 }
 
-$listaResumida = $categoriaController->RetornarCategoriasResumido();
+$listaCategoria = $categoriaController->RetornarCategorias();
 ?>
 <div id="dvAnuncioView">
     <h1>Gerenciar Anúncios</h1>
@@ -152,7 +151,7 @@ $listaResumida = $categoriaController->RetornarCategoriasResumido();
                             <select class="form-control" id="slCategoria" name="slCategoria">
                                 <option value="">Selecione</option>
                                 <?php
-                                foreach ($listaResumida as $cat) {
+                                foreach ($listaCategoria as $cat) {
                                     ?>
                                     <option value="<?= $cat->getCod() ?>" <?= ($ctg == $cat->getCod() ? "selected='selected'" : "") ?> <?= ($cat->getSubcategoria() == null ? "style='font-weight: bold;'" : "") ?>><?= $cat->getNome() ?></option>
                                 <?php } ?>
@@ -240,7 +239,7 @@ $listaResumida = $categoriaController->RetornarCategoriasResumido();
                             <select class="form-control" id="slCategoriaBusca" name="slCategoriaBusca">
                                 <option value="">Selecione</option>
                                 <?php
-                                foreach ($listaResumida as $cat) {
+                                foreach ($listaCategoria as $cat) {
                                     ?>
                                     <option value="<?= $cat->getCod() ?>" <?= ($ctg == $cat->getCod() ? "selected='selected'" : "") ?> <?= ($cat->getSubcategoria() == null ? "style='font-weight: bold;'" : "") ?>><?= $cat->getNome() ?></option>
                                 <?php } ?>

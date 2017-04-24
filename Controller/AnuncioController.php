@@ -1,11 +1,10 @@
 <?php
 
-if(file_exists("../DAL/AnuncioDAO.php")){
-require_once("../DAL/AnuncioDAO.php");
-}elseif(file_exists("DAL/AnuncioDAO.php")){
-require_once("DAL/AnuncioDAO.php");
+if (file_exists("../DAL/AnuncioDAO.php")) {
+    require_once("../DAL/AnuncioDAO.php");
+} elseif (file_exists("DAL/AnuncioDAO.php")) {
+    require_once("DAL/AnuncioDAO.php");
 }
-
 
 class AnuncioController {
 
@@ -39,8 +38,9 @@ class AnuncioController {
             return null;
         }
     }
+
     public function RetornarTodosAnuncios() {
-    return $this->anuncioDAO->RetornarTodosAnuncios();
+        return $this->anuncioDAO->RetornarTodosAnuncios();
     }
 
     public function RetornarCod(int $cod) {
@@ -58,10 +58,26 @@ class AnuncioController {
             return null;
         }
     }
-    
-    public function RetornarPesquisa(int $categoriaCod, string $termo) {
+
+    public function RetornarQuantidadeRegistros(int $categoriaCod, string $termo) {
         if (strlen($termo) >= 3 && $categoriaCod > 0) {
-            return $this->anuncioDAO->RetornarPesquisa($categoriaCod, $termo);
+            return $this->anuncioDAO->RetornarQuantidadeRegistros($categoriaCod, $termo);
+        } else {
+            return 0;
+        }
+    }
+
+    public function RetornarPesquisa(int $categoriaCod, string $termo, int $inicio, int $fim) {
+        if (strlen($termo) >= 3 && $categoriaCod > 0) {
+            return $this->anuncioDAO->RetornarPesquisa($categoriaCod, $termo, $inicio, $fim);
+        } else {
+            return null;
+        }
+    }
+
+    public function RetornarAnuncioCod(int $cod) {
+        if ($cod > 0) {
+            return $this->anuncioDAO->RetornarAnuncioCod($cod);
         } else {
             return null;
         }

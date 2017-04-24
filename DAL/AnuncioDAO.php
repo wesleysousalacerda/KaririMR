@@ -92,10 +92,11 @@ class AnuncioDAO {
             return null;
         }
     }
+
     public function RetornarTodosAnuncios() {
         try {
             $sql = "SELECT cod, nome, status FROM anuncio ORDER BY nome ASC";
-            $dt = $this->pdo->ExecuteQuery($sql,NULL);
+            $dt = $this->pdo->ExecuteQuery($sql, NULL);
             $listaAnuncio = [];
 
             foreach ($dt as $dr) {
@@ -141,12 +142,13 @@ class AnuncioDAO {
             return null;
         }
     }
-public function RetornarCompletoCod($cod) {  
+
+    public function RetornarCompletoCod($cod) {
         try {
-            $sql = "SELECT c.nome as clanome, c.descricao, c.tipo, c.valor, c.status, c.perfil, ca.nome as catnome, u.nome as usnome FROM anuncio c " .
-                    "INNER JOIN categoria ca ON ca.cod = c.categoria_cod " .
-                    "INNER JOIN usuario u ON u.cod = c.usuario_cod " .
-                    "WHERE c.cod = :cod";
+            $sql = "SELECT a.nome as anunnome, a.descricao, a.tipo, a.valor, a.status, a.perfil, ca.nome as catnome, u.nome as usnome FROM anuncio a " .
+                    "INNER JOIN categoria ca ON ca.cod = a.categoria_cod " .
+                    "INNER JOIN usuario u ON u.cod = a.usuario_cod " .
+                    "WHERE a.cod = :cod";
             $param = array(
                 ":cod" => $cod
             );
@@ -158,7 +160,7 @@ public function RetornarCompletoCod($cod) {
 
             $anuncio = new Anuncio();
 
-            $anuncio->setNome($dr["clanome"]);
+            $anuncio->setNome($dr["anunnome"]);
             $anuncio->setDescricao($dr["descricao"]);
             $anuncio->setTipo($dr["tipo"]);
             $anuncio->setValor($dr["valor"]);
@@ -175,23 +177,51 @@ public function RetornarCompletoCod($cod) {
             return null;
         }
     }
-      public function RetornarPesquisa(int $categoriaCod, string $termo) {
+
+    public function RetornarQuantidadeRegistros(int $categoriaCod, string $termo) {
         try {
-            $sql = "SELECT anun.nome,anun.descricao, (SELECT imagem FROM imagens WHERE anuncio_cod = anun.cod ORDER BY cod ASC LIMIT 1) as img FROM anuncio anun WHERE anun.categoria_cod = :categoriaCod AND anun.nome LIKE :termo AND anun.status = 1"; 
+            $sql = "SELECT count(anun.cod) as total FROM anuncio anun WHERE anun.categoria_cod = :categoriacod AND anun.nome LIKE :termo AND anun.status = 1";
+
             $param = array(
-                ":categoriaCod" => $categoriaCod,
+                ":categoriacod" => $categoriaCod,
                 ":termo" => "%{$termo}%"
             );
 
-            $dt = $this->pdo->ExecuteQuery($sql, $param);   
+            $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
+            if ($dr["total"] != null) {
+                return $dr["total"];
+            } else {
+                return 0;
+            }
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+
+    public function RetornarPesquisa(int $categoriaCod, string $termo, int $inicio, int $fim) {
+        try {
+            $sql = "SELECT anun.cod, anun.nome, anun.descricao, (SELECT imagem FROM imagens WHERE anuncio_cod = anun.cod ORDER BY cod ASC LIMIT 1) as img FROM anuncio anun WHERE anun.categoria_cod = :categoriacod AND anun.nome LIKE :termo AND anun.status = 1 LIMIT :inicio, :fim";
+
+            $param = array(
+                ":categoriacod" => $categoriaCod,
+                ":termo" => "%{$termo}%",
+                ":inicio" => $inicio,
+                ":fim" => $fim
+            );
+
+            $dt = $this->pdo->ExecuteQuery($sql, $param);
             $listaAnuncio = [];
-            
-            foreach($dt as $dr) {
+            foreach ($dt as $dr) {
                 $anuncioConsulta = new AnuncioConsulta();
+                $anuncioConsulta->setCod($dr["cod"]);
                 $anuncioConsulta->setNome($dr["nome"]);
                 $anuncioConsulta->setDescricao($dr["descricao"]);
                 $anuncioConsulta->setImagem($dr["img"]);
-                
+
                 $listaAnuncio[] = $anuncioConsulta;
             }
 
@@ -203,6 +233,35 @@ public function RetornarCompletoCod($cod) {
             return null;
         }
     }
+        public function RetornarAnuncioCod(int $cod) {
+        try {
+            $sql = "SELECT anun.cod, anun.nome, anun.descricao, anun.tipo, anun.valor, cat.nome as catnome, us.nome as usnome, us.email usemail FROM anuncio anun INNER JOIN categoria cat ON cat.cod = anun.categoria_cod INNER JOIN usuario us ON us.cod = anun.usuario_cod WHERE anun.cod = :cod AND anun.status = 1";
+            $param = array(
+                ":cod" => $cod
+            );
+            $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
+            $anuncio = new Anuncio();
+            $anuncio->setCod($dr["cod"]);
+            $anuncio->setNome($dr["nome"]);
+            $anuncio->setDescricao($dr["descricao"]);
+            $anuncio->setTipo($dr["tipo"]);
+            $anuncio->setValor($dr["valor"]);
+            //Anuncio
+            $anuncio->getCategoria()->setNome($dr["catnome"]);
+            //Usuário
+            $anuncio->getUsuario()->setNome($dr["usnome"]);
+            $anuncio->getUsuario()->setEmail($dr["usemail"]);
+
+            return $anuncio;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+
 }
 
 ?>
