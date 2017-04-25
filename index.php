@@ -41,7 +41,7 @@
                 <div class="grid-parent grid-100" id="boxBusca">
                     <input type="text" id="txtBusca" placeholder="Buscar  anúncios:" />
                     <select id="slBusca"></select>
-                    <button  id="btnBuscar">Buscar:</button>
+                    <button  id="btnBuscar">Buscar</button>
                 </div>
                 <?php
                 require_once("Util/ResquestPageSite.php");

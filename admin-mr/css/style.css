@@ -139,6 +139,10 @@ ul{
 
 #ulMenu li:hover{
     background-color: #EFEFEF;
+  
+    
+}
+#ulMenu li a:hover{
     color: #233237;
     
 }
@@ -159,7 +163,7 @@ ul{
 }
 
 #ulMenuResponsive li{
-    font-size: 1.125em;
+    font-size: 1.25em;
     border-bottom: 1px solid #111;
 }
 
