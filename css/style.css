@@ -238,6 +238,10 @@ h1{
     box-shadow: 0 0 5px #111;
 }
 
+.term{
+    font-size: 0.6em;
+    text-align: justify; 
+}
 @media (max-width: 480px) {
     .btn-padrao{
         width:100%;

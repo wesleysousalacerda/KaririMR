@@ -1,11 +1,71 @@
+<?php
+require_once ("Controller/AnuncioController.php");
+require_once ("Model/ViewModel/AnuncioConsulta.php");
+$anuncioController = new AnuncioController();
+$totalRegistros = $anuncioController->RetornarQuantidadeRegistrosTotal(); // Retorna todos os registros ativos
+
+$totalAnunciosPagina = 5; //Alterar para mais
+$paginaAtual = 1;
+
+if (filter_input(INPUT_GET, "pag", FILTER_SANITIZE_NUMBER_INT)) {
+    $paginaAtual = filter_input(INPUT_GET, "pag", FILTER_SANITIZE_NUMBER_INT);
+}
+$fim = ($paginaAtual * $totalAnunciosPagina);
+$inicio = ($fim - $totalAnunciosPagina);
+$listaConsulta = $anuncioController->RetornarPesquisaTotal($inicio, $totalAnunciosPagina);
+?>   
 <div id="dvHome">
     <h1>Bem-vindo</h1>
+    <h2>Ao maior site de revendas de automóveis do Cariri.</h2>
     <br />
-    <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt enim eu ligula hendrerit, id gravida lacus elementum. Vivamus efficitur consectetur leo at facilisis. Proin vitae ex id lorem faucibus suscipit. Mauris vitae nunc porta, tempus turpis at, vehicula tellus. Cras sit amet libero aliquet, egestas justo id, accumsan lectus. Curabitur tempus ac tellus ut blandit. Ut ornare vel neque a lacinia. In vitae turpis dictum tellus tincidunt ultrices. Fusce sem justo, ultricies a urna a, interdum varius leo. Donec ut lorem ante. Quisque id lobortis sapien. Suspendisse pharetra diam eget magna maximus pulvinar.</p>
-        <br>
-        <p>Praesent maximus ut justo ac rhoncus. Donec elementum nisl id justo condimentum faucibus. Etiam hendrerit nibh ex, nec porttitor massa mollis a. Integer commodo sapien vitae nunc faucibus, at vulputate arcu tristique. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin hendrerit vehicula purus a mattis. Sed luctus felis iaculis sapien condimentum, a imperdiet ante ultricies. Quisque quis suscipit est. Aenean tempor erat eget nisl volutpat, vel pellentesque felis ultricies.</p>
-        <br>
-        <p>Integer sit amet imperdiet libero, a pulvinar elit. Aenean et efficitur risus. Aliquam hendrerit arcu in purus venenatis, sed maximus est dignissim. Morbi fringilla tincidunt ex in vehicula. In eget augue tincidunt, interdum arcu quis, facilisis ipsum. Aliquam erat volutpat. In vitae libero nibh. Vestibulum vehicula quam eget aliquet auctor. Vivamus non sollicitudin leo, ut ultricies lectus. Pellentesque pharetra vestibulum ante vel vestibulum. Aenean a lobortis metus. Proin vitae felis sed nibh dignissim euismod vitae non mi. Quisque tempor elit ac posuere consectetur. Pellentesque tempus ornare accumsan. Ut nec eleifend purus, sed suscipit lectus. Vivamus elementum semper quam ut tincidunt.</p>
-    </div>
+    <?php
+    if (isset($listaConsulta)) {
+        if (count($listaConsulta) > 0) {
+            ?>
+            <div id="dvCategoriaItens">
+
+                <?php
+                foreach ($listaConsulta as $anuncioConsulta) {
+                    ?>
+                    <div class="panel grid-100">
+                        <div class="grid-30 mobile-grid-100 imgGridCategoria">
+                            <a href="?pagina=anuncio&cod=<?= $anuncioConsulta->getCod(); ?>"><img src="img/Anuncios/<?= $anuncioConsulta->getImagem(); ?>" alt="<?= $anuncioConsulta->getNome(); ?>"/></a>
+                        </div>
+
+                        <div class="grid-70 mobile-grid-100 conteudoGridCategoria">
+                            <h3><a href="?pagina=anuncio&cod=<?= $anuncioConsulta->getCod(); ?>"><?= $anuncioConsulta->getNome(); ?></a></h3>
+                            <?= $anuncioConsulta->getDescricao(); ?>
+                            <br/><br/>
+                            <p><a href="?pagina=anuncio&cod=<?= $anuncioConsulta->getCod(); ?>" class="btnAcessar">Acessar</a></p>
+                            <br/>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <br />
+                    <?php
+                }
+                ?>
+            </div>
+            <div class="paginacao">
+                <ul>
+                    <?php
+                    $totalNumeracao = ceil($totalRegistros / $totalAnunciosPagina);
+                    $currentPage = filter_input(INPUT_GET, "pag", FILTER_SANITIZE_NUMBER_INT);
+                    for ($i = 0; $i < $totalNumeracao; $i++) {
+                        ?>
+                        <li><a href="?pagina=home&pag=<?= ($i + 1); ?>"><?= ($i + 1); ?></a></li>
+                        <?php
+                    }
+                    ?>
+
+                </ul>
+                <br>
+            </div>
+
+            <?php
+        } else {
+            echo 'Desculpe, Não encontramos nenhum anuncio com o termo ou categoria especificados.';
+        }
+    }
+    ?>
 </div>

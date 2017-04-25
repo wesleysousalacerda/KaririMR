@@ -36,6 +36,7 @@
         <br />
         <!--Conteúdo centro do site-->
         <div id="dvConteudo" class="grid-container">
+            <h3>Filtre sua busca:</h3>
             <div class="grid-60 mobile-grid-100 suffix-10" id="dvEsquerda">
                 <!--Menu Pesquisa-->
                 <div class="grid-parent grid-100" id="boxBusca">
@@ -58,10 +59,7 @@
                 </div>
 
 
-                <!---->
-                <div class="boxDireita grid-parent grid-100">
-                    <p>Ofertas:</p>
-                </div>
+                <a class="imgGridCategoria" href=""><img src="img/anuncieaqui.png" alt="Anuncie Aqui"/></a>
 
                 <!---->
                 <div class="boxDireita grid-parent grid-100">
@@ -70,12 +68,14 @@
                 </div>
             </div>
         </div>
-
+        <br>
         <!--Rodapé do site-->
         <div id="dvRodape">
             <div class="grid-container">
                 <div class="grid-100">
-                    <p>&copy; Kariri Multi Revendedoras- Todos os Direitos Reservados</p>  
+                    <p>&copy; Kariri Multi Revendedoras - Todos os Direitos Reservados</p>
+                    <p class="term">Os vendedores e revendedores que anunciam nesta página são os únicos responsáveis pelas transações comerciais que realizam com usuários do web site kariri Multirevendedoras. A comercialização do produto anunciado, bem como a garantia de sua legítima procedência, é de inteira responsabilidade do anunciante, não sendo o KaririMR responsável por quaisquer danos diretos e/ou indiretos causados a terceiros, advindos da exibição dos anúncios em desacordo com o Código de Defesa do Consumidor e outras legislações aplicáveis ao comércio e/ou prestação de serviços por parte do anunciante. Para oferecer uma melhor experiência de navegação,
+                        o KaririMR utiliza cookies. Ao navegar pelo site você concorda com o uso dos mesmos.</p>
                 </div>
             </div>
         </div>

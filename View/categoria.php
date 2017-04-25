@@ -26,7 +26,7 @@ if (filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT)) {
 ?>
 
 <div id="dvCategoria">
-    <h1>Categorias</h1>
+    <h1>Anúncios</h1>
     <br />
 
 <?php
@@ -75,7 +75,7 @@ if (count($listaConsulta) > 0) {
         </div>
                 <?php
             } else {
-                echo 'Desculpe, Não encontramos nenhum anuncio com o termo especificado.';
+                echo 'Desculpe, Não encontramos nenhum anuncio com o termo ou categoria especificados.';
             }
 }
             ?>
