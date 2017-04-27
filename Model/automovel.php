@@ -9,6 +9,7 @@ class Usuario {
     private $renavam;
     private $marca;
     private $modelo;
+    private $ano;
     private $categoria;
     function getCod() {
         return $this->cod;
@@ -37,7 +38,9 @@ class Usuario {
     function getModelo() {
         return $this->modelo;
     }
-
+    function getAno() {
+        return $this->ano;
+    }
     function getCategoria() {
         return $this->categoria;
     }
@@ -68,6 +71,10 @@ class Usuario {
 
     function setModelo($modelo) {
         $this->modelo = $modelo;
+    }
+    
+    function setAno($ano) {
+        $this->ano = $ano;
     }
 
     function setCategoria($categoria) {
