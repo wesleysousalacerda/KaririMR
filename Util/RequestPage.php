@@ -6,6 +6,7 @@ $arrayPaginas = array(
     "home" => "View/home.php", //Página inicial
     "contato" => "View/ContatoView/ContatoView.php",
     "usuario" => "View/UsuarioView/UsuarioView.php",
+    "automovel" => "View/AutomovelView/AutomovelView.php",
     "endereco" => "View/UsuarioView/EnderecoView.php",
     "telefone" => "View/UsuarioView/TelefoneView.php",
     "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",

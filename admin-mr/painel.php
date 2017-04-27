@@ -58,6 +58,7 @@ if (isset($_SESSION["logado"])) {
                             <li class="firstLine"><a href="painel.php">Inicio</a></li>
                             <li><a href="?pagina=usuario">Usuário</a></li>
                             <li><a href="?pagina=anuncio">Anúncios</a></li>
+                            <li><a href="?pagina=automovel">Automóveis</a></li>
                             <li><a href="?pagina=categoria">Categoria</a></li>
                             <li><a href="?pagina=subcategoria">Subcategoria</a></li>
                             <li><a href="?pagina=contato">Contato</a></li>

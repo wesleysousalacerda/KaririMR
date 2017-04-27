@@ -39,7 +39,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                 ?>
                 <script>
                     document.cookie = "msg=1";
-                    document.location.href = "?pagina=categoria";
+                    document.location.href = "?pagina=subcategoria";
                 </script>
                 <?php
             } else {
