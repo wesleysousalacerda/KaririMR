@@ -60,7 +60,7 @@ class AutomovelDAO {
     public function RetornarTodosAutomoveis() {
         try {
             $sql = "";
-            $sql = "SELECT cod, nome, descricao, placa, renavam, marca, modelo, ano, categoria_cod FROM automovel ORDER BY nome ASC";
+            $sql = "SELECT cod, nome , marca, modelo, ano, categoria_cod FROM automovel ORDER BY nome ASC";
 
             $dataTable = $this->pdo->ExecuteQuery($sql, NULL);
 
@@ -70,9 +70,6 @@ class AutomovelDAO {
                 $automovel = new Automovel(); // Estrutura orientada a objetos, passasse o objeto Automovel, e nao os dados.
                 $automovel->setCod($resultado["cod"]);
                 $automovel->setNome($resultado["nome"]);
-                $automovel->setDescricao($resultado["descricao"]);
-                $automovel->setPlaca($resultado["placa"]);
-                $automovel->setRenavam($resultado["renavam"]);
                 $automovel->setMarca($resultado["marca"]);
                 $automovel->setModelo($resultado["modelo"]);
                 $automovel->setAno($resultado["ano"]);

@@ -1,6 +1,6 @@
 <?php
 
-class Usuario {
+class Automovel {
 
     private $cod;
     private $nome;
@@ -11,6 +11,7 @@ class Usuario {
     private $modelo;
     private $ano;
     private $categoria;
+    
     function getCod() {
         return $this->cod;
     }
