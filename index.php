@@ -29,7 +29,7 @@
                     <li><a href="?pagina=termodeuso">Termos de uso</a></li>
                     <li><a href="?pagina=quemsomos">Quem somos</a></li>
                     <li><a href="?pagina=contato">Contato</a></li>
-                    <li><a href="?pagina=Login">Login</a></li>                     
+                    <li><a href="login.php">Login</a></li>                     
                 </ul> 
             </div>
         </div>

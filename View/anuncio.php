@@ -40,9 +40,11 @@ if ($cod > 0) {
         <p><span class="bold">Valor:</span> <?= number_format($anuncio->getValor(), 2, ",", " "); ?></p>
         <br/>
         <p><span class="bold">Descrição:</span> <?= $anuncio->getDescricao(); ?></p>
-        <?php
-    } else {
-        ?>
+        <button onclick="renavam()">Concultar Renavam</button> 
+        <iframe  style="" id="iframe-servicos" name="iframe" src="http://erenavam.detran.ce.gov.br/getran/consultaInternet.do?method=consultaCompleta" width="300px" height="200" </iframe>
+            <?php
+        } else {
+            ?>
         <h1>Conteúdo não encontrado</h1>
         <br />
         <div>
@@ -55,3 +57,11 @@ if ($cod > 0) {
 
 </div>
 <br />
+<script>
+    $(document).ready(function () {
+    function renavam() {
+    console.log('Passei aqui')
+            document.getElementById("iframe-servicos").style.display = "";
+            }
+    };
+</script>
