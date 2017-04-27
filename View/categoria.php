@@ -1,9 +1,7 @@
 <?php
 if (filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT)) {
-
     require_once ("Controller/AnuncioController.php");
     require_once ("Model/ViewModel/AnuncioConsulta.php");
-
     $anuncioController = new AnuncioController();
     $cat = filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT);
     $termo = filter_input(INPUT_GET, "termo", FILTER_SANITIZE_STRING);
@@ -13,13 +11,10 @@ if (filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT)) {
         $totalRegistros = $anuncioController->RetornarQuantidadeRegistros(filter_input(INPUT_GET, "cat", FILTER_SANITIZE_NUMBER_INT), filter_input(INPUT_GET, "termo", FILTER_SANITIZE_STRING));
     }
     $totalAnunciosPagina = 5; //Alterar para mais
-
     $paginaAtual = 1;
-
     if (filter_input(INPUT_GET, "pag", FILTER_SANITIZE_NUMBER_INT)) {
         $paginaAtual = filter_input(INPUT_GET, "pag", FILTER_SANITIZE_NUMBER_INT);
     }
-
     $fim = ($paginaAtual * $totalAnunciosPagina);
     $inicio = ($fim - $totalAnunciosPagina);
     if (strlen($termo) == 0) {

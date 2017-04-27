@@ -1,5 +1,5 @@
-<div id="dvQuemSomos">
-    <h1>Quem somos</h1>
+<div id="dvTermoDeUso">
+    <h1>Termo de Uso</h1>
     <br />
     <div>
         <p align="justify">O KARIRI MR. Começou a ser planejado em 2015, com o intuito de facilitar as pessoas que trabalham com venda de veículo ou que estivesse interesse em comprar um, na região do Cariri, no Sul do estado do Ceara. Com o objetivo de juntar em uma única plataforma.</p>

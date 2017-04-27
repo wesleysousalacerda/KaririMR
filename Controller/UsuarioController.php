@@ -67,6 +67,14 @@ class UsuarioController {
         } else {
             return false;
         }
+    }    
+    
+    public function VerificaUsuarioExiste(string $user) {
+        if (strlen($user) >= 3) {
+            return $this->usuarioDAO->VerificaUsuarioExiste($user);
+        } else {
+            -10;
+        }
     }
 
 }

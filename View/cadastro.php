@@ -91,7 +91,7 @@
 <script src="js/mask.js" type="text/javascript"></script>
 <script>
     $('#txtCpf').mask('000.000.000-00'); //CPF
-    $('#txtData').mask('00/00/0000');
+    $('#txtData').mask('00/00/0000'); //DATA
 
     $("#txtSenha, #txtSenha2").keyup(function () {
         var resultadoValidacao = ValidarSenha(7);
@@ -138,7 +138,7 @@
             }
         }
     }
-    
+    //https://pt.stackoverflow.com/questions/170/como-fazer-replaceall-no-javascript
     String.prototype.replaceAll = String.prototype.replaceAll || function (needle, replacement) {
         return this.split(needle).join(replacement);
     };
@@ -184,6 +184,36 @@
             return true;
         } else {
             return false;
+        }
+    }
+
+    //Validações AJAX
+    function ValidaUsuario() {
+        var usuario = $("#txtUsuario").val();
+        if (usuario.length >= 3) {
+            $.ajax({
+                url: "Action/UsuarioAction.php?req=1",
+                data: {txtUsuario: $("#txtUsuario").val()},
+                type: "POST",
+                dataType: "text",
+                success: function (retorno) {
+                    if (retorno == -1) {
+                        $("#spValidaUsuario").text("Usuário válido");
+                        $("#spValidaUsuario").css("color", "#39C462");
+                    } else if (retorno == 1){
+                        $("#spValidaUsuario").text("Usuário já cadastrado ");
+                        $("#spValidaUsuario").css("color", "#FF4500");
+                    }else{
+                           $("#spValidaUsuario").text("Erro ao válidar");
+                        $("#spValidaUsuario").css("color", "#FF3730");
+                    }
+                },
+                error: function (erro) {
+                    console.log(erro);
+                }
+            }) ;
+        } else {
+            return -10;
         }
     }
 </script>

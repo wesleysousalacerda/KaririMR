@@ -8,7 +8,8 @@ $arrayPaginas = array(
     "anuncio" => "View/anuncio.php",
     "categoria" => "View/categoria.php",
     "quemsomos" => "View/quemsomos.php",
-    "cadastro" => "View/cadastro.php"
+    "cadastro" => "View/cadastro.php",
+    "termodeuso" => "View/termodeuso.php"
 
 );
 
