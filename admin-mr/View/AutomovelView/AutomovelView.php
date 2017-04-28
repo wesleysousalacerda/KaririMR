@@ -4,7 +4,6 @@ require_once("../Model/Categoria.php");
 require_once ("../Model/Automovel.php");
 require_once("../Controller/CategoriaController.php");
 $categoriaController = new CategoriaController();
-$listaCategoria = $categoriaController->RetornarCategorias();
 $automovelController = new AutomovelController();
 
 $cod = 0;
@@ -15,7 +14,6 @@ $renavam = "";
 $marca = "";
 $modelo = "";
 $ano = "";
-$categoria = 9;
 
 
 $resultado = "";
@@ -25,6 +23,7 @@ $listaAutomoveisBusca = [];
 if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $automovel = new Automovel();
 
+    $automovel->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
     $automovel->setNome(filter_input(INPUT_POST, "txtNome", FILTER_SANITIZE_STRING));
     $automovel->setDescricao(filter_input(INPUT_POST, "txtDescricao", FILTER_SANITIZE_STRING));
     $automovel->setPlaca(filter_input(INPUT_POST, "txtPlaca", FILTER_SANITIZE_STRING));
@@ -32,7 +31,9 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $automovel->setMarca(filter_input(INPUT_POST, "txtMarca", FILTER_SANITIZE_STRING));
     $automovel->setModelo(filter_input(INPUT_POST, "txtModelo", FILTER_SANITIZE_STRING));
     $automovel->setAno(filter_input(INPUT_POST, "txtAno", FILTER_SANITIZE_STRING));
-    $automovel->setCategoria(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
+    $automovel->getCategoria()->setCod(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
+    //$automovel->getUsuario()->setCod($_SESSION["cod"]);
+
     ;
 //    $automovel->setCategoria(9);
 
@@ -104,7 +105,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 }
 ?>
 
-
+$listaCategoria = $categoriaController->RetornarCategorias();
 <!DOCTYPE html>
 <div id="dvAutomovelView">
     <h1>Gerenciar Automoveis</h1>
@@ -192,101 +193,101 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                         </div>
                     </div>
                     <div class="col-lg-12">
-                    <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
-                    <a href="#" class="btn btn-danger">Cancelar</a>
+                        <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
+                        <a href="#" class="btn btn-danger">Cancelar</a>
                     </div>
                     <br />
                     <br />    
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul id="ulErros"></ul>
-                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul id="ulErros"></ul>
+                        </div>
+                    </div>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
-    <?php
-} else {
-    ?>
-    <br />
-    <!--DIV CONSULTA -->
-    <div class="panel panel-default maxPanelWidth">
-        <div class="panel-heading">Consultar</div>
-        <div class="panel-body">
-            <form method="post" name="frmBuscarAutomovel" id="frmBuscarAutomovel">
-                <div class="row">
-                    <div class="col-lg-8 col-xs-12">
-                        <div class="form-group">
-                            <label for="txtTermo">Termo de busca</label>
-                            <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: camaro amarelo" />
+        <?php
+    } else {
+        ?>
+        <br />
+        <!--DIV CONSULTA -->
+        <div class="panel panel-default maxPanelWidth">
+            <div class="panel-heading">Consultar</div>
+            <div class="panel-body">
+                <form method="post" name="frmBuscarAutomovel" id="frmBuscarAutomovel">
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-12">
+                            <div class="form-group">
+                                <label for="txtTermo">Termo de busca</label>
+                                <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: camaro amarelo" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label for="slTipoBusca">Tipo</label>
+                                <select class="form-control" id="slTipoBusca" name="slTipoBusca">
+                                    <option value="1">Nome</option>
+                                    <option value="2">Marca</option>
+                                    <option value="3">Modelo</option>
+                                    <option value="4">Placa</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-xs-12">
-                        <div class="form-group">
-                            <label for="slTipoBusca">Tipo</label>
-                            <select class="form-control" id="slTipoBusca" name="slTipoBusca">
-                                <option value="1">Nome</option>
-                                <option value="2">Marca</option>
-                                <option value="3">Modelo</option>
-                                <option value="4">Placa</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
+                            <span><?= $spResultadoBusca; ?></span>
+                            <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
+
                         </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xs-12">
-                        <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
-                        <span><?= $spResultadoBusca; ?></span>
-                        <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
 
                     </div>
+                </form>
 
-                </div>
-            </form>
+                <hr />
+                <br />
 
-            <hr />
-            <br />
+                <table class="table table-responsive table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Placa</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Ano</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($listaAutomoveisBusca != null) {
+                            foreach ($listaAutomoveisBusca as $auto) {
+                                ?>
+                                <tr>
+                                    <td><?= $auto->getNome(); ?></td>
+                                    <td><?= $auto->getPlaca(); ?></td>
+                                    <td><?= $auto->getMarca(); ?></td>
+                                    <td><?= $auto->getModelo(); ?></td>
+                                    <td><?= $auto->getAno(); ?></td>
+                                    <td>
+                                        <a href="?pagina=visualizarautomovel&cod=<?= $auto->getCod(); ?>" class="btn btn-success">Visualizar</a>
+                                        <a href="?pagina=automovel&cod=<?= $auto->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
+                                </tr>
 
-            <table class="table table-responsive table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Placa</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Ano</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($listaAutomoveisBusca != null) {
-                        foreach ($listaAutomoveisBusca as $auto) {
-                            ?>
-                            <tr>
-                                <td><?= $auto->getNome(); ?></td>
-                                <td><?= $auto->getPlaca(); ?></td>
-                                <td><?= $auto->getMarca(); ?></td>
-                                <td><?= $auto->getModelo(); ?></td>
-                                <td><?= $auto->getAno(); ?></td>
-                                <td>
-                                    <a href="?pagina=visualizarautomovel&cod=<?= $auto->getCod(); ?>" class="btn btn-success">Visualizar</a>
-                                    <a href="?pagina=automovel&cod=<?= $auto->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
-                            </tr>
-
-                            <?php
+                                <?php
+                            }
                         }
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <?php
-}
-?>
+        <?php
+    }
+    ?>
 </div>
 <script src="../js/mask.js" type="text/javascript"></script>
 
