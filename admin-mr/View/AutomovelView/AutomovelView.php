@@ -32,8 +32,9 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $automovel->setMarca(filter_input(INPUT_POST, "txtMarca", FILTER_SANITIZE_STRING));
     $automovel->setModelo(filter_input(INPUT_POST, "txtModelo", FILTER_SANITIZE_STRING));
     $automovel->setAno(filter_input(INPUT_POST, "txtAno", FILTER_SANITIZE_STRING));
-//    $automovel->setCategoria(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
-    $automovel->setCategoria(9);
+    $automovel->setCategoria(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
+    ;
+//    $automovel->setCategoria(9);
 
     if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         //Cadastrar
@@ -43,8 +44,8 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             <script>
                 document.cookie = "msg=1";
                 document.location.href = "?pagina=automovel";
-            //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
-            //o Cookie redirecionara para a pagina de automovel.
+                //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+                //o Cookie redirecionara para a pagina de automovel.
             </script>
             <?php
         } else {
@@ -59,8 +60,8 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             <script>
                 document.cookie = "msg=2";
                 document.location.href = "?pagina=automovel";
-            //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
-            //o Cookie redirecionara para a pagina de automovel.
+                //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+                //o Cookie redirecionara para a pagina de automovel.
             </script>
             <?php
         } else {
@@ -69,7 +70,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     }
 }
 
-//Buscar usuários
+//Buscar automoveis
 
 if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
 
@@ -101,7 +102,6 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
     $ano = $retornoAutomovel->getAno();
     $categoria = $retornoAutomovel->getCategoria();
 }
-
 ?>
 
 
@@ -135,7 +135,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 
                         <div class="col-lg-3 col-xs-12">
                             <div class="form-group">
-                                <label for="txtUsuario">Placa:</label>
+                                <label for="txtPlaca">Placa:</label>
                                 <input type="text" class="form-control" id="txtPlaca" name="txtPlaca" placeholder="placa"  value="">
                             </div>
                         </div>
@@ -186,21 +186,24 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                             <textarea class="form-control" id="txtDescricao" name="txtDescricao"></textarea>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p id="pResultado"><?= $resultado; ?></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                    <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
+                    <a href="#" class="btn btn-danger">Cancelar</a>
+                    </div>
+                    <br />
+                    <br />    
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul id="ulErros"></ul>
+                </div>
             </div>
-            <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
-            <a href="#" class="btn btn-danger">Cancelar</a>
-
-            <br />
-            <br />    
+            </form>
         </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <ul id="ulErros"></ul>
-            </div>
-        </div>
-    </form>
-    </div>
     </div>
     <?php
 } else {
@@ -226,7 +229,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                                 <option value="1">Nome</option>
                                 <option value="2">Marca</option>
                                 <option value="3">Modelo</option>
-                                <option value="4">Categoria</option>
+                                <option value="4">Placa</option>
                             </select>
                         </div>
                     </div>
@@ -250,10 +253,10 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                 <thead>
                     <tr>
                         <th>Nome</th>
+                        <th>Placa</th>
                         <th>Marca</th>
                         <th>Modelo</th>
                         <th>Ano</th>
-                        <th>Categoria</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -264,16 +267,13 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                             ?>
                             <tr>
                                 <td><?= $auto->getNome(); ?></td>
+                                <td><?= $auto->getPlaca(); ?></td>
                                 <td><?= $auto->getMarca(); ?></td>
                                 <td><?= $auto->getModelo(); ?></td>
                                 <td><?= $auto->getAno(); ?></td>
-                                <td><?= $auto->getCategoria(); ?></td>
                                 <td>
                                     <a href="?pagina=visualizarautomovel&cod=<?= $auto->getCod(); ?>" class="btn btn-success">Visualizar</a>
                                     <a href="?pagina=automovel&cod=<?= $auto->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
-                                    <a href="?pagina=alterarsenha&cod=<?= $auto->getCod(); ?>" class="btn btn-danger">Senha</a>
-                                    <a href="?pagina=endereco&cod=<?= $auto->getCod(); ?>" class="btn btn-info">Endereço</a>
-                                    <a href="?pagina=telefone&cod=<?= $auto->getCod(); ?>" class="btn btn-primary">Telefone</a>
                             </tr>
 
                             <?php
@@ -292,13 +292,61 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 
 
 <script>
-    $(document).ready(function () {
-    CKEDITOR.replace('txtDescricao');
-            if (getCookie("msg") == 1) {
-    document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso.</div>";
-            document.cookie = "msg=d";
-    } else if (getCookie("msg") == 2) {
-    document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário alterado com sucesso.</div>";
-            document.cookie = "msg=d";
-    }
+                $(document).ready(function () {
+                    if (getCookie("msg") == 1) {
+                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Automovel cadastrado com sucesso.</div>";
+                        document.cookie = "msg=d";
+                    } else if (getCookie("msg") == 2) {
+                        document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Automovel alterado com sucesso.</div>";
+                        document.cookie = "msg=d";
+                    }
+                    $("#frmGerenciarAutomovel").submit(function (e) {
+                        if (!ValidarFormulario()) {
+                            e.preventDefault();
+                        }
+                    });
+
+                });
+                function ValidarFormulario() {
+                    var erros = 0;
+                    var ulErros = document.getElementById("ulErros");
+                    ulErros.style.color = "red";
+                    ulErros.innerHTML = "";
+
+
+                    //Javascript nativo
+                    if (document.getElementById("txtNome").value.length < 1) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe um nome válido";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    if (document.getElementById("txtMarca").value.length < 1) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe um nome de marca válido";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    if (document.getElementById("txtRenavam").value.length != 11) {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Informe um renavam válido (11 digitos)";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    if (document.getElementById("slCategoria").value == "") {
+                        var li = document.createElement("li");
+                        li.innerHTML = "- Selecione uma categoria";
+                        ulErros.appendChild(li);
+                        erros++;
+                    }
+
+                    if (erros === 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
 </script>

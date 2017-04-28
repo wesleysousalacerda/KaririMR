@@ -60,7 +60,7 @@ class AutomovelDAO {
     public function RetornarTodosAutomoveis() {
         try {
             $sql = "";
-            $sql = "SELECT cod, nome , marca, modelo, ano, categoria_cod FROM automovel ORDER BY nome ASC";
+            $sql = "SELECT cod, nome ,placa, marca, modelo, ano FROM automovel ORDER BY nome ASC";
 
             $dataTable = $this->pdo->ExecuteQuery($sql, NULL);
 
@@ -70,11 +70,57 @@ class AutomovelDAO {
                 $automovel = new Automovel(); // Estrutura orientada a objetos, passasse o objeto Automovel, e nao os dados.
                 $automovel->setCod($resultado["cod"]);
                 $automovel->setNome($resultado["nome"]);
+                $automovel->setPlaca($resultado["placa"]);
                 $automovel->setMarca($resultado["marca"]);
                 $automovel->setModelo($resultado["modelo"]);
                 $automovel->setAno($resultado["ano"]);
-                $automovel->setCategoria($resultado["categoria_cod"]);
+                $listaAutomovel[] = $automovel;
+            }
 
+            return $listaAutomovel;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+
+    public function RetornarAutomoveis(string $termo, int $tipo) {
+        try {
+            $sql = "";
+
+            switch ($tipo) {
+                case 1:
+                    $sql = "SELECT cod, nome, placa, marca, modelo, ano FROM automovel WHERE nome LIKE :termo ORDER BY nome ASC";
+                    break;
+                case 2:
+                    $sql = "SELECT cod, nome, placa, marca, modelo, ano FROM automovel WHERE marca LIKE :termo ORDER BY nome ASC";
+                    break;
+                case 3:
+                    $sql = "SELECT cod, nome, placa, marca, modelo, ano FROM automovel WHERE modelo LIKE :termo ORDER BY nome ASC";
+                    break;
+                case 4:
+                    $sql = "SELECT cod, nome, placa, marca, modelo, ano FROM automovel WHERE placa LIKE :termo ORDER BY nome ASC";
+                    break;
+            }
+
+            $param = array(
+                ":termo" => "%{$termo}%"
+            );
+
+            $dataTable = $this->pdo->ExecuteQuery($sql, $param);
+
+            $listaAutomovel = [];
+
+            foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
+                $automovel = new Automovel(); // Estrutura orientada a objetos, passasse o objeto Automovel, e nao os dados.
+                $automovel->setCod($resultado["cod"]);
+                $automovel->setNome($resultado["nome"]);
+                $automovel->setPlaca($resultado["placa"]);
+                $automovel->setMarca($resultado["marca"]);
+                $automovel->setModelo($resultado["modelo"]);
+                $automovel->setAno($resultado["ano"]);
                 $listaAutomovel[] = $automovel;
             }
 

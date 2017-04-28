@@ -31,6 +31,13 @@ class AutomovelController {
             return false;
         }
     }
+    public function RetornarAutomoveis(string $termo, int $tipo) {
+        if ($termo != "" && $tipo >= 1 && $tipo <= 4) {
+            return $this->automovelDAO->RetornarAutomoveis($termo, $tipo);
+        } else {
+            return null;
+        }
+    }
 
     public function RetornarTodosAutomoveis() {
         return $this->automovelDAO->RetornarTodosAutomoveis();
