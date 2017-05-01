@@ -6,6 +6,7 @@ $arrayPaginas = array(
     "home" => "View/home.php", //Página inicial
     "contato" => "View/ContatoView/ContatoView.php",
     "usuario" => "View/UsuarioView/UsuarioView.php",
+    "automovel" => "View/AutomovelView/AutomovelView.php",
     "endereco" => "View/UsuarioView/EnderecoView.php",
     "telefone" => "View/UsuarioView/TelefoneView.php",
     "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
@@ -14,8 +15,9 @@ $arrayPaginas = array(
     "visualizarusuario" => "View/UsuarioView/VisualizarView.php",
     "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
     "categoria" => "View/CategoriaView/CategoriaView.php",
+    "subcategoria" => "View/CategoriaView/SubcategoriaView.php",
     "categoriaimagem" => "View/CategoriaView/AlterarImagem.php",
-    "gerenciarimagemclassificado" => "View/ClassificadoView/ImagensClassificadoView.php",
+    "gerenciarimagemanuncio" => "View/AnuncioView/ImagensAnuncioView.php",
     "visualizaranuncio" => "View/AnuncioView/VisualizarAnuncio.php",
 );
 

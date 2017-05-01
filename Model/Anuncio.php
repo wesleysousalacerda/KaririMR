@@ -36,6 +36,7 @@ class Anuncio {
     }
 
     function getValor() {
+//        $convert = $this->valor;
         return $this->valor;
     }
 

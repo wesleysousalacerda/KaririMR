@@ -108,6 +108,35 @@ class UsuarioDAO {
         }
     }
 
+    public function RetornarTodosUsuarios() {
+        try {
+            $sql = "";
+            $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario ORDER BY nome ASC";
+
+            $dataTable = $this->pdo->ExecuteQuery($sql, NULL);
+
+            $listaUsuarioTodos = [];
+
+            foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
+                $usuario = new Usuario(); // Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
+                $usuario->setCod($resultado["cod"]);
+                $usuario->setNome($resultado["nome"]);
+                $usuario->setStatus($resultado["status"]);
+                $usuario->setPermissao($resultado["permissao"]);
+                $usuario->setUsuario($resultado["usuario"]);
+
+                $listaUsuarioTodos[] = $usuario;
+            }
+
+            return $listaUsuarioTodos;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
+
     public function RetornaCod(int $usuarioCod) {
         try {
             $sql = "SELECT nome, email, cpf, usuario, nascimento, sexo, status, permissao, ip FROM usuario WHERE cod = :cod";
@@ -173,9 +202,9 @@ class UsuarioDAO {
     public function AlterarSenha(string $senha, int $cod) {
         try {
             $sql = "UPDATE usuario SET senha = :senha WHERE cod = :cod";
-            $param = array (
-            ":senha" => md5($senha),
-            ":cod" => $cod
+            $param = array(
+                ":senha" => md5($senha),
+                ":cod" => $cod
             );
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
@@ -186,6 +215,30 @@ class UsuarioDAO {
         }
     }
 
+    //____________Validar dados existentes_________________________\\
+    public function VerificaUsuarioExiste(string $user) {
+        try {
+            $sql = "SELECT usuario FROM usuario WHERE usuario = :usuario";
+
+            $param = array(
+                ":usuario" => $user
+            );
+
+            $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
+
+            if (!empty($dr)) {
+                return 1;
+            } else {
+                return -1;
+            }
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
 }
 
 ?>

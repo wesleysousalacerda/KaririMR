@@ -38,6 +38,10 @@ class UsuarioController {
         }
     }
 
+    public function RetornarTodosUsuarios() {
+        return $this->usuarioDAO->RetornarTodosUsuarios();
+    }
+
     public function RetornaCod(int $usuarioCod) {
         if ($usuarioCod > 0) {
             return $this->usuarioDAO->RetornaCod($usuarioCod);
@@ -62,6 +66,14 @@ class UsuarioController {
             return $this->usuarioDAO->AlterarSenha($senha, $cod);
         } else {
             return false;
+        }
+    }    
+    
+    public function VerificaUsuarioExiste(string $user) {
+        if (strlen($user) >= 3) {
+            return $this->usuarioDAO->VerificaUsuarioExiste($user);
+        } else {
+            -10;
         }
     }
 

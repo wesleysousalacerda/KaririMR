@@ -79,12 +79,13 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 
 
 $listaResumida = $categoriaController->RetornarCategoriasResumido();
-$listaCategoria = $categoriaController->RetornarTodos();
+$listaCategoriaCat = $categoriaController->RetornarTodosCat();
 ?>
 <div id="dvCategoriaView">
     <h1>Gerenciar Categorias</h1>
+    
     <br />
-
+    
     <div class="panel panel-default maxPanelWidth">
         <div class="panel-heading">Cadastrar e editar</div>
         <div class="panel-body">
@@ -114,19 +115,7 @@ $listaCategoria = $categoriaController->RetornarTodos();
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-xs-12">
-                        <div class="form-group">
-                            <label for="slSubcategoria">Subcategoria</label>
-                            <select class="form-control" id="slSubcategoria" name="slSubcategoria">
-                                <option value="">Selecione</option>
-                                <?php
-                                foreach ($listaResumida as $cat) {
-                                    ?>
-                                    <option value="<?= $cat->getCod() ?>" <?= ($subcategoria == $cat->getCod() ? "selected='selected'" : "") ?> <?= ($cat->getSubcategoria() == null ? "style='font-weight: bold;'" : "") ?>><?= $cat->getNome() ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="row">
@@ -162,7 +151,7 @@ $listaCategoria = $categoriaController->RetornarTodos();
         <div class="panel-heading">Consultar</div>
         <div class="panel-body">
             <?php
-            foreach ($listaCategoria as $categoria) {
+                foreach ($listaCategoriaCat as $categoria) {
                 ?>
                 <div class="row">
                     <div class="col-lg-4 col-xs-12">
@@ -185,7 +174,7 @@ $listaCategoria = $categoriaController->RetornarTodos();
         </div>
     </div>
 </div>
-<script src="../ckeditor/ckeditor.js"></script>
+<script src="../Util/ckeditor/ckeditor.js"></script>
 <script>
                 $(document).ready(function () {
                     CKEDITOR.replace('txtDescricao');

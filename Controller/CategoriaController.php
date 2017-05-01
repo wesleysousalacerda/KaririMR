@@ -37,9 +37,20 @@ class CategoriaController {
     public function RetornarCategoriasResumido() {
         return $this->categoriaDAO->RetornarCategoriasResumido();
     }
+    public function RetornarCategorias() {
+        return $this->categoriaDAO->RetornarCategorias();
+    }
 
-    public function RetornarTodos() {
-        return $this->categoriaDAO->RetornarTodos();
+    public function RetornarTodosJSON() {
+        return $this->categoriaDAO->RetornarTodosJSON();
+    }
+
+    public function RetornarTodosCat() {
+        return $this->categoriaDAO->RetornarTodosCat();
+    }
+
+    public function RetornarTodosSub() {
+        return $this->categoriaDAO->RetornarTodosSub();
     }
 
     public function RetornarCod(int $cod) {

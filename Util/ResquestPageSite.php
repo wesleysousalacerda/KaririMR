@@ -7,7 +7,9 @@ $arrayPaginas = array(
     "contato" => "View/contato.php",
     "anuncio" => "View/anuncio.php",
     "categoria" => "View/categoria.php",
-    "quemsomos" => "View/quemsomos.php"
+    "quemsomos" => "View/quemsomos.php",
+    "cadastro" => "View/cadastro.php",
+    "termodeuso" => "View/termodeuso.php"
 
 );
 

@@ -1,0 +1,251 @@
+/*ELEMENTOS*/
+*{
+    padding:0;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+}
+
+
+h1{
+    font-size: 2em;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.line{
+    margin:10px;
+    border-bottom: 1px solid #CCC;
+}
+
+.linha{
+    margin-top:10px;    
+}
+
+
+.coluna{
+    margin-top:10px;
+}
+
+/*dvTopo*/
+#dvTopo{
+    background-color: #A9A9A9;
+    border-bottom: 1px solid #BDBDBD;
+}
+
+#dvTopo{
+    text-align: center;
+}
+
+#dvTopo img{
+    width:100%;
+    max-width: 226px;
+}
+
+/*#dvMenu*/
+#dvMenuTopo{
+    background-color: #233237;
+    border-bottom: 5px solid #BDBDBD;
+}
+
+#dvMenuTopo ul {
+    list-style: none;
+    padding:5px;
+}
+
+#dvMenuTopo ul li{
+    display: inline;
+    padding:5px;
+}
+
+#dvMenuTopo ul li:hover{
+    background-color: #03A9F4;
+}
+
+
+#dvMenuTopo ul li a{
+    color: #FFF;
+    text-decoration: none;
+    font-size: 1.125em;
+    padding:5px;
+}
+
+/**/
+#dvConteudo{
+    min-height: 100vh;
+}
+
+/*dvEsquerda*/
+#dvEsquerda{
+    border:1px solid #BDBDBD;
+}
+
+#boxBusca{
+    margin-top: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #eeebeb;
+    border:1px solid #BDBDBD;
+}
+
+/**/
+
+#txtBusca{
+    width: 100%;
+    max-width: 250px;
+    padding: 7px;
+    margin-bottom: 10px;
+    outline: none;
+    border:1px solid #3399ff;
+}
+
+#txtBusca:active{
+    box-shadow: 0 0 5px #03A9F4;
+}
+
+#slBusca{
+    width: 100%;
+    max-width: 200px;
+    padding: 7px;
+    margin-bottom: 10px;
+    outline: none;
+    border:1px solid #3399ff;
+}    
+
+#btnBuscar{
+    width: 100%;
+    max-width: 200px;
+    padding: 7px;
+    outline: none;
+    border:1px solid #3399ff;
+    cursor: pointer;
+    background-color: #f6f7f9;
+}
+
+
+/*dvDireita*/
+#dvDireita{
+
+}
+
+#iconesSociais a img{
+    width:100%;
+    max-width: 48px;
+    padding:0.3em;
+}
+
+.boxDireita{
+    border:1px solid #BDBDBD;
+    padding:10px;
+    margin-bottom:20px;
+    text-align: center;
+}
+
+@media (max-width: 480px){
+    #txtBusca{
+        width: 100%;
+        max-width: 240px;
+    }
+
+    #slBusca{
+        width: 100%;
+        max-width: 255px;  
+    }
+
+    #btnBuscar{
+        width: 100%;
+        max-width: 255px; 
+    }
+}
+
+/*dvRodape*/
+#dvRodape{
+    background-color: #233237;
+    border-top: 5px solid #BDBDBD;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}
+
+/*Categorias*/
+
+.panel {
+    width: 100%;
+    border-bottom:1px solid #d4d4d4;
+}
+.imgGridCategoria{
+    text-align: center; 
+}
+
+.imgGridCategoria img{
+    max-width: 450px;
+    width: 100%;
+    margin-top: 10px;
+
+}
+
+.conteudoGridCategoria{
+    margin-top: 10px;
+
+}
+
+.paginacao{
+    width: 100%;
+    text-align: center;
+}
+
+.paginacao ul{
+    list-style: none;
+}
+
+.paginacao ul li{
+    display: inline;
+}
+
+.paginacao ul li a{
+    text-decoration: none;
+    background-color: #607D8B;
+    padding: 5px;
+    color: #FFF;
+    font-weight: bold;
+    margin-right: 2px;
+}
+
+.paginacao ul li a:hover, paginacao ul li a:active{
+    box-shadow: 0 0 7px #0288D1;
+}
+
+/*formcontroles*/
+
+.formcontroles input[type=text], .formcontroles input[type=password], .formcontroles select{
+    width: 100%;
+    padding:5px;
+    outline-color: blue;
+}
+
+.btn-padrao{
+    padding:5px;
+    background-color: #34ce7a;
+    border:1px solid #0f8746;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+}
+
+.btn-padrao:hover{
+    box-shadow: 0 0 5px #111;
+}
+
+.term{
+    font-size: 0.6em;
+    text-align: justify; 
+}
+@media (max-width: 480px) {
+    .btn-padrao{
+        width:100%;
+    }
+
+}
+
