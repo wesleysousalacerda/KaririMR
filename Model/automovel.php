@@ -1,4 +1,7 @@
 <?php
+require_once("Usuario.php");
+require_once("Categoria.php");
+
 
 class Automovel {
 
@@ -10,8 +13,15 @@ class Automovel {
     private $marca;
     private $modelo;
     private $ano;
+    private $status;
     private $categoria;
+    private $usuario;
     
+    public function __construct() {
+        $this->usuario = new Usuario();
+        $this->categoria = new Categoria();
+    }
+
     function getCod() {
         return $this->cod;
     }
@@ -41,11 +51,16 @@ class Automovel {
     }
     function getAno() {
         return $this->ano;
+    }   
+    function getStatus() {
+        return $this->status;
     }
     function getCategoria() {
         return $this->categoria;
     }
-
+    function getUsuario() {
+        return $this->usuario;
+    }
     function setCod($cod) {
         $this->cod = $cod;
     }
@@ -77,11 +92,16 @@ class Automovel {
     function setAno($ano) {
         $this->ano = $ano;
     }
+    function setStatus($status) {
+        $this->status = $status;
+    }
 
     function setCategoria($categoria) {
         $this->categoria = $categoria;
     }
-
+    function setUsuario($usuario) {
+        $this->usuario = $usuario;
+    }
 }
 
 ?>

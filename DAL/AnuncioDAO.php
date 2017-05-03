@@ -9,7 +9,7 @@ class AnuncioDAO {
     }
     public function Cadastrar(Anuncio $anuncio) {
         try {
-            $sql = "INSERT anuncio (nome, descricao, tipo, valor, status, perfil, usuario_cod, categoria_cod) VALUES (:nome, :descricao, :tipo, :valor, :status, :perfil, :usuariocod, :categoriacod)";
+            $sql = "INSERT anuncio (nome, descricao, tipo, valor, status, perfil, usuario_cod, automovel_cod) VALUES (:nome, :descricao, :tipo, :valor, :status, :perfil, :usuariocod, :automovelcod)";
             $param = array(
                 ":nome" => $anuncio->getNome(),
                 ":descricao" => $anuncio->getDescricao(),
@@ -18,7 +18,7 @@ class AnuncioDAO {
                 ":status" => $anuncio->getStatus(),
                 ":perfil" => $anuncio->getPerfil(),
                 ":usuariocod" => $anuncio->getUsuario()->getCod(),
-                ":categoriacod" => $anuncio->getCategoria()->getCod()
+                ":automovelcod" => $anuncio->getAutomovel()->getCod()
             );
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
@@ -30,7 +30,7 @@ class AnuncioDAO {
     }
     public function Alterar(Anuncio $anuncio) {
         try {
-            $sql = "UPDATE anuncio SET nome = :nome, descricao = :descricao, tipo = :tipo, valor = :valor, status = :status, perfil = :perfil, categoria_cod = :categoriacod WHERE cod = :cod";
+            $sql = "UPDATE anuncio SET nome = :nome, descricao = :descricao, tipo = :tipo, valor = :valor, status = :status, perfil = :perfil, usuario_cod = :usuariocod, automovel_cod = :automovelcod WHERE cod = :cod";
             $param = array(
                 ":nome" => $anuncio->getNome(),
                 ":descricao" => $anuncio->getDescricao(),
@@ -38,7 +38,8 @@ class AnuncioDAO {
                 ":valor" => $anuncio->getValor(),
                 ":status" => $anuncio->getStatus(),
                 ":perfil" => $anuncio->getPerfil(),
-                ":categoriacod" => $anuncio->getCategoria()->getCod(),
+                ":usuariocod" => $anuncio->getUsuario()->getCod(),
+                ":automovelcod" => $anuncio->getAutomovel()->getCod(),
                 ":cod" => $anuncio->getCod()
             );
             return $this->pdo->ExecuteNonQuery($sql, $param);
@@ -49,15 +50,15 @@ class AnuncioDAO {
             return false;
         }
     }
-    public function RetornarTodosFiltro(string $termo, int $tipo, int $status, int $perfil, int $categoriacod) {
+    public function RetornarTodosFiltro(string $termo, int $tipo, int $status, int $perfil, int $usuariocod) {
         try {
-            $sql = "SELECT cod, nome, status FROM anuncio WHERE nome LIKE :termo AND tipo = :tipo AND status = :status AND perfil = :perfil AND  categoria_cod = :categoriacod ORDER BY nome ASC";
+            $sql = "SELECT cod, nome, status FROM anuncio WHERE nome LIKE :termo AND tipo = :tipo AND status = :status AND perfil = :perfil AND  usuario_cod = :usuariocod ORDER BY nome ASC";
             $param = array(
                 ":termo" => "%{$termo}%",
                 ":tipo" => $tipo,
                 ":status" => $status,
                 ":perfil" => $perfil,
-                ":categoriacod" => $categoriacod
+                ":usuariocod" => $usuariocod
             );
             $dt = $this->pdo->ExecuteQuery($sql, $param);
             $listaAnuncio = [];
@@ -98,7 +99,7 @@ class AnuncioDAO {
     }
     public function RetornarCod(int $cod) {
         try {
-            $sql = "SELECT nome, descricao, tipo, valor, status, perfil, categoria_cod FROM anuncio WHERE cod = :cod";
+            $sql = "SELECT nome, descricao, tipo, valor, status, perfil, usuario_cod, automovel_cod FROM anuncio WHERE cod = :cod";
             $param = array(":cod" => $cod);
             //Data Table
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
@@ -108,7 +109,9 @@ class AnuncioDAO {
             $anuncio->setTipo($dt["tipo"]);
             $anuncio->setStatus($dt["status"]);
             $anuncio->setPerfil($dt["perfil"]);
-            $anuncio->getCategoria()->setCod($dt["categoria_cod"]);
+            $anuncio->getUsuario()->setCod($dt["usuario_cod"]);
+            $anuncio->getAutomovel()->setCod($dt["usuario_cod"]);
+            
             $anuncio->setValor($dt["valor"]);
             return $anuncio;
         } catch (PDOException $ex) {
@@ -120,8 +123,8 @@ class AnuncioDAO {
     }
     public function RetornarCompletoCod($cod) {
         try {
-            $sql = "SELECT a.nome as anunnome, a.descricao, a.tipo, a.valor, a.status, a.perfil, ca.nome as catnome, u.nome as usnome FROM anuncio a " .
-                    "INNER JOIN categoria ca ON ca.cod = a.categoria_cod " .
+            $sql = "SELECT a.nome as anunnome, a.descricao, a.tipo, a.valor, a.status, a.perfil, au.automovelcod as automovelcod, u.nome as usnome FROM anuncio a " .
+                    "INNER JOIN automovel au ON au.cod = a.automovel_cod " .
                     "INNER JOIN usuario u ON u.cod = a.usuario_cod " .
                     "WHERE a.cod = :cod";
             $param = array(
@@ -137,7 +140,7 @@ class AnuncioDAO {
             $anuncio->setValor($dr["valor"]);
             $anuncio->setStatus($dr["status"]);
             $anuncio->setPerfil($dr["perfil"]);
-            $anuncio->getCategoria()->setNome($dr["catnome"]);
+            $anuncio->getAutomovel()->setNome($dr["automovelcod"]);
             $anuncio->getUsuario()->setNome($dr["usnome"]);
             return $anuncio;
         } catch (PDOException $ex) {
@@ -282,7 +285,7 @@ class AnuncioDAO {
     }
         public function RetornarAnuncioCod(int $cod) {
         try {
-            $sql = "SELECT anun.cod, anun.nome, anun.descricao, anun.tipo, anun.valor, cat.nome as catnome, us.nome as usnome, us.email usemail FROM anuncio anun INNER JOIN categoria cat ON cat.cod = anun.categoria_cod INNER JOIN usuario us ON us.cod = anun.usuario_cod WHERE anun.cod = :cod AND anun.status = 1";
+            $sql = "SELECT anun.cod, anun.nome, anun.descricao, anun.tipo, anun.valor, au.automovel as automovel, us.nome as usnome, us.email usemail FROM anuncio anun INNER JOIN automovel au ON au.cod = anun.automovel_cod INNER JOIN usuario us ON us.cod = anun.usuario_cod WHERE anun.cod = :cod AND anun.status = 1";
             $param = array(
                 ":cod" => $cod
             );
@@ -294,7 +297,7 @@ class AnuncioDAO {
             $anuncio->setTipo($dr["tipo"]);
             $anuncio->setValor($dr["valor"]);
             //Anuncio
-            $anuncio->getCategoria()->setNome($dr["catnome"]);
+            $anuncio->getAutomovel()->setNome($dr["catnome"]);
             //Usuário
             $anuncio->getUsuario()->setNome($dr["usnome"]);
             $anuncio->getUsuario()->setEmail($dr["usemail"]);

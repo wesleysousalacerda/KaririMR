@@ -1,6 +1,6 @@
 <?php
 require_once("Usuario.php");
-require_once("Categoria.php");
+require_once("Automovel.php");
 
 class Anuncio {
 
@@ -11,12 +11,11 @@ class Anuncio {
     private $valor;
     private $status;
     private $perfil;
-    private $categoria;
     private $usuario;
-
+    private $automovel;
     public function __construct() {
         $this->usuario = new Usuario();
-        $this->categoria = new Categoria();
+        $this->automovel = new Automovel();
     }
 
     function getCod() {
@@ -48,8 +47,8 @@ class Anuncio {
         return $this->perfil;
     }
 
-    function getCategoria() {
-        return $this->categoria;
+    function getAutomovel() {
+        return $this->automovel;
     }
 
     function getUsuario() {
@@ -84,8 +83,8 @@ class Anuncio {
         $this->perfil = $perfil;
     }
 
-    function setCategoria($categoria) {
-        $this->categoria = $categoria;
+    function setAutomovel($automovel) {
+        $this->automovel = $automovel;
     }
 
     function setUsuario($usuario) {
