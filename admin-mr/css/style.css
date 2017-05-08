@@ -3,6 +3,7 @@
     margin: 0 auto;
     padding: 0;
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
 }
 
 body{
@@ -60,67 +61,131 @@ ul{
 }
 
 .maxPanelWidth{
-    max-width: 800px;
+    max-width: 970px;
     width:100%;
-    margin-left: 0;
+    float: left;
 }
 
 .vlSenha{
     color: red;
 }
+.imgClassificado{
+    max-width: 700px;
+    width:100%;
+    border:none;
+}
+.dvlogoTopo img{
+    padding:5px;
+    max-width:200px;
+    width:100%;
+}
 
-/*ID*/
+.row.no-gutter{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.row.no-gutter [class*='gridLeft']:not(:first-child),
+.row.no-gutter [class*='gridLeft']:not(:last-child) {
+    padding-right: 0;
+    padding-left: 0;
+}
+.firstLine{
+    border-top: 1px solid #eeeeee;
+}
+    /*ID*/
 
 #dvLogin{
-    max-width:500px;
+    max-width:400px;
     width:100%;
     margin-top:10%;
-    background-color:#FFF;
+    background-color:transparent;
     border-radius:5px;
-    border:2px solid #eee;
+    /*border:2px solid #eee;*/
+    padding:10px;
+}
+#dvTopo{
+    background-color: #EFEFEF;
+}
+
+#dvEsquerda{
+    background-color: #233237;
+    height: 100vh;
+}
+
+#dvDireita{
+    background-color: #EFEFEF;
+    height: 100vh;
+    overflow-y: scroll;
     padding:10px;
 }
 
 #dvPainel{
     width: 100%;
-    background-color: #FFFFFF;
+    background-color: #EFEFEF;
     min-height: 100vh;
 }
 
 #ulMenu{
-    background-color: #c9302c;
+    font-size: 1.525em;
+    background-color: #233237;
 }
 
 #ulMenu li{
-    display: inline;
     font-size: 1.125em;
     color: #607D8B;
+    /*border-bottom: 1px solid #eeeeee;*/
 }
 
+#ulMenu li:hover{
+    background-color: #EFEFEF;
+  
+    
+}
 #ulMenu li a:hover{
-    background-color: #ac2925;
-    color: #FFF;
+    color: #233237;
+    
 }
 
 
 #ulMenu li a{
-    color: #212121;
+    color: #A9A9A9;
     text-decoration: none;
     padding: 2px 10px;
     display: inline-block;
 }
 
-#dvlogoTopo img{
-    padding:5px;
+
+/*Menu Lateral*/
+#ulMenuResponsive{
+    background-color: #233237;
+    font-size: 1.125em;
 }
 
+#ulMenuResponsive li{
+    font-size: 1.25em;
+    border-bottom: 1px solid #111;
+}
+
+#ulMenuResponsive li:active{
+    background-color: #EFEFEF;
+    color: #233237;
+}
+
+#ulMenuResponsive li a{
+    color: #A9A9A9;
+    text-decoration: none;
+    padding: 2px 10px;
+    display: inline-block;
+}
+/*Fim menu*/
 #dvConteudo{
     margin:10px;
 }
 
 #dvRodape{
-    background-color: #757575;
-    border-top:3px solid #eee;
+    background-color: #233237;
+    border-top:10px solid #eee;
     color :#FFF;
 }
 

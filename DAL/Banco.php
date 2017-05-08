@@ -18,7 +18,7 @@ class Banco {
         $this->debug = true;
         $this->server = "127.0.0.1";
         $this->user = "root";
-        $this->password = "";
+        $this->password = "brasilux@D7";
         $this->database = "kariri_teste";
     }
 
@@ -77,7 +77,7 @@ class Banco {
     }
 
     /**
-     * Roolback changes on opened transaction
+     * Roolback changes on opened transaction - Check integrity.
      * @return void
      */
     public function Rollback() {

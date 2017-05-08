@@ -6,12 +6,19 @@ $arrayPaginas = array(
     "home" => "View/home.php", //Página inicial
     "contato" => "View/ContatoView/ContatoView.php",
     "usuario" => "View/UsuarioView/UsuarioView.php",
+    "automovel" => "View/AutomovelView/AutomovelView.php",
     "endereco" => "View/UsuarioView/EnderecoView.php",
+    "telefone" => "View/UsuarioView/TelefoneView.php",
+    "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
+    "visualizarusuario" => "View/UsuarioView/VisualizarView.php",
     "anuncio" => "View/AnuncioView/AnuncioView.php",
     "visualizarusuario" => "View/UsuarioView/VisualizarView.php",
     "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
     "categoria" => "View/CategoriaView/CategoriaView.php",
-    "telefone" => "View/UsuarioView/TelefoneView.php"
+    "subcategoria" => "View/CategoriaView/SubcategoriaView.php",
+    "categoriaimagem" => "View/CategoriaView/AlterarImagem.php",
+    "gerenciarimagemanuncio" => "View/AnuncioView/ImagensAnuncioView.php",
+    "visualizaranuncio" => "View/AnuncioView/VisualizarAnuncio.php",
 );
 
 if ($pagina) {
