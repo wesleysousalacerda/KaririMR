@@ -185,10 +185,22 @@ ul{
 
 #dvRodape{
     background-color: #233237;
-    border-top:10px solid #eee;
+    border-bottom:10px solid #eee;
     color :#FFF;
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
 }
 
 #dvRodape a{
     color: #fff;
 }
+#iconesSociais{
+    background-color: #233237;
+    padding:1.0em;
+}
+#iconesSociais a img{
+    width:100%;
+    max-width: 48px;
+    padding:0.3em;
+    }
