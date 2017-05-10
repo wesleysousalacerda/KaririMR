@@ -46,6 +46,7 @@ if (isset($_SESSION["logado"])) {
                     <li><a href="?pagina=anuncio">Anuncios</a></li>
                     <li><a href="?pagina=categoria">Categoria</a></li>
                     <li><a href="?pagina=subcategoria">Subcategoria</a></li>
+                    <li><a href="?pagina=revendedora">Revendedoras</a></li>
                     <li><a href="?pagina=contato">Contato</a></li>
                     <li><a href="logout.php">Sair</a></li>
                 </ul>
@@ -61,6 +62,7 @@ if (isset($_SESSION["logado"])) {
                         <li><a href="?pagina=automovel">Automóveis</a></li>
                         <li><a href="?pagina=categoria">Categoria</a></li>
                         <li><a href="?pagina=subcategoria">Subcategoria</a></li>
+                        <li><a href="?pagina=revendedora">Revendedoras</a></li>
                         <li><a href="?pagina=contato">Contato</a></li>
                         <li><a href="logout.php">Sair</a></li>
                     </ul>

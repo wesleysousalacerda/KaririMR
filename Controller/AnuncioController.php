@@ -15,7 +15,7 @@ class AnuncioController {
     }
 
     public function Cadastrar(Anuncio $anuncio) {
-        if (trim(strlen($anuncio->getNome())) > 0 && $anuncio->getValor() > 0 && $anuncio->getStatus() > 0 && $anuncio->getPerfil() > 0 && $anuncio->getTipo() > 0 && trim(strlen($anuncio->getDescricao())) >= 10 && $anuncio->getCategoria()->getCod() > 0 && $anuncio->getUsuario()->getCod() > 0) {
+        if (trim(strlen($anuncio->getNome())) > 0 && $anuncio->getValor() > 0 && $anuncio->getStatus() > 0 && $anuncio->getPerfil() > 0 && $anuncio->getTipo() > 0 && trim(strlen($anuncio->getDescricao())) >= 10 && $anuncio->getAutomovel()->getCod() > 0 && $anuncio->getUsuario()->getCod() > 0) {
             return $this->anuncioDAO->Cadastrar($anuncio);
         } else {
             return false;

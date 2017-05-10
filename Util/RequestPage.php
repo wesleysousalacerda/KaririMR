@@ -16,6 +16,7 @@ $arrayPaginas = array(
     "alterarsenha" => "View/UsuarioView/AlterarSenhaView.php",
     "categoria" => "View/CategoriaView/CategoriaView.php",
     "subcategoria" => "View/CategoriaView/SubcategoriaView.php",
+    "revendedora" => "View/Revendedora/RevendedoraView.php",
     "categoriaimagem" => "View/CategoriaView/AlterarImagem.php",
     "gerenciarimagemanuncio" => "View/AnuncioView/ImagensAnuncioView.php",
     "visualizaranuncio" => "View/AnuncioView/VisualizarAnuncio.php",

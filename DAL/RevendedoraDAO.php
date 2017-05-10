@@ -2,7 +2,7 @@
 
 require_once("Banco.php");
 
-class UsuarioDAO {
+class RevendedoraDAO {
 
     private $pdo;
     private $debug;
@@ -12,21 +12,17 @@ class UsuarioDAO {
         $this->debug = true;
     }
 
-    public function Cadastrar(Usuario $usuario) {
+    public function Cadastrar(Revendedora $revendedora) {
         try {
-            $sql = "INSERT INTO usuario (nome, email, cpf, usuario, senha, nascimento, sexo, status, permissao, ip) VALUES (:nome, :email, :cpf, :usuario, :senha, :nascimento, :sexo, :status, :permissao, :ip)";
+            $sql = "INSERT INTO revendedora (razaosocial,cnpj, fantasia, insc_estadual, descricao, usuario_cod) VALUES (:razaosocial, :cnpj, :fantasia, :insc_estadual, :descricao, :usuariocod)";
             $param = array(
-                ":nome" => $usuario->getNome(),
-                ":email" => $usuario->getEmail(),
-                ":cpf" => $usuario->getCpf(),
-                ":usuario" => $usuario->getUsuario(),
-                ":senha" => $usuario->getSenha(),
-                ":nascimento" => $usuario->getNascimento(),
-                ":sexo" => $usuario->getSexo(),
-                ":status" => $usuario->getStatus(),
-                ":permissao" => $usuario->getPermissao(),
-                ":ip" => $_SERVER["REMOTE_ADDR"],
-            );
+                ":razaosocial" => $revendedora->getRazaosocial(),
+                ":cnpj" => $revendedora->getCnpj(),
+                ":fantasia" => $revendedora->getFantasia(),
+                ":insc_estadual" => $revendedora->getInsc_estadual(),
+                ":descricao" => $revendedora->getDescricao(),
+                ":usuariocod" => $revendedora->getUsuario()->getCod()
+                );
 
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
@@ -37,7 +33,7 @@ class UsuarioDAO {
         }
     }
 
-    public function Alterar(Usuario $usuario) {
+    public function Alterar(Revendedora $revendedora) {
         try {
             $sql = "UPDATE usuario SET nome = :nome, email = :email, cpf =:cpf, usuario = :usuario, nascimento = :nascimento, sexo = :sexo, status = :status, permissao =:permissao WHERE cod = :cod";
             $param = array(
@@ -50,7 +46,7 @@ class UsuarioDAO {
                 ":status" => $usuario->getStatus(),
                 ":permissao" => $usuario->getPermissao(),
                 ":cod" => $usuario->getCod()
-            );
+                );
 
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
@@ -67,22 +63,22 @@ class UsuarioDAO {
 
             switch ($tipo) {
                 case 1:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE nome LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE nome LIKE :termo ORDER BY nome ASC";
+                break;
                 case 2:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE email LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE email LIKE :termo ORDER BY nome ASC";
+                break;
                 case 3:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE cpf LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE cpf LIKE :termo ORDER BY nome ASC";
+                break;
                 case 4:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE usuario LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE usuario LIKE :termo ORDER BY nome ASC";
+                break;
             }
 
             $param = array(
                 ":termo" => "%{$termo}%"
-            );
+                );
 
             $dataTable = $this->pdo->ExecuteQuery($sql, $param);
 
@@ -142,7 +138,7 @@ class UsuarioDAO {
             $sql = "SELECT nome, email, cpf, usuario, nascimento, sexo, status, permissao, ip FROM usuario WHERE cod = :cod";
             $param = array(
                 ":cod" => $usuarioCod
-            );
+                );
 
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
@@ -173,12 +169,12 @@ class UsuarioDAO {
 
     public function AutenticarUsuarioPainel(string $usu, string $senha) {
         try {
-            $sql = "SELECT cod, nome, permissao FROM usuario WHERE status = 1 AND usuario = :usuario AND senha = :senha";
+            $sql = "SELECT cod, nome FROM usuario WHERE status = 1 AND permissao = 1 AND usuario = :usuario AND senha = :senha";
 
             $param = array(
                 ":usuario" => $usu,
                 ":senha" => $senha
-            );
+                );
 
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
@@ -186,7 +182,7 @@ class UsuarioDAO {
                 $usuario = new Usuario();
                 $usuario->setCod($dt["cod"]);
                 $usuario->setNome($dt["nome"]);
-                $usuario->setPermissao($dt["permissao"]);
+
                 return $usuario;
             } else {
                 return null;
@@ -205,7 +201,7 @@ class UsuarioDAO {
             $param = array(
                 ":senha" => md5($senha),
                 ":cod" => $cod
-            );
+                );
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
             if ($this->debug) {
@@ -222,7 +218,7 @@ class UsuarioDAO {
 
             $param = array(
                 ":usuario" => $user
-            );
+                );
 
             $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
 

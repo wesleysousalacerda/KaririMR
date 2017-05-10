@@ -91,6 +91,38 @@ class AutomovelDAO {
             return null;
         }
     }
+    public function RetornarUsuarioAutomoveis(int $usuario) {
+        try {
+            $sql = "";
+            $sql = "SELECT cod, nome ,placa, marca, modelo, ano, usuario_cod, status FROM automovel WHERE usuario_cod = :usuariocod ORDER BY nome ASC";
+
+            $param = array(
+                ":usuariocod" => $usuario);
+            $dataTable = $this->pdo->ExecuteQuery($sql, $param);
+
+            $listaAutomovel = [];
+
+            foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
+                $automovel = new Automovel(); // Estrutura orientada a objetos, passasse o objeto Automovel, e nao os dados.
+                $automovel->setCod($resultado["cod"]);
+                $automovel->setNome($resultado["nome"]);
+                $automovel->setPlaca($resultado["placa"]);
+                $automovel->setMarca($resultado["marca"]);
+                $automovel->setModelo($resultado["modelo"]);
+                $automovel->setAno($resultado["ano"]);
+                $automovel->setStatus($resultado["status"]);
+                
+                $listaAutomovel[] = $automovel;
+            }
+
+            return $listaAutomovel;
+        } catch (PDOException $ex) {
+            if ($this->debug) {
+                echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+            }
+            return null;
+        }
+    }
     public function RetornarTodosFiltro(string $termo, string $placa, int $usuario) {
         try {
             $sql = "SELECT cod, nome, placa, marca,ano, status FROM automovel WHERE nome LIKE :termo AND placa = :placa AND usuario = :usuario ORDER BY nome ASC";

@@ -1,12 +1,15 @@
 <?php
 require_once("../Model/Categoria.php");
+require_once("../Model/Automovel.php");
 require_once("../Model/Anuncio.php");
 require_once("../Controller/CategoriaController.php");
 require_once("../Controller/AnuncioController.php");
+require_once("../Controller/AutomovelController.php");
 $categoriaController = new CategoriaController();
 $anuncioController = new AnuncioController();
+$automovelController = new AutomovelController();
 
-$ctg = 0;
+$auto = 0;
 $nome = "";
 $descricao = "";
 $status = 1;
@@ -28,16 +31,16 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $anuncio->setPerfil(filter_input(INPUT_POST, "slPerfil", FILTER_SANITIZE_NUMBER_INT));
     $anuncio->setStatus(filter_input(INPUT_POST, "slStatus", FILTER_SANITIZE_NUMBER_INT));
     $anuncio->setTipo(filter_input(INPUT_POST, "slTipo", FILTER_SANITIZE_NUMBER_INT));
-    $anuncio->getCategoria()->setCod(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
+    $anuncio->getAutomovel()->setCod(1);
     $anuncio->getUsuario()->setCod($_SESSION["cod"]);
-
+    var_dump($anuncio);
     if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         //Cadastrar
         if ($anuncioController->Cadastrar($anuncio)) {
             ?>
             <script>
                 document.cookie = "msg=1";
-                document.location.href = "?pagina=anuncio";
+                // document.location.href = "?pagina=anuncio";
             </script>
             <?php
         } else {
@@ -88,6 +91,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 }
 
 $listaCategoria = $categoriaController->RetornarCategorias();
+$listaAutomoveis = $automovelController->RetornarUsuarioAutomoveis($_SESSION["cod"]);
 ?>
 <div id="dvAnuncioView">
     <h1>Gerenciar Anúncios</h1>
@@ -147,13 +151,13 @@ $listaCategoria = $categoriaController->RetornarCategorias();
 
                     <div class="col-lg-3 col-xs-12">
                         <div class="form-group">
-                            <label for="slCategoria">Categoria</label>
+                            <label for="slCategoria">Automovel</label>
                             <select class="form-control" id="slCategoria" name="slCategoria">
                                 <option value="">Selecione</option>
                                 <?php
-                                foreach ($listaCategoria as $cat) {
+                                foreach ($listaAutomoveis as $aut) {
                                     ?>
-                                    <option value="<?= $cat->getCod() ?>" <?= ($ctg == $cat->getCod() ? "selected='selected'" : "") ?> <?= ($cat->getSubcategoria() == null ? "style='font-weight: bold;'" : "") ?>><?= $cat->getNome() ?></option>
+                                    <option value="<?= $aut->getCod() ?>" <?= ($auto == $aut->getCod() ? "selected='selected'" : "") ?>> <?= $aut->getNome() ?></option>
                                 <?php } ?>
                             </select>
                         </div>

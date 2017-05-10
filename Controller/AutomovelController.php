@@ -45,6 +45,14 @@ public function RetornarAutomoveis(string $termo, int $tipo) {
         return null;
     }
 }
+public function RetornarUsuarioAutomoveis(int $usuario) {
+    if ($usuario > 0) {
+        return $this->automovelDAO->RetornarUsuarioAutomoveis($usuario);
+    } else {
+        return null;
+    }
+}
+
 
 public function RetornarTodosAutomoveis() {
     return $this->automovelDAO->RetornarTodosAutomoveis();
