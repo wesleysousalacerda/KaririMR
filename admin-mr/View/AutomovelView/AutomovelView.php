@@ -303,10 +303,12 @@ $listaCategoria = $categoriaController->RetornarCategorias();
             ?>
         </div>
         <script src="../js/mask.js" type="text/javascript"></script>
+        <script src="../Util/ckeditor/ckeditor.js"></script>
 
 
         <script>
             $(document).ready(function () {
+                CKEDITOR.replace('txtDescricao');
                 if (getCookie("msg") == 1) {
                     document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Automovel cadastrado com sucesso.</div>";
                     document.cookie = "msg=d";
