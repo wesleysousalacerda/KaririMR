@@ -33,14 +33,13 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $anuncio->setTipo(filter_input(INPUT_POST, "slTipo", FILTER_SANITIZE_NUMBER_INT));
     $anuncio->getAutomovel()->setCod(1);
     $anuncio->getUsuario()->setCod($_SESSION["cod"]);
-    var_dump($anuncio);
     if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         //Cadastrar
         if ($anuncioController->Cadastrar($anuncio)) {
             ?>
             <script>
                 document.cookie = "msg=1";
-                // document.location.href = "?pagina=anuncio";
+            document.location.href = "?pagina=anuncio";
             </script>
             <?php
         } else {
@@ -132,7 +131,7 @@ $listaAutomoveis = $automovelController->RetornarUsuarioAutomoveis($_SESSION["co
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-6 col-xs-12">
+                    <div class="col-lg-6 colxs-12">
                         <div class="form-group">
                             <label for="txtValor">Valor</label>
                             <input type="text" class="form-control" id="txtValor" name="txtValor" placeholder="" value="<?= $valor; ?>">

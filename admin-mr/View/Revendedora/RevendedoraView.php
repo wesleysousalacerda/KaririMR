@@ -10,6 +10,7 @@ $cnpj = "";
 $fantasia = "";
 $descricao = "";
 $insc_estadual = "";
+$usuario = "";
 
 $resultado = "";
 // $Bresultado = "";
@@ -104,7 +105,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtInscricao">Incrição Estadual</label>
-                                <input type="text" class="form-control" id="txtInscricao" name="txtInscricao" placeholder=""  value="<?= $insc_estadual; ?>">
+                                <input type="text" class="form-control" id="txtInscricao" name="txtInscricao" placeholder="Incrição Estadual"  value="<?= $insc_estadual; ?>">
                             </div>
                         </div>
                     </div>
@@ -115,7 +116,12 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                                 <input type="text" class="form-control" id="txtDescricao" name="txtDescricao" placeholder="" value="<?= $descricao; ?>"/>
                             </div>
                         </div>
-
+                        <div class="col-lg-6 col-xs-12">
+                        <div class="form-group">
+                            <label for="txtUsuario">Usuário</label>
+                            <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuario"  value="<?= $usuario; ?>">
+                        </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -224,7 +230,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
 
 
     <script>
-    alert('da');
+        alert('da');
         $(document).ready(function () {
             if (getCookie("msg") == 1) {
                 document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora cadastrada com sucesso.</div>";
@@ -238,7 +244,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                     e.preventDefault();
                 }
             });
-              alert('da');
+            alert('da');
         });
 
         function ValidarFormulario() {
