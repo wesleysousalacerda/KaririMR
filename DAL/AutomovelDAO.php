@@ -14,7 +14,7 @@ class AutomovelDAO {
 
     public function Cadastrar(Automovel $automovel) {
         try {
-            $sql = "INSERT automovel (nome, descricao, placa, renavam, marca, modelo,ano,status, categoria_cod, usuario_cod) VALUES (:nome, :descricao, :placa, :renavam, :marca, :modelo,:ano,:status, :categoriacod, :usuariocod)";
+            $sql = "INSERT INTO automovel (nome, descricao, placa, renavam, marca, modelo,ano,status, categoria_cod, usuario_cod) VALUES (:nome, :descricao, :placa, :renavam, :marca, :modelo,:ano,:status, :categoriacod, :usuariocod)";
             $param = array(
                 ":nome" => $automovel->getNome(),
                 ":descricao" => $automovel->getDescricao(),
@@ -27,6 +27,7 @@ class AutomovelDAO {
                 ":categoriacod" => $automovel->getCategoria()->getCod(),
                 ":usuariocod" => $automovel->getUsuario()->getCod()
                 );
+
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
             if ($this->debug) {
@@ -35,6 +36,33 @@ class AutomovelDAO {
             return false;
         }
     }
+
+    // public function Cadastrar(Automovel $automovel) {
+    //     try {
+    //         $sql = "INSERT automovel (nome, descricao, placa, renavam, marca, modelo,ano,status, categoria_cod, usuario_cod) VALUES ('Fiat', 'das','aha12344','123','sda','renavam', '2010', 1,13,23)";
+    //         // $sql = "INSERT INTO automovel (nome, descricao, placa, renavam, marca, modelo,ano,status, categoria_cod, usuario_cod) VALUES (:nome, :descricao, :placa, :renavam, :marca, :modelo,:ano,:status, :categoriacod, :usuariocod)";
+            
+    //         // $param = array(
+    //         //     ":nome" => $automovel->getNome(),
+    //         //     ":descricao" => $automovel->getDescricao(),
+    //         //     ":placa" => $automovel->getPlaca(),
+    //         //     ":renavam" => $automovel->getRenavam(),
+    //         //     ":marca" => $automovel->getMarca(),
+    //         //     ":modelo" => $automovel->getModelo(),
+    //         //     ":ano" => $automovel->getAno(),
+    //         //     ":status" => $automovel->getStatus(),
+    //         //     ":categoriacod" => $automovel->getCategoria()->getCod(),
+    //         //     ":usuariocod" => $automovel->getUsuario()->getCod()
+    //         //     );
+    //         return $this->pdo->ExecuteNonQuery($sql, null);
+    //     } catch (PDOException $ex) {
+    //         if ($this->debug) {
+    //             echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+                
+    //         }
+    //         return false;
+    //     }
+    // }
 
     public function Alterar(Automovel $automovel) {
         try {

@@ -11,14 +11,14 @@ class AutomovelController {
     }
 
     public function Cadastrar(Automovel $automovel) {
-        if (strlen($automovel->getNome()) >= 1 && strlen($automovel->getDescricao()) >= 10 &&
-            strlen($automovel->getPlaca()) == 7 && $automovel->getRenavam() == 11 && $automovel->getMarca() >= 1 &&
-            $automovel->getModelo() >= 1 && $automovel->getAno() == 4 && $automovel->getStatus() == 1 && $automovel->getCategoria() >= 1 && $automovel->getUsuario() >= 1) {
+        // if (strlen($automovel->getNome()) >= 1 && strlen($automovel->getDescricao()) >= 10 &&
+        //     strlen($automovel->getPlaca()) == 7 && $automovel->getRenavam() == 11 && $automovel->getMarca() >= 1 &&
+        //     $automovel->getModelo() >= 1 && $automovel->getAno() == 4 && $automovel->getStatus() == 1 && $automovel->getCategoria() >= 1 && $automovel->getUsuario() >= 1) {
 
             return $this->automovelDAO->Cadastrar($automovel);
-    } else {
-        return false;
-    }
+    // } else {
+    //     return false;
+    // }
 }
 
 public function Alterar(Automovel $automovel) {

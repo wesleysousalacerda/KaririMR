@@ -35,11 +35,12 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $automovel->setMarca(filter_input(INPUT_POST, "txtMarca", FILTER_SANITIZE_STRING));
     $automovel->setModelo(filter_input(INPUT_POST, "txtModelo", FILTER_SANITIZE_STRING));
     $automovel->setAno(filter_input(INPUT_POST, "txtAno", FILTER_SANITIZE_STRING));
-    $automovel->setStatus(filter_input(INPUT_GET, "txtStatus", FILTER_SANITIZE_NUMBER_INT));
-    $automovel->getUsuario()->setCod(filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_NUMBER_INT));;
+    $automovel->setStatus($status);
+    $automovel->getUsuario()->setCod($usuario);
+    // $automovel->getUsuario()->setCod(filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_NUMBER_INT));;
     $automovel->getCategoria()->setCod(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
 
-    var_dump($automovel);
+    
 //    $automovel->setCategoria(9);
 
     if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
@@ -55,7 +56,10 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             </script>
             <?php
         } else {
-            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar o automovel.</div>";
+
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar o automovel.</div>"
+            ;
+            // var_dump($automovel);       
         }
     } else {
         //Editar
@@ -315,6 +319,7 @@ $listaCategoria = $categoriaController->RetornarCategorias();
                         e.preventDefault();
                     }
                 });
+                alert('da');
 
             });
             function ValidarFormulario() {

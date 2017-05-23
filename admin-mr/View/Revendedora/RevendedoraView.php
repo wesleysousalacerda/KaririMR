@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 require_once ("../Controller/RevendedoraController.php");
 require_once ("../Model/Revendedora.php");
@@ -57,46 +56,8 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     }
 }
 }
-
-//Buscar usuários
-
-// if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
-
-//     $termo = filter_input(INPUT_POST, "txtTermo", FILTER_SANITIZE_STRING);
-//     $tipo = filter_input(INPUT_POST, "slTipoBusca", FILTER_SANITIZE_NUMBER_INT);
-//     $listaUsuariosBusca = $usuarioController->RetornarUsuarios($termo, $tipo);
-
-//     if ($listaUsuariosBusca != null) {
-//         $spResultadoBusca = "Exibindo dados";
-//     } else {
-//         $spResultadoBusca = "Dados não encontrado";
-//     }
-// }else if (filter_input(INPUT_POST, "btnBuscarTudo", FILTER_SANITIZE_STRING)) {
-
-
-//     $listaUsuariosBusca = $usuarioController->RetornarTodosUsuarios();
-
-// }
-
-// if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
-//     $retornoUsuario = $usuarioController->RetornaCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
-
-//     $cod = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
-//     $nome = $retornoUsuario->getNome();
-//     $email = $retornoUsuario->getEmail();
-//     $usuario = $retornoUsuario->getUsuario();
-//     $cpf = $retornoUsuario->getCpf();
-//     $senha = "sim";
-//     //--------
-//     //http://stackoverflow.com/questions/10306999/php-convert-date-format-dd-mm-yyyy-yyyy-mm-dd
-//     $date = str_replace('-', '/', $retornoUsuario->getNascimento());
-//     $dtNascimento = date('d-m-Y', strtotime($date));
-
-//     $sexo = $retornoUsuario->getSexo();
-//     $permissao = $retornoUsuario->getPermissao();
-//     $status = $retornoUsuario->getStatus();
-// }
 ?>
+<!DOCTYPE html>
 <div id="dvRevendedoraView">
     <h1>Gerenciar Revendedoras</h1>
     <br />
@@ -263,23 +224,21 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
 
 
     <script>
+    alert('da');
         $(document).ready(function () {
             if (getCookie("msg") == 1) {
-                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso.</div>";
+                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora cadastrada com sucesso.</div>";
                 document.cookie = "msg=d";
             } else if (getCookie("msg") == 2) {
-                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Usuário alterado com sucesso.</div>";
+                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora alterada com sucesso.</div>";
                 document.cookie = "msg=d";
             }
-
-            $('#txtCnpj').mask('99.999.999/9999-99');
-
             $("#frmGerenciarRevendedora").submit(function (e) {
                 if (!ValidarFormulario()) {
                     e.preventDefault();
                 }
             });
-
+              alert('da');
         });
 
         function ValidarFormulario() {
@@ -287,7 +246,6 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             var ulErros = document.getElementById("ulErros");
             ulErros.style.color = "red";
             ulErros.innerHTML = "";
-
 
         //Javascript nativo
         if (document.getElementById("txtRazaosocial").value.length < 5) {

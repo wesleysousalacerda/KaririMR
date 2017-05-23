@@ -58,7 +58,7 @@
                     <a href=""><img src="img/social/instagram.png" alt=""/></a>
                 </div>
 
-
+                
                 <a class="imgGridCategoria" href=""><img src="img/anuncieaqui.png" alt="Anuncie Aqui"/></a>
 
                 <!---->

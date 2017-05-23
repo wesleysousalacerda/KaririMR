@@ -11,13 +11,13 @@ class RevendedoraController {
     }
 
     public function Cadastrar(Revendedora $revendedora) {
-        if (strlen($revendedora->getRazaosocial()) >= 1 && strlen($revendedora->getCnpj()) == 14 && strlen($revendedora->getFantasia()) >= 2 && 
-                strlen($revendedora->getInsc_estadual()) >=10 && $revendedora->getDescricao() >= 10 && $revendedora->getUsuario() >= 1 ) {
-
+        // if (strlen($revendedora->getRazaosocial()) >= 1 && strlen($revendedora->getCnpj()) == 14 && strlen($revendedora->getFantasia()) >= 2 && 
+        //         strlen($revendedora->getInsc_estadual()) >=10 && $revendedora->getDescricao() >= 10 && $revendedora->getUsuario() >= 1 ) {
+        
             return $this->revendedoraDAO->Cadastrar($revendedora);
-        } else {
-            return false;
-        }
+        // } else {
+        //     return false;
+        // }
     }
 
     public function Alterar(Usuario $usuario) {
