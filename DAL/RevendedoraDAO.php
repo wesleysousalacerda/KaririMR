@@ -57,24 +57,11 @@ class RevendedoraDAO {
         }
     }
 
-    public function RetornarUsuarios(string $termo, int $tipo) {
+    public function RetornarRevendedoras(string $termo) {
         try {
             $sql = "";
+            $sql = "SELECT cod, razaosocial, fantasia, usuario_cod FROM revendedora WHERE fantasia LIKE :termo ORDER BY fantasia ASC";
 
-            switch ($tipo) {
-                case 1:
-                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE nome LIKE :termo ORDER BY nome ASC";
-                break;
-                case 2:
-                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE email LIKE :termo ORDER BY nome ASC";
-                break;
-                case 3:
-                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE cpf LIKE :termo ORDER BY nome ASC";
-                break;
-                case 4:
-                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE usuario LIKE :termo ORDER BY nome ASC";
-                break;
-            }
 
             $param = array(
                 ":termo" => "%{$termo}%"
@@ -82,20 +69,18 @@ class RevendedoraDAO {
 
             $dataTable = $this->pdo->ExecuteQuery($sql, $param);
 
-            $listaUsuario = [];
+            $listaRevenda = [];
 
             foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
-                $usuario = new Usuario(); // Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
-                $usuario->setCod($resultado["cod"]);
-                $usuario->setNome($resultado["nome"]);
-                $usuario->setStatus($resultado["status"]);
-                $usuario->setPermissao($resultado["permissao"]);
-                $usuario->setUsuario($resultado["usuario"]);
-
-                $listaUsuario[] = $usuario;
+                $revendedora = new Revendedora(); // Estrutura orientada a objetos, passasse o objeto Revendedora,nao os dados.
+                $revendedora->setCod($resultado["cod"]);
+                $revendedora->setRazaosocial($resultado["razaosocial"]);
+                $revendedora->setFantasia($resultado["fantasia"]);
+                $revendedora->setUsuario($resultado["usuario_cod"]);
+                $listaRevenda[] = $revendedora;
             }
 
-            return $listaUsuario;
+            return $listaRevenda;
         } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
@@ -104,27 +89,26 @@ class RevendedoraDAO {
         }
     }
 
-    public function RetornarTodosUsuarios() {
+    public function RetornarTodasRevendedoras() {
         try {
-            $sql = "";
-            $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario ORDER BY nome ASC";
+            $sql = ""; 
+            $sql = "SELECT cod, razaosocial, fantasia, usuario_cod FROM revendedora ORDER BY fantasia ASC";
 
             $dataTable = $this->pdo->ExecuteQuery($sql, NULL);
 
-            $listaUsuarioTodos = [];
+            $listaRevendaTodos = [];
 
             foreach ($dataTable as $resultado) {// O metodo foreach varre linha por linha na tabela, procurando o parametro AS.
-                $usuario = new Usuario(); // Estrutura orientada a objetos, passasse o objeto Usuario, e nao os dados.
-                $usuario->setCod($resultado["cod"]);
-                $usuario->setNome($resultado["nome"]);
-                $usuario->setStatus($resultado["status"]);
-                $usuario->setPermissao($resultado["permissao"]);
-                $usuario->setUsuario($resultado["usuario"]);
+                $revendedora = new Revendedora(); // Estrutura orientada a objetos, passasse o objeto Revendedora,nao os dados.
+                $revendedora->setCod($resultado["cod"]);
+                $revendedora->setRazaosocial($resultado["razaosocial"]);
+                $revendedora->setFantasia($resultado["fantasia"]);
+                $revendedora->setUsuario($resultado["usuario_cod"]);
 
-                $listaUsuarioTodos[] = $usuario;
+                $listaRevendaTodos[] = $revendedora;
             }
 
-            return $listaUsuarioTodos;
+            return $listaRevendaTodos;
         } catch (PDOException $ex) {
             if ($this->debug) {
                 echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
@@ -133,29 +117,25 @@ class RevendedoraDAO {
         }
     }
 
-    public function RetornaCod(int $usuarioCod) {
+    public function RetornaCod(int $revendaCod) {
         try {
-            $sql = "SELECT nome, email, cpf, usuario, nascimento, sexo, status, permissao, ip FROM usuario WHERE cod = :cod";
+            $sql = "SELECT razaosocial,cnpj, fantasia, insc_estadual, descricao, usuario_cod FROM revendedora WHERE cod = :cod";
             $param = array(
-                ":cod" => $usuarioCod
+                ":cod" => $revendaCod
                 );
 
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
             if ($dt != null) {
-                $usuario = new Usuario();
+                $revenda = new Revendedora();
 
-                $usuario->setNome($dt["nome"]);
-                $usuario->setEmail($dt["email"]);
-                $usuario->setCpf($dt["cpf"]);
-                $usuario->setUsuario($dt["usuario"]);
-                $usuario->setNascimento($dt["nascimento"]);
-                $usuario->setSexo($dt["sexo"]);
-                $usuario->setStatus($dt["status"]);
-                $usuario->setPermissao($dt["permissao"]);
-                $usuario->setIp($dt["ip"]);
-
-                return $usuario;
+                $revenda->setRazaosocial($dt["razaosocial"]);
+                $revenda->setCnpj($dt["cnpj"]);
+                $revenda->setFantasia($dt["fantasia"]);
+                $revenda->setInsc_estadual($dt["insc_estadual"]);
+                $revenda->setDescricao($dt["descricao"]);
+                $revenda->setUsuario($dt["usuario_cod"]);
+                return $revenda;
             } else {
                 return null;
             }

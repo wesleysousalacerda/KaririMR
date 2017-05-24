@@ -14,9 +14,9 @@ $fantasia = "";
 $descricao = "";
 $insc_estadual = "";
 $usuario = "";
-// $usercod = 23;
 $resultado = "";
-// $Bresultado = "";
+$spResultadoBusca = "";
+$listaRevenda = [];
 if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $usuario = filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_STRING);
     $revendedora = new Revendedora();
@@ -64,6 +64,37 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
 }else{
     $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Nome de usuario não cadastrado!.</div>";
 }
+}//FIm Cadastrar
+//Buscar usuários
+?>
+<script>
+</script>
+<?php 
+if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
+    $termo = filter_input(INPUT_POST, "txtTermo", FILTER_SANITIZE_STRING);
+    if ($termo != ""){
+        $listaRevenda = $revendedoraController->RetornarRevendedoras($termo);
+    }else{
+     $spResultadoBusca = "Insira termo de pesquisa.";
+ }
+ if ($listaRevenda != null) {
+    $spResultadoBusca = "Exibindo dados";
+} else {
+    $spResultadoBusca = "Dados não encontrado";
+}
+}else if (filter_input(INPUT_POST, "btnBuscarTudo", FILTER_SANITIZE_STRING)) {
+   $listaRevenda = $revendedoraController->RetornarTodasRevendedoras();
+}
+
+if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
+    $retornoRevenda = $revendedoraController->RetornaCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+    $cod = filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT);
+    $razaosocial = $retornoRevenda->getRazaosocial();
+    $fantasia = $retornoRevenda->getFantasia();
+    $usuario = $retornoRevenda->getUsuario();
+    $insc_estadual = $retornoRevenda->getInsc_estadual();
+    $descricao = $retornoRevenda->getDescricao();
+    $cnpj = $retornoRevenda->getCnpj();
 }
 ?>
 <!DOCTYPE html>
@@ -72,7 +103,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     <br />
     <div class="controlePaginas">
         <a href="?pagina=revendedora"><img src="img/icones/editar.png" alt=""/></a>
-        <!-- <a href="?pagina=revendedora&consulta=s"><img src="img/icones/buscar.png" alt=""/></a> -->
+        <a href="?pagina=revendedora&consulta=s"><img src="img/icones/buscar.png" alt=""/></a>
     </div>
 
     <br />
@@ -157,104 +188,89 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
         <div class="panel panel-default maxPanelWidth">
             <div class="panel-heading">Consultar</div>
             <div class="panel-body">
-                <form method="post" name="frmBuscarUsuario" id="frmBuscarUsuario">
+                <form method="post" name="frmBuscarRevendedora" id="frmBuscarRevendedora">
                     <div class="row">
                         <div class="col-lg-8 col-xs-12">
-                            <div class="form-group">
+                           <!--  <div class="form-group">
                                 <label for="txtTermo">Termo de busca</label>
-                                <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: fulano de tal" />
-                            </div>
-                        </div>
+                                <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: Hilton Veiculos" />
+                            </div> -->
+                            <div class="input-group">
+                              <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Revendedora...">
+                              <span class="input-group-btn">
+                                  <input class="btn btn-primary" type="submit" name="btnBuscar" value="Buscar"> 
+                                  <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todas">
+                              </span>
+                          </div><!-- /input-group -->
+                          <span><?= $spResultadoBusca; ?></span>
 
-                        <div class="col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label for="slTipoBusca">Tipo</label>
-                                <select class="form-control" id="slTipoBusca" name="slTipoBusca">
-                                    <option value="1">Nome</option>
-                                    <option value="2">E-mail</option>
-                                    <option value="3">CPF </option>
-                                    <option value="4">Usuário </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                      </div>
+                  </div>
+              </form>
 
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
-                            <span><?= $spResultadoBusca; ?></span>
-                            <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
+              <hr />
+              <br />
 
-                        </div>
-
-                    </div>
-                </form>
-
-                <hr />
-                <br />
-
-                <table class="table table-responsive table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Usuário</th>
-                            <th>Status</th>
-                            <th>Permissão</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if ($listaUsuariosBusca != null) {
-                            foreach ($listaUsuariosBusca as $user) {
-                                ?>
-                                <tr>
-                                    <td><?= $user->getNome(); ?></td>
-                                    <td><?= $user->getUsuario(); ?></td>
-                                    <td><?= ($user->getStatus() == 1 ? "Ativo" : "Bloqueado") ?></td>
-                                    <td><?= ($user->getPermissao() == 1 ? "Administrador." : "Comum") ?></td>
-                                    <td>
-                                        <a href="?pagina=visualizarusuario&cod=<?= $user->getCod(); ?>" class="btn btn-success">Visualizar</a>
-                                        <a href="?pagina=usuario&cod=<?= $user->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
-                                        <a href="?pagina=alterarsenha&cod=<?= $user->getCod(); ?>" class="btn btn-danger">Senha</a>
-                                        <a href="?pagina=endereco&cod=<?= $user->getCod(); ?>" class="btn btn-info">Endereço</a>
-                                        <a href="?pagina=telefone&cod=<?= $user->getCod(); ?>" class="btn btn-primary">Telefone</a>
-                                    </tr>
-
-                                    <?php
-                                }
-                            }
+              <table class="table table-responsive table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Razão Social</th>
+                        <th>Fantasia</th>
+                        <th>Usuario</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($listaRevenda != null) {
+                        foreach ($listaRevenda as $revenda) {
                             ?>
-                        </tbody>
-                    </table>
-                </div>
+                            <tr>
+                                <td><?= $revenda->getRazaosocial(); ?></td>
+                                <td><?= $revenda->getFantasia(); ?></td>
+                                <td><?= $revenda->getUsuario(); ?></td>
+                                <td>
+                                    <a href="?pagina=visualizarrevenda&cod=<?= $revenda->getCod(); ?>" class="btn btn-success">Visualizar</a>
+                                    <a href="?pagina=revendedora&cod=<?= $revenda->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
+                                    <a href="?pagina=usuario&cod=<?= $revenda->getCod(); ?>" class="btn btn-danger">Usuario</a>
+                                    <a href="?pagina=endereco&cod=<?= $revenda->getCod(); ?>" class="btn btn-info">Endereço</a>
+                                    <a href="?pagina=telefone&cod=<?= $revenda->getCod(); ?>" class="btn btn-primary">Imagem</a>
+                                </tr>
+
+                                <?php
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
-            <?php
+        </div>
+        <?php
+    }
+    ?>
+</div>
+<script src="../js/mask.js" type="text/javascript">
+</script>
+<script>
+    $(document).ready(function () {
+        if (getCookie("msg") == 1) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora cadastrada com sucesso.</div>";
+            document.cookie = "msg=d";
+        } else if (getCookie("msg") == 2) {
+            document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora alterada com sucesso.</div>";
+            document.cookie = "msg=d";
         }
-        ?>
-    </div>
-    <script src="../js/mask.js" type="text/javascript">
-    </script>
-    <script>
-        $(document).ready(function () {
-            if (getCookie("msg") == 1) {
-                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora cadastrada com sucesso.</div>";
-                document.cookie = "msg=d";
-            } else if (getCookie("msg") == 2) {
-                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora alterada com sucesso.</div>";
-                document.cookie = "msg=d";
+        $("#frmGerenciarRevendedora").submit(function (e) {
+            if (!ValidarFormulario()) {
+                e.preventDefault();
             }
-            $("#frmGerenciarRevendedora").submit(function (e) {
-                if (!ValidarFormulario()) {
-                    e.preventDefault();
-                }
-            });
         });
-        function ValidarFormulario() {
-            var erros = 0;
-            var ulErros = document.getElementById("ulErros");
-            ulErros.style.color = "red";
-            ulErros.innerHTML = "";
+    });
+    function ValidarFormulario() {
+        var erros = 0;
+        var ulErros = document.getElementById("ulErros");
+        ulErros.style.color = "red";
+        ulErros.innerHTML = "";
         //Javascript nativo
         if (document.getElementById("txtRazaosocial").value.length < 5) {
             var li = document.createElement("li");
