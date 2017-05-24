@@ -320,8 +320,7 @@ $listaCategoria = $categoriaController->RetornarCategorias();
                     if (!ValidarFormulario()) {
                         e.preventDefault();
                     }
-                });
-                alert('da');
+                });                
 
             });
             function ValidarFormulario() {
