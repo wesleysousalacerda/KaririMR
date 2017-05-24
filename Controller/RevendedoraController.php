@@ -30,21 +30,21 @@ class RevendedoraController {
         }
     }
 
-    public function RetornarUsuarios(string $termo, int $tipo) {
-        if ($termo != "" && $tipo >= 1 && $tipo <= 4) {
-            return $this->usuarioDAO->RetornarUsuarios($termo, $tipo);
+    public function RetornarRevendedoras(string $termo) {
+        if ($termo != "") {
+            return $this->revendedoraDAO->RetornarRevendedoras($termo);
         } else {
             return null;
         }
     }
 
-    public function RetornarTodosUsuarios() {
-        return $this->usuarioDAO->RetornarTodosUsuarios();
+    public function RetornarTodasRevendedoras() {
+        return $this->revendedoraDAO->RetornarTodasRevendedoras();
     }
 
-    public function RetornaCod(int $usuarioCod) {
-        if ($usuarioCod > 0) {
-            return $this->usuarioDAO->RetornaCod($usuarioCod);
+    public function RetornaCod(int $revendaCod) {
+        if ($revendaCod > 0) {
+            return $this->revendedoraDAO->RetornaCod($revendaCod);
         } else {
             return null;
         }

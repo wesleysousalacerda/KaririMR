@@ -40,28 +40,30 @@ if ($cod > 0) {
         <p><span class="bold">Valor:</span> <?= number_format($anuncio->getValor(), 2, ",", " "); ?></p>
         <br/>
         <p><span class="bold">Descrição:</span> <?= $anuncio->getDescricao(); ?></p>
-        <button onclick="renavam()">Concultar Renavam</button> 
-        <iframe  style="" id="iframe-servicos" name="iframe" src="http://erenavam.detran.ce.gov.br/getran/consultaInternet.do?method=consultaCompleta" width="300px" height="200" </iframe>
-            <?php
-        } else {
-            ?>
-        <h1>Conteúdo não encontrado</h1>
-        <br />
-        <div>
-            <p>Desculpe, o anuncio que você procura não existe ou não foi encontrado.</p>
-            <p>Por favor, faça uma busca através do menu acima.</p>
-        </div>
-        <?php
-    }
+        <!-- <div class="row"> -->
+
+<button onclick="renavam()">Concultar Renavam</button> 
+<iframe  style="" id="iframe-servicos" name="iframe" src="http://erenavam.detran.ce.gov.br/getran/consultaInternet.do?method=consultaCompleta" width="300px" height="200" </iframe>
+    <?php
+} else {
     ?>
+    <h1>Conteúdo não encontrado</h1>
+    <br />
+    <div>
+        <p>Desculpe, o anuncio que você procura não existe ou não foi encontrado.</p>
+        <p>Por favor, faça uma busca através do menu acima.</p>
+    </div>
+    <?php
+}
+?>
 
 </div>
 <br />
 <script>
     $(document).ready(function () {
-    function renavam() {
-    console.log('Passei aqui')
+        function renavam() {
+            console.log('Passei aqui')
             document.getElementById("iframe-servicos").style.display = "";
-            }
+        }
     };
 </script>
