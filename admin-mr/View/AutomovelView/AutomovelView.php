@@ -59,7 +59,6 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
 
             $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar o automovel.</div>"
             ;
-            // var_dump($automovel);       
         }
     } else {
         //Editar
@@ -86,10 +85,9 @@ $listaBusca = [];
 if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
 
     $termo = filter_input(INPUT_POST, "txtTermo", FILTER_SANITIZE_STRING);
-    $placa = filter_input(INPUT_POST, "txtPlacaBusca", FILTER_SANITIZE_STRING);
-    $usuario = filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_NUMBER_INT);
-    if ($termo != NULL && $placa != NULL && $usuario != NULL ) {
-        $listaBusca = $automovelController->RetornarTodosFiltro($termo, $placa, $usuario);
+    $tipo = filter_input(INPUT_POST, "slTipoBusca", FILTER_SANITIZE_NUMBER_INT);
+    if ($termo != NULL && $usuario != NULL ) {
+        $listaBusca = $automovelController->RetornarAutomoveis($termo,$tipo);
     } else {
         $Bresultado = "<div class=\"alert alert-danger\" role=\"alert\">Insira todos os campos.</div>";
     }
@@ -253,7 +251,7 @@ $listaCategoria = $categoriaController->RetornarCategorias();
                             <div class="col-xs-12">
                                 <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
                                 <span><?= $spResultadoBusca; ?></span>
-                                <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
+                                <input class="btn btn-success" type="submit" name="btnBuscarTodos" value="Buscar Todos"> 
 
                             </div>
 
