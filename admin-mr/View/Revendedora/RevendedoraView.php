@@ -284,8 +284,15 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
             ulErros.appendChild(li);
             erros++;
         }
+        
+        if (document.getElementById("txtInscricao").value.length < 5) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe uma Inscrição Estadual válida";
+            ulErros.appendChild(li);
+            erros++;
+        }
 
-        if (document.getElementById("txtCnpj").value.length != 14) {
+        if (document.getElementById("txtCnpj").value.length != 18) {
             var li = document.createElement("li");
             li.innerHTML = "- Informe um cnpj válido";
             ulErros.appendChild(li);
@@ -294,6 +301,12 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         if (document.getElementById("txtFantasia").value.length < 2) {
             var li = document.createElement("li");
             li.innerHTML = "- Informe um Nome Fantasia válido";
+            ulErros.appendChild(li);
+            erros++;
+        }
+        if (document.getElementById("txtDescricao").value.length < 10) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe uma Descrição válida(mais que 10 caracteres)";
             ulErros.appendChild(li);
             erros++;
         }
