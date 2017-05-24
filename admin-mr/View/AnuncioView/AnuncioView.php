@@ -38,7 +38,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
         if ($anuncioController->Cadastrar($anuncio)) {
             ?>
             <script>
-                document.cookie = "msg=1";
+            document.cookie = "msg=1";
             document.location.href = "?pagina=anuncio";
             </script>
             <?php

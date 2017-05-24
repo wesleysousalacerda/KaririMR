@@ -302,9 +302,8 @@ $listaCategoria = $categoriaController->RetornarCategorias();
             }
             ?>
         </div>
-        <script src="../js/mask.js" type="text/javascript"></script>
-
-
+        <script src="../js/mask.js" type="text/javascript">
+        </script>
         <script>
             $(document).ready(function () {
                 if (getCookie("msg") == 1) {
@@ -319,7 +318,6 @@ $listaCategoria = $categoriaController->RetornarCategorias();
                         e.preventDefault();
                     }
                 });
-                alert('da');
 
             });
             function ValidarFormulario() {

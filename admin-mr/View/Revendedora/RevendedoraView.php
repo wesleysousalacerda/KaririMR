@@ -23,7 +23,6 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $revendedora->setInsc_estadual(filter_input(INPUT_POST, "txtInscricao", FILTER_SANITIZE_STRING));
     $revendedora->setDescricao(filter_input(INPUT_POST, "txtDescricao", FILTER_SANITIZE_STRING));
     $revendedora->getUsuario()->setCod($_SESSION["cod"]);
-    var_dump($revendedora);
     if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         //Cadastrar
 
@@ -32,30 +31,30 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             <script>
                 document.cookie = "msg=1";
                 document.location.href = "?pagina=revendedora";
-            //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
-            //o Cookie redirecionara para a pagina de revendedora.
-        </script>
-        <?php
+                //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+                //o Cookie redirecionara para a pagina de revendedora.
+            </script>
+            <?php
+        } else {
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a revendedora.</div>";
+        }
     } else {
-        $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a revendedora.</div>";
-    }
-} else {
         //Editar
-    $revendedora->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+        $revendedora->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
 
-    if ($revendedoraController->Alterar($revendedora)) {
-        ?>
-        <script>
-            document.cookie = "msg=2";
-            document.location.href = "?pagina=revendedora";
-            //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
-            //o Cookie redirecionara para a pagina de revendedora.
-        </script>
-        <?php
-    } else {
-        $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a revendedora.</div>";
+        if ($revendedoraController->Alterar($revendedora)) {
+            ?>
+            <script>
+                document.cookie = "msg=2";
+                document.location.href = "?pagina=revendedora";
+                //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+                //o Cookie redirecionara para a pagina de revendedora.
+            </script>
+            <?php
+        } else {
+            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a revendedora.</div>";
+        }
     }
-}
 }
 ?>
 <!DOCTYPE html>
@@ -101,7 +100,6 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                                 <input type="text" class="form-control" id="txtFantasia" name="txtFantasia" placeholder="Nome Fantasia"  value="<?= $fantasia; ?>">
                             </div>
                         </div>
-
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtInscricao">Incrição Estadual</label>
@@ -117,10 +115,10 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                             </div>
                         </div>
                         <div class="col-lg-6 col-xs-12">
-                        <div class="form-group">
-                            <label for="txtUsuario">Usuário</label>
-                            <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuario"  value="<?= $usuario; ?>">
-                        </div>
+                            <div class="form-group">
+                                <label for="txtUsuario">Usuário <span id="spValidaUsuario"></span></label>
+                                <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuario"  value="<?= $usuario; ?>">
+                            </div>
                         </div>
                     </div>
 
@@ -179,7 +177,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                             <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
 
                         </div>
-                        
+
                     </div>
                 </form>
 
@@ -226,11 +224,9 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
         }
         ?>
     </div>
-    <script src="../js/mask.js" type="text/javascript"></script>
-
-
+    <script src="../js/mask.js" type="text/javascript">
+    </script>
     <script>
-        alert('da');
         $(document).ready(function () {
             if (getCookie("msg") == 1) {
                 document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora cadastrada com sucesso.</div>";
@@ -244,15 +240,12 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
                     e.preventDefault();
                 }
             });
-            alert('da');
         });
-
         function ValidarFormulario() {
             var erros = 0;
             var ulErros = document.getElementById("ulErros");
             ulErros.style.color = "red";
             ulErros.innerHTML = "";
-
         //Javascript nativo
         if (document.getElementById("txtRazaosocial").value.length < 5) {
             var li = document.createElement("li");
@@ -261,19 +254,19 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             erros++;
         }
 
-        if (document.getElementById("txtCnpj").val() != 14) {
+        if (document.getElementById("txtCnpj").value.length != 14) {
             var li = document.createElement("li");
             li.innerHTML = "- Informe um cnpj válido";
             ulErros.appendChild(li);
             erros++;
         }
-        if (document.getElementById("txtFantasia").val() < 2) {
+        if (document.getElementById("txtFantasia").value.length < 2) {
             var li = document.createElement("li");
             li.innerHTML = "- Informe um Nome Fantasia válido";
             ulErros.appendChild(li);
             erros++;
         }
-    }
+    
 
     if (erros === 0) {
         return true;
@@ -281,4 +274,33 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
         return false;
     }
 }
+function ValidaUsuario() {
+    var usuario = $("#txtUsuario").val();
+    if (usuario.length >= 3) {
+        $.ajax({
+            url: "Action/UsuarioAction.php?req=1",
+            data: {txtUsuario: $("#txtUsuario").val()},
+            type: "POST",
+            dataType: "text",
+            success: function (retorno) {
+                if (retorno == - 1) {
+                    $("#spValidaUsuario").text("Usuário Não Cadastrado");
+                    $("#spValidaUsuario").css("color", "#39C462");
+                } else if (retorno == 1){
+                    $("#spValidaUsuario").text("Usuário Válido");
+                    $("#spValidaUsuario").css("color", "#FF4500");
+                } else{
+                    $("#spValidaUsuario").text("Erro ao válidar");
+                    $("#spValidaUsuario").css("color", "#FF3730");
+                }
+            },
+            error: function (erro) {
+                console.log(erro);
+            }
+        });
+    } else {
+        return - 10;
+    }
+}
+
 </script>
