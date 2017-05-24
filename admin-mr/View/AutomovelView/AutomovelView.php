@@ -276,8 +276,8 @@ $listaCategoria = $categoriaController->RetornarCategorias();
                         </thead>
                         <tbody>
                             <?php
-                            if ($listaAutomoveisBusca != null) {
-                                foreach ($listaAutomoveisBusca as $auto) {
+                            if ($listaBusca != null) {
+                                foreach ($listaBusca as $auto) {
                                     ?>
                                     <tr>
                                         <td><?= $auto->getNome(); ?></td>
