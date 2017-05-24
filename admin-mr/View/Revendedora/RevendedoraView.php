@@ -263,6 +263,9 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
             document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora alterada com sucesso.</div>";
             document.cookie = "msg=d";
         }
+        $('#txtCnpj').mask('00.000.000/0000-00');
+
+        
         $("#frmGerenciarRevendedora").submit(function (e) {
             if (!ValidarFormulario()) {
                 e.preventDefault();
