@@ -1,8 +1,11 @@
 <?php
 require_once ("../Controller/RevendedoraController.php");
 require_once ("../Model/Revendedora.php");
+require_once("../Model/Usuario.php");
+require_once("../Controller/UsuarioController.php");
 
 $revendedoraController = new RevendedoraController();
+$usuarioController = new UsuarioController();
 
 $cod = 1;
 $razaosocial = "";
@@ -11,10 +14,11 @@ $fantasia = "";
 $descricao = "";
 $insc_estadual = "";
 $usuario = "";
-
+// $usercod = 23;
 $resultado = "";
 // $Bresultado = "";
 if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
+    $usuario = filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_STRING);
     $revendedora = new Revendedora();
 
     $revendedora->setRazaosocial(filter_input(INPUT_POST, "txtRazaosocial", FILTER_SANITIZE_STRING));
@@ -22,15 +26,17 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $revendedora->setFantasia(filter_input(INPUT_POST, "txtFantasia", FILTER_SANITIZE_STRING));
     $revendedora->setInsc_estadual(filter_input(INPUT_POST, "txtInscricao", FILTER_SANITIZE_STRING));
     $revendedora->setDescricao(filter_input(INPUT_POST, "txtDescricao", FILTER_SANITIZE_STRING));
-    $revendedora->getUsuario()->setCod($_SESSION["cod"]);
-    if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
+    $usercod = $usuarioController->RetornarUser($usuario);
+    if ($usercod != null){
+        $revendedora->getUsuario()->setCod($usercod);
+        if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         //Cadastrar
 
-        if ($revendedoraController->Cadastrar($revendedora)) {
-            ?>
-            <script>
-                document.cookie = "msg=1";
-                document.location.href = "?pagina=revendedora";
+            if ($revendedoraController->Cadastrar($revendedora)) {
+                ?>
+                <script>
+                    document.cookie = "msg=1";
+                    document.location.href = "?pagina=revendedora";
                 //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
                 //o Cookie redirecionara para a pagina de revendedora.
             </script>
@@ -55,6 +61,9 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a revendedora.</div>";
         }
     }
+}else{
+    $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Nome de usuario não cadastrado!.</div>";
+}
 }
 ?>
 <!DOCTYPE html>
@@ -266,41 +275,43 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
             ulErros.appendChild(li);
             erros++;
         }
-    
 
-    if (erros === 0) {
-        return true;
-    } else {
-        return false;
+
+        if (erros === 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
-}
-function ValidaUsuario() {
-    var usuario = $("#txtUsuario").val();
-    if (usuario.length >= 3) {
-        $.ajax({
-            url: "Action/UsuarioAction.php?req=1",
-            data: {txtUsuario: $("#txtUsuario").val()},
-            type: "POST",
-            dataType: "text",
-            success: function (retorno) {
-                if (retorno == - 1) {
-                    $("#spValidaUsuario").text("Usuário Não Cadastrado");
-                    $("#spValidaUsuario").css("color", "#39C462");
-                } else if (retorno == 1){
-                    $("#spValidaUsuario").text("Usuário Válido");
-                    $("#spValidaUsuario").css("color", "#FF4500");
-                } else{
-                    $("#spValidaUsuario").text("Erro ao válidar");
-                    $("#spValidaUsuario").css("color", "#FF3730");
+    function ValidaUsuario() {
+        var usuario = $("#txtUsuario").val();
+        if (usuario.length >= 3) {
+            $.ajax({
+                url: "../Action/UsuarioAction.php?req=1",
+                data: {txtUsuario: $("#txtUsuario").val()},
+                type: "POST",
+                dataType: "text",
+                success: function (retorno) {
+                    if (retorno == - 1) {
+                        $("#spValidaUsuario").text("Usuário Não Cadastrado");
+                        $("#spValidaUsuario").css("color", "#39C462");
+                        alert('Nao cadastrado');
+                    } else if (retorno == 1){
+                        $("#spValidaUsuario").text("Usuário Válido");
+                        $("#spValidaUsuario").css("color", "#FF4500");
+                        alert('Cadastrado');
+                    } else{
+                        $("#spValidaUsuario").text("Erro ao válidar");
+                        $("#spValidaUsuario").css("color", "#FF3730");
+                    }
+                },
+                error: function (erro) {
+                    console.log(erro);
                 }
-            },
-            error: function (erro) {
-                console.log(erro);
-            }
-        });
-    } else {
-        return - 10;
+            });
+        } else {
+            return - 10;
+        }
     }
-}
 
 </script>

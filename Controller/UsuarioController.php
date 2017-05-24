@@ -76,5 +76,12 @@ class UsuarioController {
             -10;
         }
     }
+    public function RetornarUser(string $user) {
+        if (strlen($user) >=3) {
+            return $this->usuarioDAO->RetornarUser($user);
+        } else {
+            return null;
+        }
+    }
 
 }

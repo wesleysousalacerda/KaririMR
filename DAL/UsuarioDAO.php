@@ -26,7 +26,7 @@ class UsuarioDAO {
                 ":status" => $usuario->getStatus(),
                 ":permissao" => $usuario->getPermissao(),
                 ":ip" => $_SERVER["REMOTE_ADDR"],
-            );
+                );
 
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
@@ -50,7 +50,7 @@ class UsuarioDAO {
                 ":status" => $usuario->getStatus(),
                 ":permissao" => $usuario->getPermissao(),
                 ":cod" => $usuario->getCod()
-            );
+                );
 
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
@@ -67,22 +67,22 @@ class UsuarioDAO {
 
             switch ($tipo) {
                 case 1:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE nome LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE nome LIKE :termo ORDER BY nome ASC";
+                break;
                 case 2:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE email LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE email LIKE :termo ORDER BY nome ASC";
+                break;
                 case 3:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE cpf LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE cpf LIKE :termo ORDER BY nome ASC";
+                break;
                 case 4:
-                    $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE usuario LIKE :termo ORDER BY nome ASC";
-                    break;
+                $sql = "SELECT cod, nome, usuario, status, permissao FROM usuario WHERE usuario LIKE :termo ORDER BY nome ASC";
+                break;
             }
 
             $param = array(
                 ":termo" => "%{$termo}%"
-            );
+                );
 
             $dataTable = $this->pdo->ExecuteQuery($sql, $param);
 
@@ -142,7 +142,7 @@ class UsuarioDAO {
             $sql = "SELECT nome, email, cpf, usuario, nascimento, sexo, status, permissao, ip FROM usuario WHERE cod = :cod";
             $param = array(
                 ":cod" => $usuarioCod
-            );
+                );
 
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
@@ -178,7 +178,7 @@ class UsuarioDAO {
             $param = array(
                 ":usuario" => $usu,
                 ":senha" => $senha
-            );
+                );
 
             $dt = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
@@ -205,7 +205,7 @@ class UsuarioDAO {
             $param = array(
                 ":senha" => md5($senha),
                 ":cod" => $cod
-            );
+                );
             return $this->pdo->ExecuteNonQuery($sql, $param);
         } catch (PDOException $ex) {
             if ($this->debug) {
@@ -222,7 +222,7 @@ class UsuarioDAO {
 
             $param = array(
                 ":usuario" => $user
-            );
+                );
 
             $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
 
@@ -239,6 +239,30 @@ class UsuarioDAO {
             return null;
         }
     }
+    public function RetornarUser(string $user) {
+        try {
+            $sql = "SELECT cod FROM usuario WHERE usuario = :usuario";
+
+            $param = array(
+                ":usuario" => $user
+                );
+
+            $dr = $this->pdo->ExecuteQueryOneRow($sql, $param);
+
+
+            if (!empty($dr)) {
+              $user = $dr["cod"];
+              return $user;
+          } else {
+            return null;
+        }
+    } catch (PDOException $ex) {
+        if ($this->debug) {
+            echo "ERRO: {$ex->getMessage()} LINE: {$ex->getLine()}";
+        }
+        return null;
+    }
+}
 }
 
 ?>
