@@ -147,20 +147,21 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                             </div>
                         </div>
                     </div>
+                    
                     <div class="row">
-                        <div class="col-lg-6 col-xs-12">
-                            <div class="form-group">
-                                <label for="txtDescricao">Descrição</label>
-                                <input type="text" class="form-control" id="txtDescricao" name="txtDescricao" placeholder="" value="<?= $descricao; ?>"/>
-                            </div>
-                        </div>
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtUsuario">Usuário <span id="spValidaUsuario"></span></label>
                                 <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuario"  value="<?= $usuario; ?>">
                             </div>
-                        </div>
+                        </div>                                                
                     </div>
+                     <div class="row">
+                            <div class="col-lg-12">
+                                <p style="font-weight: 700;">Descrição</p>
+                                <textarea class="form-control" id="txtDescricao" name="txtDescricao"></textarea>
+                            </div>
+                        </div>
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -249,10 +250,12 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
     }
     ?>
 </div>
-<script src="../js/mask.js" type="text/javascript">
-</script>
+<script src="../js/mask.js" type="text/javascript"></script>
+<script src="../Util/ckeditor/ckeditor.js"></script>
+
 <script>
     $(document).ready(function () {
+        CKEDITOR.replace('txtDescricao');
         if (getCookie("msg") == 1) {
             document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora cadastrada com sucesso.</div>";
             document.cookie = "msg=d";
