@@ -40,7 +40,7 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     // $automovel->getUsuario()->setCod(filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_NUMBER_INT));;
     $automovel->getCategoria()->setCod(filter_input(INPUT_POST, "slCategoria", FILTER_SANITIZE_NUMBER_INT));
 
-    
+
 //    $automovel->setCategoria(9);
 
     if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
@@ -88,7 +88,7 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
     $termo = filter_input(INPUT_POST, "txtTermo", FILTER_SANITIZE_STRING);
     $placa = filter_input(INPUT_POST, "txtPlacaBusca", FILTER_SANITIZE_STRING);
     $usuario = filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_NUMBER_INT);
-    if ($termo != NULL && $placa != NULL && $usuario != NULL ) {
+    if ($termo != NULL && $placa != NULL && $usuario != NULL) {
         $listaBusca = $automovelController->RetornarTodosFiltro($termo, $placa, $usuario);
     } else {
         $Bresultado = "<div class=\"alert alert-danger\" role=\"alert\">Insira todos os campos.</div>";
@@ -187,206 +187,206 @@ $listaCategoria = $categoriaController->RetornarCategorias();
                                     foreach ($listaCategoria as $cat) {
                                         ?>
                                         <option value="<?= $cat->getCod() ?>" <?= ($ctg == $cat->getCod() ? "selected='selected'" : "") ?> <?= ($cat->getSubcategoria() == null ? "style='font-weight: bold;'" : "") ?>><?= $cat->getNome() ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p style="font-weight: 700;">Descrição</p>
-                                <textarea class="form-control" id="txtDescricao" name="txtDescricao"></textarea>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p id="pResultado"><?= $resultado; ?></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
-                            <a href="#" class="btn btn-danger">Cancelar</a>
-                        </div>
-                        <br />
-                        <br />    
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <ul id="ulErros">
-
-                                </ul>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <?php
-        } else {
-            ?>
-            <br />
-            <!--DIV CONSULTA -->
-            <div class="panel panel-default maxPanelWidth">
-                <div class="panel-heading">Consultar</div>
-                <div class="panel-body">
-                    <form method="post" name="frmBuscarAutomovel" id="frmBuscarAutomovel">
-                        <div class="row">
-                            <div class="col-lg-8 col-xs-12">
-                                <div class="form-group">
-                                    <label for="txtTermo">Termo de busca</label>
-                                    <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: camaro amarelo" />
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-xs-12">
-                                <div class="form-group">
-                                    <label for="slTipoBusca">Tipo</label>
-                                    <select class="form-control" id="slTipoBusca" name="slTipoBusca">
-                                        <option value="1">Nome</option>
-                                        <option value="2">Marca</option>
-                                        <option value="3">Modelo</option>
-                                        <option value="4">Placa</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
-                                <span><?= $spResultadoBusca; ?></span>
-                                <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
-
-                            </div>
-
-                        </div>
-                    </form>
-
-                    <hr />
-                    <br />
-
-                    <table class="table table-responsive table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Placa</th>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Ano</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if ($listaAutomoveisBusca != null) {
-                                foreach ($listaAutomoveisBusca as $auto) {
-                                    ?>
-                                    <tr>
-                                        <td><?= $auto->getNome(); ?></td>
-                                        <td><?= $auto->getPlaca(); ?></td>
-                                        <td><?= $auto->getMarca(); ?></td>
-                                        <td><?= $auto->getModelo(); ?></td>
-                                        <td><?= $auto->getAno(); ?></td>
-                                        <td>
-                                            <a href="?pagina=visualizarautomovel&cod=<?= $auto->getCod(); ?>" class="btn btn-success">Visualizar</a>
-                                            <a href="?pagina=automovel&cod=<?= $auto->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
-                                        </tr>
-
-                                        <?php
-                                    }
-                                }
-                                ?>
-                            </tbody>
-                        </table>
                     </div>
-                </div>
-                <?php
-            }
-            ?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p style="font-weight: 700;">Descrição</p>
+                            <textarea class="form-control" id="txtDescricao" name="txtDescricao"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p id="pResultado"><?= $resultado; ?></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <input class="btn btn-success" type="submit" name="btnGravar" value="Gravar">
+                        <a href="#" class="btn btn-danger">Cancelar</a>
+                    </div>
+                    <br />
+                    <br />    
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul id="ulErros">
+
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <script src="../js/mask.js" type="text/javascript"></script>
-        <script src="../Util/ckeditor/ckeditor.js"></script>
+        <?php
+    } else {
+        ?>
+        <br />
+        <!--DIV CONSULTA -->
+        <div class="panel panel-default maxPanelWidth">
+            <div class="panel-heading">Consultar</div>
+            <div class="panel-body">
+                <form method="post" name="frmBuscarAutomovel" id="frmBuscarAutomovel">
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-12">
+                            <div class="form-group">
+                                <label for="txtTermo">Termo de busca</label>
+                                <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: camaro amarelo" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label for="slTipoBusca">Tipo</label>
+                                <select class="form-control" id="slTipoBusca" name="slTipoBusca">
+                                    <option value="1">Nome</option>
+                                    <option value="2">Marca</option>
+                                    <option value="3">Modelo</option>
+                                    <option value="4">Placa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <input class="btn btn-info" type="submit" name="btnBuscar" value="Buscar"> 
+                            <span><?= $spResultadoBusca; ?></span>
+                            <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todos"> 
+
+                        </div>
+
+                    </div>
+                </form>
+
+                <hr />
+                <br />
+
+                <table class="table table-responsive table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Placa</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Ano</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($listaAutomoveisBusca != null) {
+                            foreach ($listaAutomoveisBusca as $auto) {
+                                ?>
+                                <tr>
+                                    <td><?= $auto->getNome(); ?></td>
+                                    <td><?= $auto->getPlaca(); ?></td>
+                                    <td><?= $auto->getMarca(); ?></td>
+                                    <td><?= $auto->getModelo(); ?></td>
+                                    <td><?= $auto->getAno(); ?></td>
+                                    <td>
+                                        <a href="?pagina=visualizarautomovel&cod=<?= $auto->getCod(); ?>" class="btn btn-success">Visualizar</a>
+                                        <a href="?pagina=automovel&cod=<?= $auto->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
+                                </tr>
+
+                                <?php
+                            }
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <?php
+    }
+    ?>
+</div>
+<script src="../js/mask.js" type="text/javascript"></script>
+<script src="../Util/ckeditor/ckeditor.js"></script>
 
 
-        <script>
-            $(document).ready(function () {
-                CKEDITOR.replace('txtDescricao');
-                if (getCookie("msg") == 1) {
-                    document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Automovel cadastrado com sucesso.</div>";
-                    document.cookie = "msg=d";
-                } else if (getCookie("msg") == 2) {
-                    document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Automovel alterado com sucesso.</div>";
-                    document.cookie = "msg=d";
+<script>
+        $(document).ready(function () {
+            CKEDITOR.replace('txtDescricao');
+            if (getCookie("msg") == 1) {
+                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Automovel cadastrado com sucesso.</div>";
+                document.cookie = "msg=d";
+            } else if (getCookie("msg") == 2) {
+                document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Automovel alterado com sucesso.</div>";
+                document.cookie = "msg=d";
+            }
+            $("#frmGerenciarAutomovel").submit(function (e) {
+                if (!ValidarFormulario()) {
+                    e.preventDefault();
                 }
-                $("#frmGerenciarAutomovel").submit(function (e) {
-                    if (!ValidarFormulario()) {
-                        e.preventDefault();
-                    }
-                });
-                alert('da');
-
             });
-            function ValidarFormulario() {
-                var erros = 0;
-                var ulErros = document.getElementById("ulErros");
-                ulErros.style.color = "red";
-                ulErros.innerHTML = "";
+
+        });
+        function ValidarFormulario() {
+            var erros = 0;
+            var ulErros = document.getElementById("ulErros");
+            ulErros.style.color = "red";
+            ulErros.innerHTML = "";
 
 
-                    //Javascript nativo
-                    if (document.getElementById("txtNome").value.length < 1) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um nome válido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
+            //Javascript nativo
+            if (document.getElementById("txtNome").value.length < 1) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um nome válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
 
-                    if (document.getElementById("txtMarca").value.length < 1) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um nome de marca válido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
+            if (document.getElementById("txtMarca").value.length < 1) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um nome de marca válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
 
-                    if (document.getElementById("txtRenavam").value.length != 11) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um renavam válido (11 digitos)";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-                    if (document.getElementById("txtPlaca").value.length != 7) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe uma placa válida (7 digitos)";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-                    if (document.getElementById("txtAno").value.length != 4) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um ano válido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-                    if (document.getElementById("txtModelo").value.length < 1) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe um modelo válido";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-                    if (document.getElementById("txtDescricao").value.length < 10) {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Informe uma descrição válida";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
-                    if (document.getElementById("slCategoria").value == "") {
-                        var li = document.createElement("li");
-                        li.innerHTML = "- Selecione uma categoria";
-                        ulErros.appendChild(li);
-                        erros++;
-                    }
+            if (document.getElementById("txtRenavam").value.length != 11) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um renavam válido (11 digitos)";
+                ulErros.appendChild(li);
+                erros++;
+            }
+            if (document.getElementById("txtPlaca").value.length != 7) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe uma placa válida (7 digitos)";
+                ulErros.appendChild(li);
+                erros++;
+            }
+            if (document.getElementById("txtAno").value.length != 4) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um ano válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
+            if (document.getElementById("txtModelo").value.length < 1) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe um modelo válido";
+                ulErros.appendChild(li);
+                erros++;
+            }
+            var value = CKEDITOR.instances['txtDescricao'].getData();
+            if (value.length < 10) {
+                var li = document.createElement("li");
+                li.innerHTML = "- Informe uma descrição";
+                ulErros.appendChild(li);
+                erros++;
+            }
+            if (document.getElementById("slCategoria").value == "") {
+                var li = document.createElement("li");
+                li.innerHTML = "- Selecione uma categoria";
+                ulErros.appendChild(li);
+                erros++;
+            }
 
-                    if (erros === 0) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                }
-            </script>
+            if (erros === 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+</script>

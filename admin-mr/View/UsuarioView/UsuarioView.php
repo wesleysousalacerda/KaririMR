@@ -425,14 +425,14 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
 
         if (!ValidarSenha() && $("#txtCodUsuario").val() == "0") {
             var li = document.createElement("li");
-            li.innerHTML = "- Senhas inválidas";
+            li.innerHTML = "- Senhas inválidas(Senha maior ou igual a 7 caracteres)";
             $("#ulErros").append(li);
             erros++;
         }
 
         if (!ValidarData(document.getElementById("txtData").value)) {
             var li = document.createElement("li");
-            li.innerHTML = "- Informe uma data válida válida";
+            li.innerHTML = "- Informe uma data válida";
             ulErros.appendChild(li);
             erros++;
         }

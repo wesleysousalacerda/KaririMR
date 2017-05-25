@@ -27,63 +27,63 @@ if (filter_input(INPUT_POST, "btnGravar", FILTER_SANITIZE_STRING)) {
     $revendedora->setInsc_estadual(filter_input(INPUT_POST, "txtInscricao", FILTER_SANITIZE_STRING));
     $revendedora->setDescricao(filter_input(INPUT_POST, "txtDescricao", FILTER_SANITIZE_STRING));
     $usercod = $usuarioController->RetornarUser($usuario);
-    if ($usercod != null){
+    if ($usercod != null) {
         $revendedora->getUsuario()->setCod($usercod);
         if (!filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
-        //Cadastrar
+            //Cadastrar
 
             if ($revendedoraController->Cadastrar($revendedora)) {
                 ?>
                 <script>
                     document.cookie = "msg=1";
                     document.location.href = "?pagina=revendedora";
-                //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
-                //o Cookie redirecionara para a pagina de revendedora.
-            </script>
-            <?php
+                    //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+                    //o Cookie redirecionara para a pagina de revendedora.
+                </script>
+                <?php
+            } else {
+                $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a revendedora.</div>";
+            }
         } else {
-            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar cadastrar a revendedora.</div>";
+            //Editar
+            $revendedora->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
+
+            if ($revendedoraController->Alterar($revendedora)) {
+                ?>
+                <script>
+                    document.cookie = "msg=2";
+                    document.location.href = "?pagina=revendedora";
+                    //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
+                    //o Cookie redirecionara para a pagina de revendedora.
+                </script>
+                <?php
+            } else {
+                $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a revendedora.</div>";
+            }
         }
     } else {
-        //Editar
-        $revendedora->setCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
-
-        if ($revendedoraController->Alterar($revendedora)) {
-            ?>
-            <script>
-                document.cookie = "msg=2";
-                document.location.href = "?pagina=revendedora";
-                //Script para evitar que o banco seja cadastrado toda vez que recarregar a pagina. 
-                //o Cookie redirecionara para a pagina de revendedora.
-            </script>
-            <?php
-        } else {
-            $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Houve um erro ao tentar alterar a revendedora.</div>";
-        }
+        $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Nome de usuario não cadastrado!.</div>";
     }
-}else{
-    $resultado = "<div class=\"alert alert-danger\" role=\"alert\">Nome de usuario não cadastrado!.</div>";
-}
 }//FIm Cadastrar
 //Buscar usuários
 ?>
 <script>
 </script>
-<?php 
+<?php
 if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
     $termo = filter_input(INPUT_POST, "txtTermo", FILTER_SANITIZE_STRING);
-    if ($termo != ""){
+    if ($termo != "") {
         $listaRevenda = $revendedoraController->RetornarRevendedoras($termo);
-    }else{
-     $spResultadoBusca = "Insira termo de pesquisa.";
- }
- if ($listaRevenda != null) {
-    $spResultadoBusca = "Exibindo dados";
-} else {
-    $spResultadoBusca = "Dados não encontrado";
-}
-}else if (filter_input(INPUT_POST, "btnBuscarTudo", FILTER_SANITIZE_STRING)) {
-   $listaRevenda = $revendedoraController->RetornarTodasRevendedoras();
+    } else {
+        $spResultadoBusca = "Insira termo de pesquisa.";
+    }
+    if ($listaRevenda != null) {
+        $spResultadoBusca = "Exibindo dados";
+    } else {
+        $spResultadoBusca = "Dados não encontrado";
+    }
+} else if (filter_input(INPUT_POST, "btnBuscarTudo", FILTER_SANITIZE_STRING)) {
+    $listaRevenda = $revendedoraController->RetornarTodasRevendedoras();
 }
 
 if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
@@ -147,18 +147,19 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-lg-6 col-xs-12">
-                            <div class="form-group">
-                                <label for="txtDescricao">Descrição</label>
-                                <input type="text" class="form-control" id="txtDescricao" name="txtDescricao" placeholder="" value="<?= $descricao; ?>"/>
-                            </div>
-                        </div>
                         <div class="col-lg-6 col-xs-12">
                             <div class="form-group">
                                 <label for="txtUsuario">Usuário <span id="spValidaUsuario"></span></label>
                                 <input type="text" class="form-control" id="txtUsuario" name="txtUsuario" placeholder="Usuario"  value="<?= $usuario; ?>">
                             </div>
+                        </div>                                                
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p style="font-weight: 700;">Descrição</p>
+                            <textarea class="form-control" id="txtDescricao" name="txtDescricao"></textarea>
                         </div>
                     </div>
 
@@ -191,50 +192,50 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                 <form method="post" name="frmBuscarRevendedora" id="frmBuscarRevendedora">
                     <div class="row">
                         <div class="col-lg-8 col-xs-12">
-                           <!--  <div class="form-group">
-                                <label for="txtTermo">Termo de busca</label>
-                                <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: Hilton Veiculos" />
-                            </div> -->
+                            <!--  <div class="form-group">
+                                 <label for="txtTermo">Termo de busca</label>
+                                 <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Ex: Hilton Veiculos" />
+                             </div> -->
                             <div class="input-group">
-                              <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Revendedora...">
-                              <span class="input-group-btn">
-                                  <input class="btn btn-primary" type="submit" name="btnBuscar" value="Buscar"> 
-                                  <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todas">
-                              </span>
-                          </div><!-- /input-group -->
-                          <span><?= $spResultadoBusca; ?></span>
+                                <input type="text" class="form-control" id="txtTermo" name="txtTermo" placeholder="Revendedora...">
+                                <span class="input-group-btn">
+                                    <input class="btn btn-primary" type="submit" name="btnBuscar" value="Buscar"> 
+                                    <input class="btn btn-success" type="submit" name="btnBuscarTudo" value="Buscar Todas">
+                                </span>
+                            </div><!-- /input-group -->
+                            <span><?= $spResultadoBusca; ?></span>
 
-                      </div>
-                  </div>
-              </form>
+                        </div>
+                    </div>
+                </form>
 
-              <hr />
-              <br />
+                <hr />
+                <br />
 
-              <table class="table table-responsive table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Razão Social</th>
-                        <th>Fantasia</th>
-                        <th>Usuario</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($listaRevenda != null) {
-                        foreach ($listaRevenda as $revenda) {
-                            ?>
-                            <tr>
-                                <td><?= $revenda->getRazaosocial(); ?></td>
-                                <td><?= $revenda->getFantasia(); ?></td>
-                                <td><?= $revenda->getUsuario(); ?></td>
-                                <td>
-                                    <a href="?pagina=visualizarrevenda&cod=<?= $revenda->getCod(); ?>" class="btn btn-success">Visualizar</a>
-                                    <a href="?pagina=revendedora&cod=<?= $revenda->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
-                                    <a href="?pagina=usuario&cod=<?= $revenda->getCod(); ?>" class="btn btn-danger">Usuario</a>
-                                    <a href="?pagina=endereco&cod=<?= $revenda->getCod(); ?>" class="btn btn-info">Endereço</a>
-                                    <a href="?pagina=telefone&cod=<?= $revenda->getCod(); ?>" class="btn btn-primary">Imagem</a>
+                <table class="table table-responsive table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Razão Social</th>
+                            <th>Fantasia</th>
+                            <th>Usuario</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if ($listaRevenda != null) {
+                            foreach ($listaRevenda as $revenda) {
+                                ?>
+                                <tr>
+                                    <td><?= $revenda->getRazaosocial(); ?></td>
+                                    <td><?= $revenda->getFantasia(); ?></td>
+                                    <td><?= $revenda->getUsuario(); ?></td>
+                                    <td>
+                                        <a href="?pagina=visualizarrevenda&cod=<?= $revenda->getCod(); ?>" class="btn btn-success">Visualizar</a>
+                                        <a href="?pagina=revendedora&cod=<?= $revenda->getCod(); ?>" class="btn btn-warning">Editar</a>                                                
+                                        <a href="?pagina=usuario&cod=<?= $revenda->getCod(); ?>" class="btn btn-danger">Usuario</a>
+                                        <a href="?pagina=endereco&cod=<?= $revenda->getCod(); ?>" class="btn btn-info">Endereço</a>
+                                        <a href="?pagina=telefone&cod=<?= $revenda->getCod(); ?>" class="btn btn-primary">Imagem</a>
                                 </tr>
 
                                 <?php
@@ -249,10 +250,12 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
     }
     ?>
 </div>
-<script src="../js/mask.js" type="text/javascript">
-</script>
+<script src="../js/mask.js" type="text/javascript"></script>
+<script src="../Util/ckeditor/ckeditor.js"></script>
+
 <script>
     $(document).ready(function () {
+        CKEDITOR.replace('txtDescricao');
         if (getCookie("msg") == 1) {
             document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora cadastrada com sucesso.</div>";
             document.cookie = "msg=d";
@@ -260,6 +263,9 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
             document.getElementById("pResultado").innerHTML = "<div class=\"alert alert-success\" role=\"alert\">Revendedora alterada com sucesso.</div>";
             document.cookie = "msg=d";
         }
+        $('#txtCnpj').mask('00.000.000/0000-00');
+
+
         $("#frmGerenciarRevendedora").submit(function (e) {
             if (!ValidarFormulario()) {
                 e.preventDefault();
@@ -279,7 +285,14 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
             erros++;
         }
 
-        if (document.getElementById("txtCnpj").value.length != 14) {
+        if (document.getElementById("txtInscricao").value.length < 5) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe uma Inscrição Estadual válida";
+            ulErros.appendChild(li);
+            erros++;
+        }
+
+        if (document.getElementById("txtCnpj").value.length != 18) {
             var li = document.createElement("li");
             li.innerHTML = "- Informe um cnpj válido";
             ulErros.appendChild(li);
@@ -288,6 +301,13 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
         if (document.getElementById("txtFantasia").value.length < 2) {
             var li = document.createElement("li");
             li.innerHTML = "- Informe um Nome Fantasia válido";
+            ulErros.appendChild(li);
+            erros++;
+        }
+        var value = CKEDITOR.instances['txtDescricao'].getData();
+        if (value.length < 10) {
+            var li = document.createElement("li");
+            li.innerHTML = "- Informe uma descrição";
             ulErros.appendChild(li);
             erros++;
         }
@@ -308,15 +328,15 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                 type: "POST",
                 dataType: "text",
                 success: function (retorno) {
-                    if (retorno == - 1) {
+                    if (retorno == -1) {
                         $("#spValidaUsuario").text("Usuário Não Cadastrado");
                         $("#spValidaUsuario").css("color", "#39C462");
                         alert('Nao cadastrado');
-                    } else if (retorno == 1){
+                    } else if (retorno == 1) {
                         $("#spValidaUsuario").text("Usuário Válido");
                         $("#spValidaUsuario").css("color", "#FF4500");
                         alert('Cadastrado');
-                    } else{
+                    } else {
                         $("#spValidaUsuario").text("Erro ao válidar");
                         $("#spValidaUsuario").css("color", "#FF3730");
                     }
@@ -326,7 +346,7 @@ if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
                 }
             });
         } else {
-            return - 10;
+            return -10;
         }
     }
 
