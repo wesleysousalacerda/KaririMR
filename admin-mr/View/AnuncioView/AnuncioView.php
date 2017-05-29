@@ -80,7 +80,7 @@ if (filter_input(INPUT_POST, "btnBuscar", FILTER_SANITIZE_STRING)) {
 if (filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT)) {
     $anuncio = $anuncioController->RetornarCod(filter_input(INPUT_GET, "cod", FILTER_SANITIZE_NUMBER_INT));
 
-    $ctg = $anuncio->getCategoria()->getCod();
+    // $ctg = $anuncio->getCategoria()->getCod();
     $nome = $anuncio->getNome();
     $descricao = $anuncio->getDescricao();
     $status = $anuncio->getStatus();
@@ -290,7 +290,7 @@ $listaAutomoveis = $automovelController->RetornarUsuarioAutomoveis($_SESSION["co
                                 <td>
                                     <a href="?pagina=visualizaranuncio&cod=<?= $anuncio->getCod(); ?>" class="btn btn-success">Visualizar</a>
                                     <a href="?pagina=anuncio&cod=<?= $anuncio->getCod(); ?>" class="btn btn-warning">Editar</a>
-                                    <a href="?pagina=gerenciarimagemanuncio&cod=<?= $anuncio->getCod(); ?>" class="btn btn-info">Gerenciar imagens</a>
+                                    <a href="?pagina=gerenciarimagemanuncio&cod=<?= $anuncio->getCod(); ?>" class="btn btn-info">Imagens</a>
                                 </td>
                             </tr>
                             <?php
